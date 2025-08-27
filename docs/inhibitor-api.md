@@ -130,6 +130,8 @@ response = requests.post(url, headers=headers, data=json.dumps(payload))
 print(response.json())
 ```
 
+👉 Want to see this in action? Try the [Quickstart Notebook](../notebooks/quickstart_inhibitor.ipynb) for a live demo.
+
 ---
 
 ## 📌 Best Practices
