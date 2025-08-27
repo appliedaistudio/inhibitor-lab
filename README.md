@@ -10,8 +10,12 @@ This repository is designed for developers, researchers, and teams looking to bu
 
 Explore hands-on examples of how to integrate and test the Inhibitor with different types of agents:
 
-- **[LLM Feedback Agent](notebooks/llm_feedback_agent.ipynb)**  
-  Demonstrates the Reason–Observe–Adjust loop with an LLM assistant. Shows how unsafe recommendations are caught.  
+- **[Quickstart: Inhibitor API](notebooks/quickstart_inhibitor.ipynb)**
+  Minimal example showing how to connect to the API, send text, and view results.
+  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/appliedaistudio/inhibitor-lab/blob/main/notebooks/quickstart_inhibitor.ipynb)
+
+- **[LLM Feedback Agent](notebooks/llm_feedback_agent.ipynb)**
+  Demonstrates the Reason–Observe–Adjust loop with an LLM assistant. Shows how unsafe recommendations are caught.
   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/appliedaistudio/inhibitor-lab/blob/main/notebooks/llm_feedback_agent.ipynb)
 
 - **[Real-Time Moderation Agent](notebooks/realtime_moderation_agent.ipynb)**  
