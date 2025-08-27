@@ -1,6 +1,6 @@
 # inhibitor-lab
 
-**inhibitor-lab** is the official open-source project from [appliedAIstudio](https://appliedaistudio.com) for demonstrating how to integrate and experiment with the Inhibitor service in agent-based systems.
+**inhibitor-lab** is the official open-source project from [appliedAIstudio](https://www.appliedai.studio/) for demonstrating how to integrate and experiment with the Inhibitor service in agent-based systems.
 
 This repository is designed for developers, researchers, and teams looking to build ethical, interruptible, and auditable agents. It includes working examples, live integrations, reference patterns, and technical documentation to support safe and responsible agent development using the Inhibitor.
 
@@ -25,6 +25,15 @@ Explore hands-on examples of how to integrate and test the Inhibitor with differ
 - **[Data Handling Agent](notebooks/data_handling_agent.ipynb)**  
   Demonstrates safe vs unsafe handling of sensitive information (PII, HR, healthcare). Shows tradeoffs between **insight** and **performance** modes.  
   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/appliedaistudio/inhibitor-lab/blob/main/notebooks/data_handling_agent.ipynb)
+
+---
+
+## 🔌 API Documentation
+
+The Inhibitor service exposes a REST API for ethical evaluation, logging, and oversight.  
+Full details are available here: [docs/inhibitor-api.md](docs/inhibitor-api.md)
+
+👉 You must obtain an **Inhibitor API key** from [appliedAIstudio](https://www.appliedai.studio/) to use the service.
 
 ---
 
@@ -57,4 +66,5 @@ The Inhibitor provides two modes of operation:
 2. Open notebooks or examples  
 3. Follow documentation in `/docs` to start integrating  
 
-> **Note:** The Inhibitor service is developed by appliedAIstudio. To learn more, visit [appliedAIstudio.com](https://appliedaistudio.com).
+> **Note:** The Inhibitor service is developed by [appliedAIstudio](https://www.appliedai.studio/).
+
