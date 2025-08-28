@@ -2,7 +2,7 @@
 
 ## Foundations
 
-This section provides a high-level overview of the ideas behind the framework, before exploring more detailed aspects. It explains the overall purpose and theoretical basis for how the **Inhibitor** works.
+This document provides a high-level overview of the ideas behind the framework, before exploring more detailed aspects. It explains the overall purpose and theoretical basis for how the **Inhibitor** works.
 
 At its core, the approach is about helping a system make sense of complex, messy, or ambiguous situations. The underlying **model** here refers to the conceptual representation of knowledge that underlies inhibition: a structured way of describing **concepts**, how they relate to one another, and how they influence interpretations of real-world input. This conceptual **model** is what underlies inhibition. It provides the foundation on which the system interprets and balances competing signals, even when information is incomplete or uncertain.
 
