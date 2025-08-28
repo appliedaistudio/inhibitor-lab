@@ -41,6 +41,14 @@ Full details are available here: [docs/inhibitor-api.md](docs/inhibitor-api.md)
 
 ---
 
+## 📜 Regulations
+
+The Inhibitor actively supports detection and oversight across a defined set of regulations.
+The complete list is maintained in a dedicated document: [docs/supported-regulations.md](docs/supported-regulations.md)
+Refer to this document for details on which regulations are covered and how support is implemented.
+
+---
+
 ## ⚡ Insight vs Performance Modes
 
 The Inhibitor provides two modes of operation:
