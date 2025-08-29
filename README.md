@@ -1,10 +1,18 @@
-# inhibitor-lab
+# Inhibitor Lab – Ethical Oversight for Agents
 
-**inhibitor-lab** is the official open-source project from [appliedAIstudio](https://www.appliedai.studio/) for demonstrating how to integrate and experiment with the Inhibitor service in agent-based systems.
+> 🔎 **Independent Validation (July 2025)**  
+> The 2025 *AI Safety Index* exposes a critical industry gap: leading AI companies are rapidly scaling model capabilities **without embedding real-time ethical reasoning**.  
+> While most firms perform adequately on transparency and post-hoc governance, **all seven** scored poorly—many failing outright—on:
+>
+> - Existential safety (no company scored above a D)
+> - Dangerous capability testing (only 3 of 7 attempted)
+> - Real-time decision safety (none had actionable strategies)
+>
+> 🧠 This is exactly where the **Inhibitor** applies: real-time ethical reasoning and interruptibility, by design.
 
-This repository is designed for developers, researchers, and teams looking to build ethical, interruptible, and auditable agents. It includes working examples, live integrations, reference patterns, and technical documentation to support safe and responsible agent development using the Inhibitor.
-
----
+📄 **Read the report**:  
+- [Future of Life Institute – Full Report](https://futureoflife.org/ai-safety-index-summer-2025/)  
+- [📎 Local PDF Copy (docs/AI-Safety-Index-Summer-2025.pdf)](docs/AI-Safety-Index-Summer-2025.pdf)
 
 ## 🚀 Notebooks
 
