@@ -18,7 +18,7 @@ This repository is designed for developers, researchers, and teams looking to bu
 
 📄 **Read the report**:  
 - [Future of Life Institute – Full Report](https://futureoflife.org/ai-safety-index-summer-2025/)  
-- [📎 Local PDF Copy (docs/AI-Safety-Index-Summer-2025.pdf)](docs/AI-Safety-Index-Summer-2025.pdf)
+- [📎 Local PDF Copy (docs/FLI-AI-Safety-Index-Summer-2025.pdf)](docs/FLI-AI-Safety-Index-Summer-2025.pdf)
 
 ## 🚀 Notebooks
 
