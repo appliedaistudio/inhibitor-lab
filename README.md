@@ -14,7 +14,7 @@ This repository is designed for developers, researchers, and teams looking to bu
 > - Dangerous capability testing (only 3 of 7 attempted)
 > - Real-time decision safety (none had actionable strategies)
 >
-> 🧠 This is exactly where the **Inhibitor** applies: real-time ethical reasoning and interruptibility, by design.
+> 🧠 This is where the **Inhibitor** applies: real-time ethical reasoning and interruptibility, by design.
 
 📄 **Read the report**:  
 - [Future of Life Institute – Full Report](https://futureoflife.org/ai-safety-index-summer-2025/)  
