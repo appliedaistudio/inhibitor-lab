@@ -1,4 +1,6 @@
 # inhibitor-lab
+[![GitHub Pre-Release](https://img.shields.io/github/v/release/appliedaistudio/inhibitor-lab?include_prereleases&label=Pre-Release)](https://github.com/appliedaistudio/inhibitor-lab/releases)
+
 
 **inhibitor-lab** is the official open-source project from [appliedAIstudio](https://www.appliedai.studio/) for demonstrating how to integrate and experiment with the Inhibitor service in agent-based systems.
 
