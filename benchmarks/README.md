@@ -9,7 +9,7 @@
   author    = {appliedAIstudio and contributors},
   year      = {2025},
   publisher = {Inhibitor-Lab Project},
-  doi       = {10.5281/zenodo.xxxxxxx}
+  note      = {Benchmark ID: IEB-2025-V1.1}
 }
 ```
 
@@ -6207,3 +6207,4 @@ This report evaluates the performance of various language models and providers i
 ![Explanation & Transparency Distribution](./rubric_explanation_distribution.png)
 ![Practical Usability Distribution](./rubric_usability_distribution.png)
 ![Composite Score Distribution](./rubric_composite_score_distribution.png)
+
