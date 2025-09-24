@@ -24,27 +24,16 @@ This repository is designed for developers, researchers, and teams looking to bu
 
 ## 🚀 Notebooks
 
-Explore hands-on examples of how to integrate and test the Inhibitor with different types of agents:
+### Example Notebooks
 
-- **[Quickstart: Inhibitor API](notebooks/quickstart_inhibitor.ipynb)**
-  Minimal example showing how to connect to the API, send text, and view results.  
-  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/appliedaistudio/inhibitor-lab/blob/main/notebooks/quickstart_inhibitor.ipynb)
+- **[Quickstart: Inhibitor API](notebooks/quickstart_inhibitor.ipynb)**  
+  Minimal example for connecting to the API, sending inputs, and viewing moderation results.
 
-- **[LLM Feedback Agent](notebooks/llm_feedback_agent.ipynb)**
-  Demonstrates the Reason–Observe–Adjust loop with an LLM assistant. Shows how unsafe recommendations are caught.  
-  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/appliedaistudio/inhibitor-lab/blob/main/notebooks/llm_feedback_agent.ipynb)
+- **[Adaptive Feedback Agent](notebooks/adaptive_agent_feedback_loops.ipynb)**  
+  Unified agent that performs real-time oversight, critique, and adjustment using LLMs. Replaces older AI security and data handling agents.
 
 - **[Real-Time Moderation Agent](notebooks/realtime_moderation_agent.ipynb)**  
-  Demonstrates **performance mode** for fast, real-time oversight of streaming inputs.  
-  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/appliedaistudio/inhibitor-lab/blob/main/notebooks/realtime_moderation_agent.ipynb)
-
-- **[AI Security Attacks](notebooks/ai_security_attacks.ipynb)**  
-  Demonstrates common vulnerabilities (prompt injection, PII leakage, malicious code) and how the Inhibitor flags them.  
-  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/appliedaistudio/inhibitor-lab/blob/main/notebooks/ai_security_attacks.ipynb)
-
-- **[Data Handling Agent](notebooks/data_handling_agent.ipynb)**  
-  Demonstrates safe vs unsafe handling of sensitive information (PII, HR, healthcare). Shows tradeoffs between **insight** and **performance** modes.  
-  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/appliedaistudio/inhibitor-lab/blob/main/notebooks/data_handling_agent.ipynb)
+  Demonstrates performance mode for rapid, inline moderation of streamed inputs.
 
 ---
 
