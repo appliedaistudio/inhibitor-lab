@@ -70,18 +70,22 @@ The Inhibitor provides two modes of operation:
 
 ## 📂 Repository Structure
 
-- `notebooks/` → Interactive Jupyter notebooks demonstrating different agent scenarios  
-- `examples/` → Lightweight code samples for quick integration  
-- `docs/` → Technical documentation and integration guides  
-- `benchmarks/` → Performance and latency tracking results  
+- `notebooks/` → Interactive Jupyter notebooks demonstrating different agent scenarios
+- `examples/` → Lightweight code samples for quick integration
+- `docs/` → Technical documentation and integration guides
+- `benchmarks/` → Performance and latency tracking results
 
 ---
 
 ## Getting Started
 
-1. Clone this repo  
-2. Open notebooks or examples  
-3. Follow documentation in `/docs` to start integrating  
+1. Clone this repo
+2. Open notebooks or examples
+3. Follow documentation in `/docs` to start integrating
+
+### 🧭 Plan Your Build Sprint
+
+If you are preparing to integrate the Inhibitor into a new agent, walk through the [Inhibitor Application Sprint](docs/inhibitor-application-sprint.md). It provides a phase-by-phase guide for defining inhibitions, building reflective loops, activating the Inhibitor, stress-testing your agent, and launching with ongoing oversight.
 
 > **Note:** The Inhibitor service is developed by [appliedAIstudio](https://www.appliedai.studio/).
 
