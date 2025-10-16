@@ -1,3 +1,7 @@
+> In September 2025, [California passed SB-53](https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53), the first law requiring AI safety disclosures from advanced model developers.
+> SB-53 sets real-time safety standards—systems must show how they monitor risk and adjust when things go wrong.
+> 32 of the top 50 AI firms are in California, so this law sets the pace—and other states are already lining up to follow.
+
 # inhibitor-lab
 [![GitHub Pre-Release](https://img.shields.io/github/v/release/appliedaistudio/inhibitor-lab?include_prereleases&label=Pre-Release)](https://github.com/appliedaistudio/inhibitor-lab/releases)
 
