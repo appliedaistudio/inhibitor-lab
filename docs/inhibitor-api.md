@@ -14,7 +14,7 @@ X-API-Key: <your_api_key>
 
 Production:
 ```
-https://inhibitor.infra-5ad.workers.dev
+https://iaas.appliedai.studio
 ```
 
 ---
@@ -31,7 +31,7 @@ GET /
 
 ### 2. Evaluate Output
 ```
-POST /inhibitor
+POST /check
 ```
 - Run ethical evaluation on text.
 - Modes:
@@ -40,7 +40,7 @@ POST /inhibitor
 
 **Request Example:**
 ```http
-POST /inhibitor
+POST /check
 X-API-Key: <your_api_key>
 Content-Type: application/json
 
@@ -109,7 +109,7 @@ DELETE /logs/{id}
 import requests, json
 
 # API endpoint for evaluations
-url = "https://inhibitor.infra-5ad.workers.dev/inhibitor"
+url = "https://iaas.appliedai.studio/check"
 
 # Headers include the API key
 headers = {

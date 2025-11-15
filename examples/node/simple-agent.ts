@@ -5,8 +5,8 @@ import axios from 'axios';
 
 // Define an async function that interacts with the Inhibitor
 async function runAgent() {
-  // Send a POST request to the Inhibitor service
-  const response = await axios.post('http://localhost:8787/inhibitor', {
+  // Send a POST request to the production Inhibitor service
+  const response = await axios.post('https://iaas.appliedai.studio/check', {
     // Inform the Inhibitor about the agent's contemplated action
     text: "Agent contemplating action: buy ETH.",
     // Choose the mode for the Inhibitor ("insight" or "performance")
