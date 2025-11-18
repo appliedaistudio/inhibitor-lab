@@ -1,0 +1,1059 @@
+{
+  "organization": "ExampleCorp",
+  "domain": "general",
+  "created": "2025-11-17T18:06:39.832684Z",
+  "documents": [
+    {
+      "rule_id": "background-checks-must-be-completed-befo-54992755",
+      "description": "Background checks must be completed before a start date is assigned.",
+      "bindings": [
+        {
+          "name": "background_check_date",
+          "pattern": "(?P<background_check_date>\\d{4}-\\d{2}-\\d{2})",
+          "type": "date"
+        },
+        {
+          "name": "start_date",
+          "pattern": "(?P<start_date>\\d{4}-\\d{2}-\\d{2})",
+          "type": "date"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(background_check_date, start_date). !background_check_date || !start_date || background_check_date <= start_date",
+          "on_fail": "Background check must be completed before a start date is assigned."
+        }
+      ]
+    },
+    {
+      "rule_id": "offer-letters-may-not-be-sent-if-the-can-8a8084de",
+      "description": "Offer letters may not be sent if the candidate is missing legal name or date of birth (YYYY-MM-DD).",
+      "bindings": [
+        {
+          "name": "legal_name",
+          "pattern": "(?P<legal_name>.+)",
+          "type": "string"
+        },
+        {
+          "name": "date_of_birth",
+          "pattern": "(?P<date_of_birth>\\d{4}-\\d{2}-\\d{2})",
+          "type": "date"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(legal_name, date_of_birth). legal_name != null && legal_name != '' && date_of_birth != null && date_of_birth != ''",
+          "on_fail": "Offer letters may not be sent if the candidate is missing legal name or date of birth."
+        }
+      ]
+    },
+    {
+      "rule_id": "minors-under-18-cannot-be-hired-for-role-cd610df4",
+      "description": "Minors (under 18) cannot be hired for roles requiring late-night shifts.",
+      "bindings": [
+        {
+          "name": "age",
+          "pattern": "(?P<age>\\d+)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(age). age >= 18",
+          "on_fail": "Minors (under 18) cannot be hired for roles requiring late-night shifts."
+        }
+      ]
+    },
+    {
+      "rule_id": "any-role-handling-pii-requires-signed-co-b79d42f2",
+      "description": "Any role handling PII requires signed confidentiality agreement before system access.",
+      "bindings": [
+        {
+          "name": "role",
+          "pattern": "(?P<role>\\w+)",
+          "type": "string"
+        },
+        {
+          "name": "agreement_signed",
+          "pattern": "(?P<agreement_signed>true|false)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(role, agreement_signed). (!role || !agreement_signed || agreement_signed == 'true' || role != 'PII')",
+          "on_fail": "Access denied: Role handling PII requires a signed confidentiality agreement."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-the-candidate-declines-background-che-4f9c03e2",
+      "description": "If the candidate declines background check, the requisition must be closed as 'withdrawn'.",
+      "bindings": [
+        {
+          "name": "candidate_decision",
+          "pattern": "(?P<candidate_decision>declines|accepts)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(candidate_decision). candidate_decision == 'declines'",
+          "on_fail": "The requisition must be closed as 'withdrawn' if the candidate declines the background check."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-full-ssn-is-detected-block-the-operat-25aafb9c",
+      "description": "If full SSN is detected, block the operation and require redaction.",
+      "bindings": [
+        {
+          "name": "ssn",
+          "pattern": "(?P<ssn>\\d{3}-\\d{2}-\\d{4})",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(ssn). ssn && /\\d{3}-\\d{2}-\\d{4}/.test(ssn)",
+          "on_fail": "Full SSN detected. Please redact the SSN before proceeding."
+        }
+      ]
+    },
+    {
+      "rule_id": "emails-must-match-local-domain-tld-other-7aa88a73",
+      "description": "Emails must match local@domain.tld; otherwise reject the record.",
+      "bindings": [
+        {
+          "name": "email",
+          "pattern": "(?P<email>^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(email). email == 'local@domain.tld'",
+          "on_fail": "Email does not match the required format 'local@domain.tld'."
+        }
+      ]
+    },
+    {
+      "rule_id": "phone-numbers-must-be-in-e-164-format-e--b3dfec07",
+      "description": "Phone numbers must be in E.164 format (e.g., +15551234567); otherwise reject.",
+      "bindings": [
+        {
+          "name": "phone_number",
+          "pattern": "(?P<phone_number>\\+\\d{1,15})",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(phone_number). phone_number && /^\\+\\d{1,15}$/.test(phone_number)",
+          "on_fail": "Phone number must be in E.164 format (e.g., +15551234567)."
+        }
+      ]
+    },
+    {
+      "rule_id": "card-not-present-payments-above-1-500-re-971a8d54",
+      "description": "Card-not-present payments above $1,500 require 3DS verification.",
+      "bindings": [
+        {
+          "name": "amount",
+          "pattern": "(?P<amount>\\d+(\\.\\d{2})?)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(amount). !amount || amount <= 1500",
+          "on_fail": "Card-not-present payments above $1,500 require 3DS verification."
+        }
+      ]
+    },
+    {
+      "rule_id": "wire-transfers-above-25-000-require-an-a-b51ef37b",
+      "description": "Wire transfers above $25,000 require an approval code and finance approver ID.",
+      "bindings": [
+        {
+          "name": "amount",
+          "pattern": "(?P<amount>\\d+(?:\\.\\d{1,2})?)",
+          "type": "number"
+        },
+        {
+          "name": "approval_code",
+          "pattern": "(?P<approval_code>\\w+)",
+          "type": "string"
+        },
+        {
+          "name": "finance_approver_id",
+          "pattern": "(?P<finance_approver_id>\\w+)",
+          "type": "id"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(amount, approval_code, finance_approver_id). amount <= 25000 || (approval_code && finance_approver_id)",
+          "on_fail": "Wire transfers above $25,000 require an approval code and finance approver ID."
+        }
+      ]
+    },
+    {
+      "rule_id": "any-single-merchant-refund-above-5-000-r-d6322bc2",
+      "description": "Any single merchant refund above $5,000 requires manager approval.",
+      "bindings": [
+        {
+          "name": "refund_amount",
+          "pattern": "(?P<refund_amount>\\d+(?:\\.\\d{1,2})?)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(refund_amount). refund_amount <= 5000",
+          "on_fail": "Refunds above $5,000 require manager approval."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-total-refunds-exceed-20-000-within-24-cc21771c",
+      "description": "If total refunds exceed $20,000 within 24 hours per merchant, freeze further refunds pending review.",
+      "bindings": [
+        {
+          "name": "total_refunds",
+          "pattern": "(?P<total_refunds>\\d+(?:\\.\\d{1,2})?)",
+          "type": "number"
+        },
+        {
+          "name": "merchant_id",
+          "pattern": "(?P<merchant_id>\\w+)",
+          "type": "id"
+        },
+        {
+          "name": "refund_time",
+          "pattern": "(?P<refund_time>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2})",
+          "type": "date"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(total_refunds, merchant_id, refund_time). !total_refunds || total_refunds <= 20000",
+          "on_fail": "Total refunds exceed $20,000 within 24 hours for this merchant. Further refunds are frozen pending review."
+        }
+      ]
+    },
+    {
+      "rule_id": "disbursements-exceeding-10-000-require-a-627a113c",
+      "description": "Disbursements exceeding $10,000 require a verified business tax ID.",
+      "bindings": [
+        {
+          "name": "amount",
+          "pattern": "(?P<amount>\\d+(?:\\.\\d{1,2})?)",
+          "type": "number"
+        },
+        {
+          "name": "tax_id",
+          "pattern": "(?P<tax_id>\\w+)",
+          "type": "id"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(amount, tax_id). (!tax_id || amount <= 10000)",
+          "on_fail": "Disbursements exceeding $10,000 require a verified business tax ID."
+        }
+      ]
+    },
+    {
+      "rule_id": "payouts-to-individuals-above-600-in-a-ca-dddb9d0d",
+      "description": "Payouts to individuals above $600 in a calendar year must collect a TIN (taxpayer identification number).",
+      "bindings": [
+        {
+          "name": "payout_amount",
+          "pattern": "(?P<payout_amount>\\d+\\.?\\d*)",
+          "type": "number"
+        },
+        {
+          "name": "calendar_year",
+          "pattern": "(?P<calendar_year>\\d{4})",
+          "type": "date"
+        },
+        {
+          "name": "tin",
+          "pattern": "(?P<tin>\\w+)",
+          "type": "id"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(payout_amount, calendar_year, tin). (!payout_amount || payout_amount <= 600 || tin != null && tin != '')",
+          "on_fail": "Payouts above $600 require a valid TIN."
+        }
+      ]
+    },
+    {
+      "rule_id": "record-approval-code-approver-id-and-jus-3e56d3de",
+      "description": "Record approval code, approver ID, and justification for wires and large refunds.",
+      "bindings": [
+        {
+          "name": "approval_code",
+          "pattern": "(?P<approval_code>\\w+)",
+          "type": "string"
+        },
+        {
+          "name": "approver_id",
+          "pattern": "(?P<approver_id>\\d+)",
+          "type": "id"
+        },
+        {
+          "name": "justification",
+          "pattern": "(?P<justification>.+)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(approval_code, approver_id, justification). approval_code && approver_id && justification",
+          "on_fail": "Approval code, approver ID, and justification must be recorded for wires and large refunds."
+        }
+      ]
+    },
+    {
+      "rule_id": "do-not-log-full-pan-only-last-4-digits-m-082f3c85",
+      "description": "Do not log full PAN; only last 4 digits may be stored, masked elsewhere.",
+      "bindings": [
+        {
+          "name": "pan_last4",
+          "pattern": "(?P<pan_last4>\\d{4})$",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(pan_last4). /^\\d{4}$/.test(pan_last4)",
+          "on_fail": "PAN must be masked except for the last 4 digits."
+        }
+      ]
+    },
+    {
+      "rule_id": "production-logs-must-not-contain-full-ss-df8f9bac",
+      "description": "Production logs must not contain full SSN, full credit card PAN, or unmasked emails.",
+      "bindings": [
+        {
+          "name": "ssn",
+          "pattern": "(?P<ssn>\\b\\d{3}-\\d{2}-\\d{4}\\b)",
+          "type": "string"
+        },
+        {
+          "name": "credit_card_pan",
+          "pattern": "(?P<credit_card_pan>\\b\\d{4}-\\d{4}-\\d{4}-\\d{4}\\b)",
+          "type": "string"
+        },
+        {
+          "name": "email",
+          "pattern": "(?P<email>[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(ssn, credit_card_pan, email). (!ssn || !/\\b\\d{3}-\\d{2}-\\d{4}\\b/.test(ssn)) && (!credit_card_pan || !/\\b\\d{4}-\\d{4}-\\d{4}-\\d{4}\\b/.test(credit_card_pan)) && (!email || !/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/.test(email))",
+          "on_fail": "Production logs contain sensitive information: full SSN, full credit card PAN, or unmasked email."
+        }
+      ]
+    },
+    {
+      "rule_id": "all-data-classified-confidential-must-be-3da37109",
+      "description": "All data classified 'Confidential' must be encrypted at rest (AES-256).",
+      "bindings": [
+        {
+          "name": "classification",
+          "pattern": "(?P<classification>Confidential)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(classification). classification != 'Confidential'",
+          "on_fail": "Data classified as 'Confidential' must be encrypted at rest using AES-256."
+        }
+      ]
+    },
+    {
+      "rule_id": "api-key-must-be-present-on-each-request--312a3f41",
+      "description": "API key must be present on each request; if missing, block the request.",
+      "bindings": [
+        {
+          "name": "api_key",
+          "pattern": "(?P<api_key>.+)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(api_key). api_key != null && api_key != ''",
+          "on_fail": "API key is missing; request is blocked."
+        }
+      ]
+    },
+    {
+      "rule_id": "key-format-32-hex-chars-optionally-group-55ac335a",
+      "description": "Key format: 32 hex chars, optionally grouped with dashes (8-4-4-4-12).",
+      "bindings": [
+        {
+          "name": "key",
+          "pattern": "(?P<key>[a-fA-F0-9]{8}(-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}|[a-fA-F0-9]{32})",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(key). !key || /^[a-fA-F0-9]{8}(-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$/.test(key) || /^[a-fA-F0-9]{32}$/.test(key)",
+          "on_fail": "Key must be 32 hex characters, optionally grouped with dashes in the format 8-4-4-4-12."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-key-is-flagged-as-revoked-block-the-r-ad7c50ce",
+      "description": "If key is flagged as revoked, block the request.",
+      "bindings": [
+        {
+          "name": "key_status",
+          "pattern": "(?P<key_status>revoked|active|pending)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(key_status). key_status == 'revoked'",
+          "on_fail": "The request is blocked because the key is flagged as revoked."
+        }
+      ]
+    },
+    {
+      "rule_id": "burst-limit-is-120-requests-per-10-secon-7829a118",
+      "description": "Burst limit is 120 requests per 10 seconds (RPS).",
+      "bindings": [
+        {
+          "name": "request_count",
+          "pattern": "(?P<request_count>\\d+)",
+          "type": "number"
+        },
+        {
+          "name": "time_window",
+          "pattern": "(?P<time_window>\\d+)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(request_count, time_window). (!request_count || !time_window || (request_count / time_window) <= 12)",
+          "on_fail": "Request rate exceeds the burst limit of 120 requests per 10 seconds."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-client-has-premium-tier-allow-2000-rp-4faa6f7a",
+      "description": "If client has premium tier, allow 2000 RPM, 400 RPS.",
+      "bindings": [
+        {
+          "name": "tier",
+          "pattern": "(?P<tier>premium|basic|standard)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(tier). tier == 'premium'",
+          "on_fail": "Client does not have premium tier, access limited to lower RPM/RPS."
+        }
+      ]
+    },
+    {
+      "rule_id": "content-type-must-be-application-json-02335540",
+      "description": "Content-type must be application/json.",
+      "bindings": [
+        {
+          "name": "content_type",
+          "pattern": "(?P<content_type>application/json)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(content_type). content_type == 'application/json'",
+          "on_fail": "Content-type must be application/json."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-payload-size-exceeds-512kb-reject-the-8e432c94",
+      "description": "If payload size exceeds 512KB, reject the request.",
+      "bindings": [
+        {
+          "name": "payload_size",
+          "pattern": "(?P<payload_size>\\d+)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(payload_size). payload_size && payload_size <= 512 * 1024",
+          "on_fail": "Payload size exceeds 512KB, request rejected."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-organization-field-is-missing-or-empt-39848590",
+      "description": "If 'organization' field is missing or empty in the payload, reject the request.",
+      "bindings": [
+        {
+          "name": "organization",
+          "pattern": "(?P<organization>.*)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(organization). !organization || organization == ''",
+          "on_fail": "The 'organization' field is required and cannot be empty."
+        }
+      ]
+    },
+    {
+      "rule_id": "true-positives-tp-and-false-positives-fp-7c04bb3a",
+      "description": "True positives (TP) and false positives (FP) must be tracked per category: hate, sexual content, PII.",
+      "bindings": [
+        {
+          "name": "category",
+          "pattern": "(?P<category>hate|sexual content|PII)",
+          "type": "string"
+        },
+        {
+          "name": "true_positives",
+          "pattern": "(?P<true_positives>\\d+)",
+          "type": "number"
+        },
+        {
+          "name": "false_positives",
+          "pattern": "(?P<false_positives>\\d+)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(category, true_positives, false_positives). (category == 'hate' || category == 'sexual content' || category == 'PII') && true_positives >= 0 && false_positives >= 0",
+          "on_fail": "True positives and false positives must be tracked for each category: hate, sexual content, PII, with non-negative values."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-fp-rate-for-a-category-exceeds-5-over-f9a15a2d",
+      "description": "If FP rate for a category exceeds 5% over the last 500 labeled items, lower that category's sensitivity by one step.",
+      "bindings": [
+        {
+          "name": "fp_rate",
+          "pattern": "(?P<fp_rate>\\d+(\\.\\d+)?)",
+          "type": "number"
+        },
+        {
+          "name": "category",
+          "pattern": "(?P<category>\\w+)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(fp_rate, category). fp_rate > 0.05",
+          "on_fail": "The false positive rate for the category does not exceed 5%."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-fn-rate-exceeds-3-for-a-category-over-5c4eb11c",
+      "description": "If FN rate exceeds 3% for a category over the last 500, raise sensitivity by one step.",
+      "bindings": [
+        {
+          "name": "fn_rate",
+          "pattern": "(?P<fn_rate>\\d+(\\.\\d+)?)",
+          "type": "number"
+        },
+        {
+          "name": "category",
+          "pattern": "(?P<category>\\w+)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(fn_rate, category). fn_rate != null && fn_rate > 3",
+          "on_fail": "FN rate exceeds 3% for the category, sensitivity should be raised by one step."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-there-are-fewer-than-100-labeled-item-62009ef3",
+      "description": "If there are fewer than 100 labeled items in window, do not update sensitivity.",
+      "bindings": [
+        {
+          "name": "labeled_items_count",
+          "pattern": "(?P<labeled_items_count>\\d+)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(labeled_items_count). labeled_items_count >= 100",
+          "on_fail": "Fewer than 100 labeled items in window; sensitivity update not allowed."
+        }
+      ]
+    },
+    {
+      "rule_id": "do-not-adjust-more-than-2-steps-within-a-8fcade54",
+      "description": "Do not adjust more than ±2 steps within a 24-hour period.",
+      "bindings": [
+        {
+          "name": "steps_adjusted",
+          "pattern": "(?P<steps_adjusted>[-+]?\\d+)",
+          "type": "number"
+        },
+        {
+          "name": "time_period",
+          "pattern": "(?P<time_period>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2})",
+          "type": "date"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(steps_adjusted, time_period). !steps_adjusted || (steps_adjusted >= -2 && steps_adjusted <= 2)",
+          "on_fail": "Steps adjusted must be within ±2 steps in a 24-hour period."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-any-category-is-set-to-max-sensitivit-3b70e362",
+      "description": "If any category is set to max sensitivity for 24 hours, require human review before further increases.",
+      "bindings": [
+        {
+          "name": "category",
+          "pattern": "(?P<category>\\w+)",
+          "type": "string"
+        },
+        {
+          "name": "sensitivity_level",
+          "pattern": "(?P<sensitivity_level>max)",
+          "type": "string"
+        },
+        {
+          "name": "duration",
+          "pattern": "(?P<duration>24)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(category, sensitivity_level, duration). (!category || !sensitivity_level || !duration) || (sensitivity_level == 'max' && duration == 24)",
+          "on_fail": "Human review required: Category set to max sensitivity for 24 hours."
+        }
+      ]
+    },
+    {
+      "rule_id": "record-timestamp-category-old-sensitivit-03accb19",
+      "description": "Record (timestamp, category, old_sensitivity, new_sensitivity, reason).",
+      "bindings": [
+        {
+          "name": "timestamp",
+          "pattern": "(?P<timestamp>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z)",
+          "type": "date"
+        },
+        {
+          "name": "category",
+          "pattern": "(?P<category>\\w+)",
+          "type": "string"
+        },
+        {
+          "name": "old_sensitivity",
+          "pattern": "(?P<old_sensitivity>\\d+)",
+          "type": "number"
+        },
+        {
+          "name": "new_sensitivity",
+          "pattern": "(?P<new_sensitivity>\\d+)",
+          "type": "number"
+        },
+        {
+          "name": "reason",
+          "pattern": "(?P<reason>.+)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(timestamp, category, old_sensitivity, new_sensitivity, reason). timestamp && category && old_sensitivity != new_sensitivity",
+          "on_fail": "Timestamp, category, and sensitivity levels must be provided, and old and new sensitivity levels must differ."
+        }
+      ]
+    },
+    {
+      "rule_id": "store-reviewer-id-when-human-review-occu-e3d55b48",
+      "description": "Store reviewer ID when human review occurs.",
+      "bindings": [
+        {
+          "name": "reviewer_id",
+          "pattern": "(?P<reviewer_id>\\w+)",
+          "type": "id"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(reviewer_id). reviewer_id != null && reviewer_id != ''",
+          "on_fail": "Reviewer ID must be stored when a human review occurs."
+        }
+      ]
+    },
+    {
+      "rule_id": "block-any-url-that-matches-the-internal--bb4dbc3b",
+      "description": "Block any URL that matches the internal blocklist domain patterns.",
+      "bindings": [
+        {
+          "name": "url",
+          "pattern": "(?P<url>https?://[\\w.-]+)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(url). !url || /blocked-domain\\.com/.test(url)",
+          "on_fail": "The URL matches a blocked domain pattern."
+        }
+      ]
+    },
+    {
+      "rule_id": "block-any-message-containing-any-of-the--89e198ee",
+      "description": "Block any message containing any of the listed restricted terms.",
+      "bindings": [
+        {
+          "name": "message",
+          "pattern": "(?P<message>.+)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(message). !message || !/restricted_term1|restricted_term2|restricted_term3/.test(message)",
+          "on_fail": "Message contains restricted terms."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-both-allowlist-and-blocklist-trigger--a7bdae03",
+      "description": "If both allowlist and blocklist trigger, allowlist wins and log the conflict with rule IDs.",
+      "bindings": [
+        {
+          "name": "allowlist_id",
+          "pattern": "(?P<allowlist_id>\\w+)",
+          "type": "id"
+        },
+        {
+          "name": "blocklist_id",
+          "pattern": "(?P<blocklist_id>\\w+)",
+          "type": "id"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(allowlist_id, blocklist_id). (!allowlist_id && !blocklist_id) || (allowlist_id && !blocklist_id) || (allowlist_id && blocklist_id)",
+          "on_fail": "Conflict detected: both allowlist and blocklist are triggered. Allowlist wins. Rule IDs: allowlist_id = {allowlist_id}, blocklist_id = {blocklist_id}."
+        }
+      ]
+    },
+    {
+      "rule_id": "messages-containing-hate-slurs-must-be-b-379be74b",
+      "description": "Messages containing hate slurs must be blocked immediately.",
+      "bindings": [
+        {
+          "name": "message",
+          "pattern": "(?P<message>.+)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(message). !message || !/\\b(hate_slur1|hate_slur2|hate_slur3)\\b/i.test(message)",
+          "on_fail": "Message contains prohibited hate slurs and must be blocked."
+        }
+      ]
+    },
+    {
+      "rule_id": "sexual-content-directed-at-or-involving--408c9225",
+      "description": "Sexual content directed at or involving minors must be blocked.",
+      "bindings": [
+        {
+          "name": "content",
+          "pattern": "(?P<content>.+)",
+          "type": "string"
+        },
+        {
+          "name": "age",
+          "pattern": "(?P<age>\\d+)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(content, age). !content.toLowerCase().match(/sexual/) || age >= 18",
+          "on_fail": "Sexual content involving minors is not allowed."
+        }
+      ]
+    },
+    {
+      "rule_id": "personally-identifiable-information-pii--4b3ddef6",
+      "description": "Personally identifiable information (PII) disclosures (email, full address, SSN) must be masked or blocked.",
+      "bindings": [
+        {
+          "name": "email",
+          "pattern": "(?P<email>[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6})",
+          "type": "string"
+        },
+        {
+          "name": "full_address",
+          "pattern": "(?P<full_address>\\d+\\s+([a-zA-Z]+|[a-zA-Z]+\\s[a-zA-Z]+)\\s[a-zA-Z]+)",
+          "type": "string"
+        },
+        {
+          "name": "ssn",
+          "pattern": "(?P<ssn>\\d{3}-\\d{2}-\\d{4})",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(email, full_address, ssn). (!email || email.replace(/./g, '*') == email) && (!full_address || full_address.replace(/./g, '*') == full_address) && (!ssn || ssn.replace(/./g, '*') == ssn)",
+          "on_fail": "PII disclosures must be masked or blocked."
+        }
+      ]
+    },
+    {
+      "rule_id": "any-url-must-be-checked-against-the-bloc-a13c767c",
+      "description": "Any URL must be checked against the blocklist; block if matched.",
+      "bindings": [
+        {
+          "name": "url",
+          "pattern": "(?P<url>https?://[\\w.-]+(?:\\.[\\w\\.-]+)+[/\\w\\.-]*)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(url). !url || !/blocked-domain\\.com/.test(url)",
+          "on_fail": "The URL is blocked as it matches the blocklist."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-the-message-is-in-a-language-we-do-no-5deec459",
+      "description": "If the message is in a language we do not support, fallback to default block decision.",
+      "bindings": [
+        {
+          "name": "language",
+          "pattern": "(?P<language>\\w+)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(language). language == 'english' || language == 'spanish' || language == 'french'",
+          "on_fail": "Message language not supported, default block decision applied."
+        }
+      ]
+    },
+    {
+      "rule_id": "per-channel-error-rate-must-remain-below-8f50082b",
+      "description": "Per-channel error rate must remain below 1% over the last 100 messages.",
+      "bindings": [
+        {
+          "name": "error_rate",
+          "pattern": "(?P<error_rate>\\d+\\.\\d+)",
+          "type": "number"
+        },
+        {
+          "name": "message_count",
+          "pattern": "(?P<message_count>\\d+)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(error_rate, message_count). message_count >= 100 && error_rate < 1",
+          "on_fail": "Error rate must be below 1% for the last 100 messages."
+        }
+      ]
+    },
+    {
+      "rule_id": "keep-the-decision-rationale-rule-id-and--fef7d6d4",
+      "description": "Keep the decision rationale (rule ID) and any matched patterns with timestamps.",
+      "bindings": [
+        {
+          "name": "rule_id",
+          "pattern": "(?P<rule_id>\\w+)",
+          "type": "string"
+        },
+        {
+          "name": "timestamp",
+          "pattern": "(?P<timestamp>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z)",
+          "type": "date"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(rule_id, timestamp). rule_id != null && timestamp != null",
+          "on_fail": "Rule ID or timestamp is missing."
+        }
+      ]
+    },
+    {
+      "rule_id": "do-not-log-raw-message-content-when-pii--903c6f9b",
+      "description": "Do not log raw message content when PII masking is triggered; store masked version only.",
+      "bindings": [
+        {
+          "name": "message_content",
+          "pattern": "(?P<message_content>.+)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(message_content). !message_content || !message_content.match(/PII/)",
+          "on_fail": "Raw message content should not be logged when PII is present; ensure it is masked."
+        }
+      ]
+    },
+    {
+      "rule_id": "vendors-must-provide-a-current-soc-2-typ-fbfb52cc",
+      "description": "Vendors must provide a current SOC 2 Type II report or ISO 27001 certification.",
+      "bindings": [
+        {
+          "name": "certification_type",
+          "pattern": "(?P<certification_type>SOC 2 Type II|ISO 27001)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(certification_type). certification_type == 'SOC 2 Type II' || certification_type == 'ISO 27001'",
+          "on_fail": "Vendor must provide a current SOC 2 Type II report or ISO 27001 certification."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-vendor-fails-annual-security-question-501c7b82",
+      "description": "If vendor fails annual security questionnaire, escalate to Security and restrict integrations until remediation.",
+      "bindings": [
+        {
+          "name": "vendor_id",
+          "pattern": "(?P<vendor_id>\\w+)",
+          "type": "id"
+        },
+        {
+          "name": "questionnaire_status",
+          "pattern": "(?P<questionnaire_status>fail|pass)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(vendor_id, questionnaire_status). !vendor_id || questionnaire_status == 'fail'",
+          "on_fail": "Vendor has failed the annual security questionnaire. Escalate to Security and restrict integrations until remediation."
+        }
+      ]
+    },
+    {
+      "rule_id": "on-call-must-acknowledge-alerts-within-5-43532a0f",
+      "description": "On-call must acknowledge alerts within 5 minutes.",
+      "bindings": [
+        {
+          "name": "alert_time",
+          "pattern": "(?P<alert_time>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2})",
+          "type": "date"
+        },
+        {
+          "name": "acknowledge_time",
+          "pattern": "(?P<acknowledge_time>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2})",
+          "type": "date"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(alert_time, acknowledge_time). !alert_time || !acknowledge_time || (parseInt(acknowledge_time.replace(/[-T:]/g, '')) - parseInt(alert_time.replace(/[-T:]/g, '')) <= 500)",
+          "on_fail": "Alert was not acknowledged within 5 minutes."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-p95-latency-for-moderation-300ms-for--5dac75a3",
+      "description": "If p95 latency for moderation > 300ms for 15 minutes, scale up one tier.",
+      "bindings": [
+        {
+          "name": "latency",
+          "pattern": "(?P<latency>\\d+\\.?\\d*)",
+          "type": "number"
+        },
+        {
+          "name": "duration",
+          "pattern": "(?P<duration>\\d+)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(latency, duration). (!latency || !duration) ? false : (latency > 300 && duration >= 15)",
+          "on_fail": "P95 latency for moderation must exceed 300ms for at least 15 minutes to trigger scaling."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-block-decision-rate-40-for-1-hour-spi-e9efb82b",
+      "description": "If block decision rate > 40% for 1 hour, spin up human-in-the-loop queue.",
+      "bindings": [
+        {
+          "name": "block_decision_rate",
+          "pattern": "(?P<block_decision_rate>\\d+(\\.\\d+)?)",
+          "type": "number"
+        },
+        {
+          "name": "duration",
+          "pattern": "(?P<duration>\\d+)",
+          "type": "number"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(block_decision_rate, duration). block_decision_rate > 40 && duration >= 60",
+          "on_fail": "Block decision rate must exceed 40% for at least 1 hour to trigger human-in-the-loop queue."
+        }
+      ]
+    },
+    {
+      "rule_id": "if-a-legal-hold-is-active-disable-automa-77408609",
+      "description": "If a legal hold is active, disable automatic deletion until release is recorded by Legal.",
+      "bindings": [
+        {
+          "name": "legal_hold_status",
+          "pattern": "(?P<legal_hold_status>active|inactive)",
+          "type": "string"
+        },
+        {
+          "name": "release_recorded",
+          "pattern": "(?P<release_recorded>true|false)",
+          "type": "string"
+        }
+      ],
+      "lambdas": [
+        {
+          "lambda": "lambda(legal_hold_status, release_recorded). !(legal_hold_status == 'active' && release_recorded == 'false')",
+          "on_fail": "Automatic deletion is disabled due to an active legal hold without a recorded release."
+        }
+      ]
+    }
+  ]
+}
