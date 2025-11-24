@@ -1,5 +1,7 @@
 # Policy-to-Rule Examples
 
+These examples showcase the new policy-to-rule generation capability for the Inhibitor service. New adopters can see how narrative policy language becomes deterministic DILL rules that the runtime enforces. If you are following the [Inhibitor Application Sprint](../inhibitor-application-sprint.md), this folder sits in the early "define the inhibitions" stage—offering tangible artifacts that bridge policy writing and enforcement.
+
 This folder shows how inhibitor-ready rules are produced from customer policies and what a generated rule set looks like in practice. It is written for technical users who want to understand the lifecycle of policy text → DILL rules → runtime inhibition without needing to inspect internal notebooks.
 
 ## What lives here
