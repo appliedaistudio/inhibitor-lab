@@ -1,26 +1,74 @@
 # Policy-to-Rule Examples
 
-## Purpose of this folder
-This folder contains example policy input documents, an example generated rule document, and a high-level overview of how policy text is transformed into enforceable rules. The materials here illustrate the end-to-end workflow without relying on notebooks or implementation code.
+This folder shows how inhibitor-ready rules are produced from customer policies and what a generated rule set looks like in practice. It is written for technical users who want to understand the lifecycle of policy text → DILL rules → runtime inhibition without needing to inspect internal notebooks.
 
-## Input policy documents
-The files in `input_documents/` are sample policy or requirements documents. They represent the kinds of customer policies from which enforceable rules are extracted, and they serve as the foundation for producing inhibition logic.
+## What lives here
 
-## Output rule document
-The file in `output_rule_document/` is an example rule document used by the inhibitor. It contains:
-- A human-readable rule description
-- A list of inputs ("bindings") that the inhibitor must extract from a request
-- Executable logic ("lambdas") that decide whether to inhibit a request
+- `input_documents/` — sample customer policies (HR, data governance, API usage, vendor risk, etc.).
+- `output_rule_document/` — a single JSON envelope (`examplecorp_general_inhibitor_api_keys.json`) containing the rules derived from the inputs, already packaged in the DILL RuleDocument format the inhibitor consumes.
 
-At runtime, the inhibitor loads these rule documents and evaluates the logic against incoming requests. If a rule evaluates to false, the inhibitor triggers a block with the associated message.
+You can read the inputs to see the original intent and compare them with the emitted rules to understand how the pipeline interprets real-world language.
 
-## Knowledge-to-Rule workflow (high level)
-1. **Document ingestion & normalization** – Input policy text is cleaned and split into manageable chunks.
-2. **Constraint extraction** – An LLM identifies enforceable requirements from the text.
-3. **Binding design** – A second LLM determines which structured inputs (IDs, amounts, dates, etc.) must be extracted from customer requests to evaluate each constraint.
-4. **Rule logic authoring** – A third LLM translates each constraint into boolean rule logic using only a restricted safe subset of operations.
-5. **Gated validation steps** – Invalid constraints are dropped, invalid bindings are dropped, and invalid logic expressions are dropped so only valid rules are carried forward.
-6. **Semantic review using an internal AI validator** – An internal AI semantic checker assesses whether the rule mirrors the original policy, whether the bindings match the text, and whether the logic implements the intended behavior. This step improves accuracy beyond mechanical tests because interpreting policy language requires nuanced understanding.
-7. **Final rule document assembly** – The surviving rules are assembled into a metadata structure the inhibitor can consume.
+## Quick tour of an input → output pairing
 
-These steps collectively ensure that policy language is transformed into reliable, executable rules the inhibitor can enforce.
+A policy clause from `input_documents/hr_policy_background_checks.txt`:
+
+```
+- Background checks must be completed before a start date is assigned.
+- Offer letters may not be sent if the candidate is missing legal name or date of birth (YYYY-MM-DD).
+```
+
+The corresponding generated rule in `output_rule_document/examplecorp_general_inhibitor_api_keys.json`:
+
+```json
+{
+  "rule_id": "background-checks-must-be-completed-befo-54992755",
+  "description": "Background checks must be completed before a start date is assigned.",
+  "bindings": [
+    {"name": "background_check_date", "pattern": "(?P<background_check_date>\\d{4}-\\d{2}-\\d{2})", "type": "date"},
+    {"name": "start_date", "pattern": "(?P<start_date>\\d{4}-\\d{2}-\\d{2})", "type": "date"}
+  ],
+  "lambdas": [
+    {
+      "lambda": "lambda(background_check_date, start_date). !background_check_date || !start_date || background_check_date <= start_date",
+      "on_fail": "Background check must be completed before a start date is assigned."
+    }
+  ]
+}
+```
+
+The description echoes the policy text, bindings show what data the inhibitor extracts, and the lambda expresses the enforcement logic.
+
+## How rule generation works (conceptual)
+
+1. **Collect & normalize policy sources** — ingest customer documents (TXT, Markdown, PDF, DOCX) and normalize text so downstream processing is deterministic.
+2. **Find enforceable constraints** — detect statements that are testable (thresholds, formats, conditional requirements) and drop descriptive or aspirational language.
+3. **Design bindings** — identify the minimum structured inputs needed to check each constraint and propose named regex captures plus semantic types (`string`, `number`, `date`, `id`).
+4. **Author lambdas** — translate each constraint into one or more boolean expressions that mirror the original intent, including clear `on_fail` messages.
+5. **Validate aggressively** — reject malformed bindings or lambdas, ensure capture groups match parameter order, and keep only schema-compliant rules.
+6. **Package for distribution** — assemble validated rules into a DILL envelope under the organization/domain so they can be shipped as metadata (e.g., alongside API keys).
+
+These steps rely on LLM-assisted interpretation for extraction and authoring, plus deterministic validation to ensure only safe, executable logic is emitted. Implementation details are internal; the artifacts here show the expected outcomes.
+
+## How the inhibitor uses these rules
+
+1. **Semantic extraction guided by bindings** — for each rule, the inhibitor presents the input payload and each binding regex to an LLM extractor. The extractor returns best-fit values (not just literal regex matches), producing a map of variable names to strings.
+2. **Validation and preparation** — the runtime confirms that bindings were returned in the right order and that the rule document is structurally valid. Missing bindings are noted but do not automatically fail the rule.
+3. **Deterministic evaluation** — lambdas run in a sandboxed, side-effect-free JavaScript environment. Each lambda returns `true` to pass or `false` to trigger inhibition with its `on_fail` message. Evaluation short-circuits on the first failure.
+4. **Result handling** — if all lambdas pass, the request proceeds. If any lambda fails, the inhibitor responds with the associated message so callers know exactly which policy guardrail was violated.
+
+This model is fast (no vector search), auditable (rules are explicit JSON), and portable across domains because the rule schema is domain-agnostic.
+
+## Working with the examples
+
+- Browse `input_documents/` to see the natural-language policies that drive rule creation, including API usage guidance (rate limits, payload rules), security requirements (PII handling), and trust & safety guardrails (blocklists, moderation thresholds).
+- Open `output_rule_document/examplecorp_general_inhibitor_api_keys.json` to inspect every generated rule. Each entry includes `bindings`, `lambdas`, and a `description`, ready to embed in metadata such as `INHIBITOR_API_KEYS`.
+- Compare inputs to outputs to understand how thresholds, identifiers, and conditional enforcement are encoded. For instance, API-key presence in the input set maps to a simple binding (`api_key`) and a lambda that blocks when it is empty.
+
+## Expectations for your own documents
+
+- Provide policy text that states concrete requirements (formats, limits, dependencies, required identifiers). Clear statements become precise bindings and lambdas.
+- Ambiguous or narrative content is filtered out rather than turned into fragile logic.
+- The resulting DILL envelope is self-contained: it carries rule IDs, human-readable descriptions, extraction hints, and executable checks. Drop it next to an API key or client config, and the inhibitor will enforce it deterministically at runtime.
+
+Use the examples in this folder as a blueprint for how your policies will be translated into enforceable inhibition rules.
