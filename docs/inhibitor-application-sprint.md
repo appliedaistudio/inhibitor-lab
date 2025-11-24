@@ -16,7 +16,7 @@ Every phase is purposeful. You’re not just checking boxes—you’re aligning 
 
 Inhibition isn’t just about blocking. It’s a structural layer that monitors the agent’s reasoning in real time and corrects before harm occurs. This phase captures the ethical, legal, and operational principles that will power that layer.
 
-*Example reference: The early steps in the "Quickstart" notebook illustrate how base-level constraints are expressed and evaluated using the Inhibitor.*
+*Example reference: The early steps in the "Quickstart" notebook illustrate how base-level constraints are expressed and evaluated using the Inhibitor. You can also review the [policy-to-rule examples](./policy-rule-examples/README.md) to see how written policies become enforceable rule documents before runtime integration.*
 
 **Inputs:**
 
