@@ -48,7 +48,7 @@ This repository is designed for developers, researchers, and teams looking to bu
 The Inhibitor service exposes a REST API for ethical evaluation, logging, and oversight.  
 Full details are available here: [docs/inhibitor-api.md](docs/inhibitor-api.md)
 
-👉 You must obtain an **Inhibitor API key** from [appliedAIstudio](https://www.appliedai.studio/) to use the service.
+👉 You must obtain an **Inhibitor API key** from [appliedAIstudio](https://www.appliedai.studio/iaas) to use the service.
 
 ---
 
