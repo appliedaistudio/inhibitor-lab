@@ -1,5 +1,7 @@
 # Inhibitor Application Sprint
 
+[![Inhibitor hero banner](./assets/images/inhibitor-hero.jpg)](https://www.appliedai.studio/iaas)
+
 ---
 
 ## Overview
