@@ -16,6 +16,10 @@ This repository is designed for developers, researchers, and teams looking to bu
 
 The Inhibitor service is engineered to be GDPR-compliant by design through data minimization, single-purpose processing, and stateless operation. Review the full guidance and deployment checklist here: [docs/gdpr-compliance.md](docs/gdpr-compliance.md).
 
+## 🌍 Global Edge Deployment & Geographic Sovereignty
+
+The Inhibitor runs on a distributed edge compute fabric to keep processing close to users, reduce cross-border data movement, and align with regional sovereignty expectations. Read the deployment overview here: [docs/global-edge-deployment.md](docs/global-edge-deployment.md).
+
 ---
 
 ## 🔎 **AI Safety Index (July 2025)**
