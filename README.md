@@ -1,105 +1,68 @@
+[
 ![Inhibitor hero banner](docs/assets/images/inhibitor-hero.jpg)
-
-> In September 2025, [California passed SB-53](https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53), the first law requiring AI safety disclosures from advanced model developers.
-> SB-53 sets real-time safety standards—systems must show how they monitor risk and adjust when things go wrong.
-> 32 of the top 50 AI firms are in California, so this law sets the pace—and other states are already lining up to follow.
+](docs/inhibitor-application-sprint.md)
 
 # inhibitor-lab
-[![GitHub Pre-Release](https://img.shields.io/github/v/release/appliedaistudio/inhibitor-lab?include_prereleases&label=Pre-Release)](https://github.com/appliedaistudio/inhibitor-lab/releases)
 
-
-**inhibitor-lab** is the official open-source project from [appliedAIstudio](https://www.appliedai.studio/) for demonstrating how to integrate and experiment with the Inhibitor service in agent-based systems.
-
-This repository is designed for developers, researchers, and teams looking to build ethical, interruptible, and auditable agents. It includes working examples, live integrations, reference patterns, and technical documentation to support safe and responsible agent development using the Inhibitor.
-
-## 🛡️ GDPR Compliance by Design
-
-The Inhibitor service is engineered to be GDPR-compliant by design through data minimization, single-purpose processing, and stateless operation. Review the full guidance and deployment checklist here: [docs/gdpr-compliance.md](docs/gdpr-compliance.md).
-
-## 🌍 Global Edge Deployment & Geographic Sovereignty
-
-The Inhibitor runs on a distributed edge compute fabric to keep processing close to users, reduce cross-border data movement, and align with regional sovereignty expectations. Read the deployment overview here: [docs/global-edge-deployment.md](docs/global-edge-deployment.md).
+**inhibitor-lab** is the open-source R&D space for integrating the **Inhibitor** into agent-based systems. The audience is AI technologists who need defensible, real-time controls to keep autonomous agents from doing unsafe or wasteful work.
 
 ---
 
-## 🔎 **AI Safety Index (July 2025)**
-> The 2025 *AI Safety Index* exposes a critical industry gap: leading AI companies are rapidly scaling model capabilities **without embedding real-time ethical reasoning**.
-> While most firms perform adequately on transparency and post-hoc governance, **all seven** scored poorly—many failing outright—on:
->
-> - Existential safety (no company scored above a D)
-> - Dangerous capability testing (only 3 of 7 attempted)
-> - Real-time decision safety (none had actionable strategies)
->
-> 🧠 This is where the **Inhibitor** applies: real-time ethical reasoning and interruptibility, by design.
+## Why teams ship with the Inhibitor
 
-📄 **Read the report**:  
-- [Future of Life Institute – Full Report](https://futureoflife.org/ai-safety-index-summer-2025/)  
-- [📎 Local PDF Copy (docs/FLI-AI-Safety-Index-Report-Summer-2025.pdf)](docs/FLI-AI-Safety-Index-Report-Summer-2025.pdf)
+- **Real-time guardrails** for LLM-driven agents, with interruptibility and course correction rather than post-hoc filters.
+- **Audit-ready trails** that explain why actions were blocked, enabling compliance reviews and root-cause analysis.
+- **Deployment agility** via edge-first, stateless design that respects geographic data boundaries and GDPR expectations.
 
-## 🚀 Notebooks
+### Industry signal: AI Safety Index (July 2025)
 
-### Example Notebooks
+Leading AI companies scored **D or worse** on existential safety and lacked real-time decision safeguards. The Inhibitor is designed to close that gap with inline ethical reasoning and actionability.
 
-- **[Quickstart: Inhibitor API](notebooks/quickstart_inhibitor.ipynb)**  
-  Minimal example for connecting to the API, sending inputs, and viewing moderation results.
-
-- **[Adaptive Feedback Agent](notebooks/adaptive_agent_feedback_loops.ipynb)**  
-  Unified agent that performs real-time oversight, critique, and adjustment using LLMs. Replaces older AI security and data handling agents.
-
-- **[Real-Time Moderation Agent](notebooks/realtime_moderation_agent.ipynb)**  
-  Demonstrates performance mode for rapid, inline moderation of streamed inputs.
+References:
+- [Future of Life Institute – Full Report](https://futureoflife.org/ai-safety-index-summer-2025/)
+- [Local PDF Copy](docs/FLI-AI-Safety-Index-Report-Summer-2025.pdf)
 
 ---
 
-## 🔌 API Documentation
+## Core capabilities
 
-The Inhibitor service exposes a REST API for ethical evaluation, logging, and oversight.  
-Full details are available here: [docs/inhibitor-api.md](docs/inhibitor-api.md)
-
-👉 You must obtain an **Inhibitor API key** from [appliedAIstudio](https://www.appliedai.studio/iaas) to use the service.
-
----
-
-## 📜 Regulations
-
-The Inhibitor actively supports detection and oversight across a defined set of regulations.
-The complete list is maintained in a dedicated document: [docs/supported-regulations.md](docs/supported-regulations.md)
-Refer to this document for details on which regulations are covered and how support is implemented.
+- **Insight Mode** – slower, with narrative reasoning for compliance, audits, and debugging.
+- **Performance Mode** – fast, flag-only moderation for real-time agents and high-throughput tasks.
+- **GDPR compliance by design** – data minimization, single-purpose processing, and stateless operation. See [docs/gdpr-compliance.md](docs/gdpr-compliance.md).
+- **Global edge deployment** – compute stays close to users to reduce cross-border movement. See [docs/global-edge-deployment.md](docs/global-edge-deployment.md).
 
 ---
 
-## ⚡ Insight vs Performance Modes
+## Quickstart (developers)
 
-The Inhibitor provides two modes of operation:
-
-- **Insight Mode**  
-  Slower but provides detailed reasoning for why outputs are flagged.  
-  Best for compliance, audits, and debugging.  
-
-- **Performance Mode**  
-  Fast, minimal feedback (flag only).  
-  Best for real-time agents, moderation, or high-throughput use.  
-
----
-
-## 📂 Repository Structure
-
-- `notebooks/` → Interactive Jupyter notebooks demonstrating different agent scenarios
-- `examples/` → Lightweight code samples for quick integration
-- `docs/` → Technical documentation and integration guides
-- `benchmarks/` → Performance and latency tracking results
+1. **Get an API key** from [appliedAIstudio](https://www.appliedai.studio/iaas).
+2. **Review the REST API**: [docs/inhibitor-api.md](docs/inhibitor-api.md).
+3. **Run an example notebook** (pick one):
+   - [Quickstart: Inhibitor API](notebooks/quickstart_inhibitor.ipynb)
+   - [Adaptive Feedback Agent](notebooks/adaptive_agent_feedback_loops.ipynb)
+   - [Real-Time Moderation Agent](notebooks/realtime_moderation_agent.ipynb)
+4. **Layer the Inhibitor into your agent loop** (oversight, critique, and action correction).
+5. **Stress-test and monitor** using the [Inhibitor Application Sprint](docs/inhibitor-application-sprint.md).
 
 ---
 
-## Getting Started
+## Compliance and regulation coverage
 
-1. Clone this repo
-2. Open notebooks or examples
-3. Follow documentation in `/docs` to start integrating
+The Inhibitor tracks and surfaces violations across a maintained set of regulations. See [docs/supported-regulations.md](docs/supported-regulations.md) for the latest mappings.
 
-### 🧭 Plan Your Build Sprint
+---
 
-If you are preparing to integrate the Inhibitor into a new agent, walk through the [Inhibitor Application Sprint](docs/inhibitor-application-sprint.md). It provides a phase-by-phase guide for defining inhibitions, building reflective loops, activating the Inhibitor, stress-testing your agent, and launching with ongoing oversight.
+## Repository map
 
-> **Note:** The Inhibitor service is developed by [appliedAIstudio](https://www.appliedai.studio/).
+- `notebooks/` – interactive scenarios showing oversight and moderation patterns.
+- `examples/` – lightweight code snippets for quick integration.
+- `docs/` – API reference, deployment guidance, and governance resources.
+- `benchmarks/` – latency and performance tracking.
+
+---
+
+## Build with confidence
+
+- Walk the full implementation playbook: [Inhibitor Application Sprint](docs/inhibitor-application-sprint.md).
+- Need help or an enterprise key? Visit [appliedAIstudio](https://www.appliedai.studio/).
 
