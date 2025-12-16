@@ -2,6 +2,8 @@
 
 This reference explains how the Inhibitor processes agent reasoning and injects domain-specific knowledge via custom rules and inference data. It is designed to be discoverable from the main repository README for anyone integrating the Inhibitor into their agent loops.
 
+For a visual walkthrough, the [Inhibitor Demo](https://iaas-demo.replit.app/) shows the oversight loop in motion: the left panel pairs user prompts with the final, safety-aware reply, while the right panel exposes the reasoning chain, alerts, and course corrections as they fire.
+
 ---
 
 ## 🧠 Inside the Inhibitor: How a Thought Becomes a Decision
