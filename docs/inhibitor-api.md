@@ -2,6 +2,8 @@
 
 The Inhibitor service provides a REST API for evaluating agent outputs, monitoring logs, and ensuring ethical reasoning in real time.
 
+If you want to see the API concepts mapped to a real interaction flow, the [Inhibitor Demo](https://iaas-demo.replit.app/) streams example prompts alongside the internal reasoning chain, so you can spot how verdicts, alerts, and mitigations line up with the responses users receive.
+
 ⚠️ **Note**: To use the API, you must have an **Inhibitor API key** issued by [appliedAIstudio](https://www.appliedai.studio/). Include it in all requests with the header:
 
 ```

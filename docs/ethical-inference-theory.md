@@ -6,6 +6,8 @@ This document provides a high-level overview of the ideas behind the framework, 
 
 At its core, the approach is about helping a system make sense of complex, messy, or ambiguous situations. The underlying **model** here refers to the conceptual representation of knowledge that underlies inhibition: a structured way of describing **concepts**, how they relate to one another, and how they influence interpretations of real-world input. This conceptual **model** is what underlies inhibition. It provides the foundation on which the system interprets and balances competing signals, even when information is incomplete or uncertain.
 
+If you want to see these ideas expressed in a running system, open the [Inhibitor Demo](https://iaas-demo.replit.app/). The scenarios show how the conceptual model surfaces risks, fires warnings, and shapes the agent’s outward response as the internal reasoning evolves.
+
 ---
 
 ## 1. Understanding Through **Uncertainty**

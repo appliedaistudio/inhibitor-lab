@@ -31,6 +31,7 @@ References:
 - **GDPR compliance by design** – data minimization, single-purpose processing, and stateless operation. See [docs/gdpr-compliance.md](docs/gdpr-compliance.md).
 - **Global edge deployment** – compute stays close to users to reduce cross-border movement. See [docs/global-edge-deployment.md](docs/global-edge-deployment.md).
 - **Explained oversight** – see [docs/inhibitor-inside.md](docs/inhibitor-inside.md) for a narrative on how the Inhibitor converts agent thoughts into structured, ethical decisions.
+- **See it live** – explore the [Inhibitor Demo](https://iaas-demo.replit.app/) to watch how risky prompts are detected, interventions fire, and responses get redirected in real time.
 
 ---
 
