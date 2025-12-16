@@ -30,6 +30,7 @@ References:
 - **Performance Mode** – fast, flag-only moderation for real-time agents and high-throughput tasks.
 - **GDPR compliance by design** – data minimization, single-purpose processing, and stateless operation. See [docs/gdpr-compliance.md](docs/gdpr-compliance.md).
 - **Global edge deployment** – compute stays close to users to reduce cross-border movement. See [docs/global-edge-deployment.md](docs/global-edge-deployment.md).
+- **Explained oversight** – see [docs/inhibitor-inside.md](docs/inhibitor-inside.md) for a narrative on how the Inhibitor converts agent thoughts into structured, ethical decisions.
 
 ---
 
