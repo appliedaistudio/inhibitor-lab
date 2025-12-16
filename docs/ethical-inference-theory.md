@@ -83,3 +83,9 @@ This kind of reasoning system is designed for environments where information is 
 By structuring reasoning in this way, the system can simulate careful consideration without overclaiming certainty. It produces structured outputs that can be explained, examined, and challenged, which is essential when dealing with complex real-world situations.
 
 ---
+
+## Navigation
+
+- Translate this theory into practice with the [Inside the Inhibitor walkthrough](./inhibitor-inside.md) and the iterative [ROA pattern](./roa-pattern.md).
+- Follow the [Inhibitor Application Sprint](./inhibitor-application-sprint.md) to see where these concepts guide design decisions, then test them through the [Inhibitor API](./inhibitor-api.md).
+- Map ethical themes to real-world controls by reviewing [supported regulations](./supported-regulations.md), [GDPR compliance](./gdpr-compliance.md), and [global edge deployment](./global-edge-deployment.md).

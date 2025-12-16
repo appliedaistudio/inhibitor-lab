@@ -74,3 +74,12 @@ This model is fast (no vector search), auditable (rules are explicit JSON), and 
 - The resulting DILL envelope is self-contained: it carries rule IDs, human-readable descriptions, extraction hints, and executable checks. Drop it next to an API key or client config, and the inhibitor will enforce it deterministically at runtime.
 
 Use the examples in this folder as a blueprint for how your policies will be translated into enforceable inhibition rules.
+
+---
+
+## Navigate the examples
+
+- Follow the full build flow in the [Inhibitor Application Sprint](../inhibitor-application-sprint.md) and wire these artifacts into the [Inhibitor API](../inhibitor-api.md).
+- See how the rules interact with the oversight loop in [Inside the Inhibitor](../inhibitor-inside.md) and the [ROA pattern](../roa-pattern.md).
+- Align rule intent with governance guidance in [GDPR compliance](../gdpr-compliance.md), [global edge deployment](../global-edge-deployment.md), and the list of [supported regulations](../supported-regulations.md).
+- Track documentation updates that mention these examples in [Release Notes 1.1](../release-notes-1.1.md) and tie them back to the broader [ethical inference theory](../ethical-inference-theory.md).

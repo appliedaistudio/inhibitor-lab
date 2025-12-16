@@ -99,4 +99,11 @@ This isn’t just a handoff. It’s a release with eyes wide open. The agent ent
 * A reusable method for building responsible, auditable AI
 * A shared language for turning policies into code—and code into behavior
 
+## Keep exploring
+
+- **See the loop in motion:** Pair this sprint with the [ROA pattern reference](./roa-pattern.md) and the deeper [Inside the Inhibitor](./inhibitor-inside.md) narrative.
+- **Connect policy to code:** Use the [policy-to-rule examples](./policy-rule-examples/README.md) and [Inhibitor API](./inhibitor-api.md) to wire enforcement into your build.
+- **Audit and compliance:** Cross-check deployments with [GDPR guidance](./gdpr-compliance.md), [global edge deployment](./global-edge-deployment.md), and the latest [supported regulations](./supported-regulations.md).
+- **Stay current:** Review [Release Notes 1.1](./release-notes-1.1.md) for changes to onboarding, demos, and the supporting documentation.
+
 ---

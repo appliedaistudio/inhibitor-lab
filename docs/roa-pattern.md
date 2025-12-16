@@ -145,3 +145,9 @@ async function runAgent(prompt) {
 ```
 
 ---
+
+## Navigate the pattern
+
+- See this loop executed in the [example notebooks](../notebooks/quickstart_inhibitor.ipynb) and the [Inside the Inhibitor](./inhibitor-inside.md) walkthrough.
+- Use the [Inhibitor Application Sprint](./inhibitor-application-sprint.md) to wire ROA into your build, then connect rules from the [policy-to-rule examples](./policy-rule-examples/README.md) through the [Inhibitor API](./inhibitor-api.md).
+- Align the loop with compliance guidance in [GDPR compliance](./gdpr-compliance.md), [global edge deployment](./global-edge-deployment.md), and [supported regulations](./supported-regulations.md).
