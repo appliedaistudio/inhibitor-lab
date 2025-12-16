@@ -10,6 +10,8 @@ This is a build sprint—a focused, collaborative method for bringing an Inhibit
 
 Every phase is purposeful. You’re not just checking boxes—you’re aligning design with conscience, translating policy into action, and watching how your agent thinks. This is where responsible AI stops being theory and starts working in practice.
 
+For a deeper look at how the Inhibitor evaluates and shapes reasoning, review the [Inside the Inhibitor reference](./inhibitor-inside.md).
+
 ---
 
 ## Phase 1: Define the Inhibitions
