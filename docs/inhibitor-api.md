@@ -142,3 +142,10 @@ print(response.json())
 * Use **performance mode** in production for low-latency, high-volume use.
 * Always **request an API key** from [appliedAIstudio](https://www.appliedai.studio/) before use.
 
+## 🔗 Explore next
+
+- Map requests and responses back to the live [Inhibitor Demo](https://iaas-demo.replit.app/) and the walkthrough in [Inside the Inhibitor](./inhibitor-inside.md).
+- Follow the build sequence in the [Inhibitor Application Sprint](./inhibitor-application-sprint.md) and its [policy-to-rule examples](./policy-rule-examples/README.md) to see how rules surface in `/check` responses.
+- Align deployments with [GDPR compliance](./gdpr-compliance.md), [global edge placement](./global-edge-deployment.md), and the broader [supported regulations](./supported-regulations.md).
+- See how this reference evolved in [Release Notes 1.1](./release-notes-1.1.md) and pair it with the [ROA pattern](./roa-pattern.md) used in the example notebooks.
+

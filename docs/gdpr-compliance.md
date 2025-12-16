@@ -54,3 +54,12 @@ Even with a privacy-preserving core, GDPR risks re-enter if:
 - [ ] User-facing disclosures explain the Inhibitor’s role in automated decisions.
 
 By following these practices, teams can deploy the Inhibitor with confidence that its privacy-by-design architecture supports GDPR compliance when paired with responsible governance.
+
+---
+
+## Explore related guidance
+
+- Pair this checklist with [global edge deployment](./global-edge-deployment.md) to keep processing local to users.
+- Review the [supported regulations](./supported-regulations.md) that sit alongside GDPR in the Inhibitor’s enforcement scope.
+- See how policy inputs become runtime controls in the [policy-to-rule examples](./policy-rule-examples/README.md) and [Inhibitor Application Sprint](./inhibitor-application-sprint.md).
+- Validate request flows against the [Inhibitor API](./inhibitor-api.md) and the oversight loop described in [Inside the Inhibitor](./inhibitor-inside.md).

@@ -23,3 +23,11 @@ Version 1.1 sharpens how AI technologists discover, evaluate, and observe the In
 - Expand demo scenarios to cover additional compliance domains and recovery paths.
 - Add more pre-wired quickstart recipes so teams can pair the decision flow with their agent frameworks in minutes.
 - Deepen observability around live interventions to pair demo visuals with telemetry teams can ship to their monitoring stacks.
+
+---
+
+## Cross-references
+
+- Dive into the refreshed [README](../README.md) and [Inhibitor Application Sprint](./inhibitor-application-sprint.md) that this release highlights.
+- Pair the new [Inside the Inhibitor](./inhibitor-inside.md) narrative with the [ROA pattern](./roa-pattern.md) and the [Inhibitor API](./inhibitor-api.md) to see how changes land in practice.
+- Connect compliance threads across [GDPR guidance](./gdpr-compliance.md), [global edge deployment](./global-edge-deployment.md), [supported regulations](./supported-regulations.md), and the [policy-to-rule examples](./policy-rule-examples/README.md).

@@ -38,3 +38,12 @@
 - The service is geographically distributed by default, keeping processing near users to reduce latency and unnecessary data movement.
 - Region-aware controls allow teams to meet sovereignty commitments and GDPR expectations when processing personal or regulated data.
 - Combined with privacy-by-design practices, this edge deployment model provides a defensible foundation for compliance and performance.
+
+---
+
+## Follow-on reading
+
+- Align with the privacy posture in [GDPR compliance](./gdpr-compliance.md) and the enforcement scope in [supported regulations](./supported-regulations.md).
+- See how the edge model supports oversight loops in the [Inhibitor Application Sprint](./inhibitor-application-sprint.md) and [Inside the Inhibitor](./inhibitor-inside.md).
+- Connect deployment decisions to the [Inhibitor API](./inhibitor-api.md) behaviors and the [ROA pattern](./roa-pattern.md) used in notebooks.
+- Track documentation and onboarding changes in [Release Notes 1.1](./release-notes-1.1.md).
