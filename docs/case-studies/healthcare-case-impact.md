@@ -1,4 +1,4 @@
-**Cutting AI Errors in Healthcare Operations**
+# Healthcare Case Impact: Cutting AI Errors in Operations
 
 In a recent deployment with a healthcare operations client, our inhibition layer dramatically improved both accuracy and efficiency:
 
@@ -12,7 +12,7 @@ The system flags risky fields in real time, with confidence scores and traceable
 
 ---
 
-**Business Impact 1: Reduced Review Time**
+## Business Impact 1: Reduced Review Time
 
 Before inhibition, review processes relied heavily on manual validation. Each field had to be checked for formatting, presence, and cross-field consistency. Inhibitor logic now catches formatting issues, missing fields, and misalignments at the point of inference.
 
@@ -42,7 +42,7 @@ By resolving these gaps on the fly, the system removes entire classes of delay. 
 
 ---
 
-**Business Impact 2: Fewer Critical Errors**
+## Business Impact 2: Fewer Critical Errors
 
 In regulated workflows, certain errors trigger full case rejection. The inhibitor prevents these by enforcing schema alignment and field consistency early.
 
@@ -72,7 +72,7 @@ Without this type of data-type enforcement, downstream systems would reject or m
 
 ---
 
-**Business Impact 3: Increased Auditability**
+## Business Impact 3: Increased Auditability
 
 To pass external audits, every field needs to have an origin, justification, and verifiable transformation history. The inhibitor enables this by embedding structured explanations into every modification.
 
@@ -102,11 +102,10 @@ When adjustment flows are transparent and justified in-line, audit teams can ver
 
 ---
 
-**Why Adjustment Flows Matter**
+## Why Adjustment Flows Matter
 
 Adjustment flows are not just technical patches—they represent the inhibitor's capacity to reason through schema logic and data gaps. Every intervention is scored, documented, and applied before the result is finalized. This architecture turns post-hoc cleanup into real-time correction, shifting the entire quality curve left.
 
 That shift is the reason we saw material drops in review time and critical errors—and why trust in the data output increased.
 
 This is not just AI that acts. It’s AI that knows when to adjust.
-
