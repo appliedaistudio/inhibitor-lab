@@ -104,6 +104,7 @@ This isn’t just a handoff. It’s a release with eyes wide open. The agent ent
 - **See the loop in motion:** Pair this sprint with the [ROA pattern reference](./roa-pattern.md) and the deeper [Inside the Inhibitor](./inhibitor-inside.md) narrative.
 - **Connect policy to code:** Use the [policy-to-rule examples](./policy-rule-examples/README.md) and [Inhibitor API](./inhibitor-api.md) to wire enforcement into your build.
 - **Audit and compliance:** Cross-check deployments with [GDPR guidance](./gdpr-compliance.md), [global edge deployment](./global-edge-deployment.md), and the latest [supported regulations](./supported-regulations.md).
+- **See outcomes in the field:** Review the [healthcare case impact report](./case-studies/healthcare-case-impact.md) to see how inhibition reduced review time, critical errors, and audit friction in production.
 - **Stay current:** Review [Release Notes 1.1](./release-notes-1.1.md) for changes to onboarding, demos, and the supporting documentation.
 
 ---
