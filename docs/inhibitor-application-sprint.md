@@ -14,6 +14,8 @@ Want to orient stakeholders quickly? Point them to the [Inhibitor Demo](https://
 
 For a deeper look at how the Inhibitor evaluates and shapes reasoning, review the [Inside the Inhibitor reference](./inhibitor-inside.md).
 
+If you want a domain-agnostic sequence for rolling the Inhibitor into a system, review the [typical adoption progression](./inhibitor-progression.md) alongside this sprint.
+
 ---
 
 ## Phase 1: Define the Inhibitions
