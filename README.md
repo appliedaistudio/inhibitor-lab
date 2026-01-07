@@ -64,6 +64,7 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 ### Documentation trails
 
 - **Implementation flow** – Start with the [Inhibitor Application Sprint](docs/inhibitor-application-sprint.md), then dive into the [Reason-Observe-Adjust pattern](docs/roa-pattern.md) and the [Inside the Inhibitor](docs/inhibitor-inside.md) narrative to see how the oversight loop runs.
+- **Adoption progression** – Follow the [typical Inhibitor adoption progression](docs/inhibitor-progression.md) to sequence confidence calibration, schema hardening, error prevention, and auditability.
 - **Case studies** – See how the inhibitor performs in production with the [healthcare case impact report](docs/case-studies/healthcare-case-impact.md).
 - **Policy to runtime** – Trace how written policies become DILL rules in the [policy-to-rule examples](docs/policy-rule-examples/README.md), then compare enforcement outcomes in the [API reference](docs/inhibitor-api.md) and [supported regulations](docs/supported-regulations.md).
 - **Governance and compliance** – Pair [GDPR guidance](docs/gdpr-compliance.md) with [global edge deployment](docs/global-edge-deployment.md) and zoom out to the [ethical inference theory](docs/ethical-inference-theory.md) that underpins the system.
@@ -75,4 +76,3 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 
 - Walk the full implementation playbook: [Inhibitor Application Sprint](docs/inhibitor-application-sprint.md).
 - Need help or an enterprise key? Visit [appliedAIstudio](https://www.appliedai.studio/).
-
