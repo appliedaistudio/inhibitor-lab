@@ -60,6 +60,14 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 - `examples/` – lightweight code snippets for quick integration.
 - `docs/` – API reference, deployment guidance, and governance resources.
 - `benchmarks/` – latency and performance tracking.
+- `stress_benchmarks/` – stress benchmark notebooks plus progressive load and semantic-context result sets.
+
+### Stress benchmark results
+
+The stress benchmarks complement the latency benchmarks by exercising the Inhibitor under heavier load and longer-context prompts.
+
+- **Progressive load results** – multi-scenario, high-concurrency runs that stress throughput and latency as user counts scale. See the latest report in [`stress_benchmarks/progressive_load_results/v1.21.0/README.md`](stress_benchmarks/progressive_load_results/v1.21.0/README.md).
+- **Semantic context results** – low-concurrency runs that validate detection quality across long, semantically rich prompts and large context windows. See the latest report in [`stress_benchmarks/semantic_context_results/v1.21.0/README.md`](stress_benchmarks/semantic_context_results/v1.21.0/README.md).
 
 ### Documentation trails
 
@@ -68,7 +76,7 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 - **Case studies** – See how the inhibitor performs in production with the [healthcare case impact report](docs/case-studies/healthcare-case-impact.md).
 - **Policy to runtime** – Trace how written policies become DILL rules in the [policy-to-rule examples](docs/policy-rule-examples/README.md), then compare enforcement outcomes in the [API reference](docs/inhibitor-api.md) and [supported regulations](docs/supported-regulations.md).
 - **Governance and compliance** – Pair [GDPR guidance](docs/gdpr-compliance.md) with [global edge deployment](docs/global-edge-deployment.md) and zoom out to the [ethical inference theory](docs/ethical-inference-theory.md) that underpins the system.
-- **Change history** – Review [release notes 1.1](docs/release-notes-1.1.md) to see how the docs and onboarding pathways evolved.
+- **Change history** – Review [release notes 1.2](docs/release-notes-1.2.md) for the latest documentation and benchmark updates, or [release notes 1.1](docs/release-notes-1.1.md) for earlier onboarding improvements.
 
 ---
 
