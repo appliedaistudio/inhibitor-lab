@@ -61,6 +61,12 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 - `docs/` – API reference, deployment guidance, and governance resources.
 - `benchmarks/` – latency and performance tracking.
 - `stress_benchmarks/` – stress benchmark notebooks plus progressive load and semantic-context result sets.
+- `codefest/` – Philly Codefest OpenBuild challenge kits, starter notebooks, shared logs, and team operations docs.
+
+### Philly Codefest OpenBuild kit
+
+- Start here: [`codefest/README.md`](codefest/README.md)
+- Team operations: [`codefest/TEAM_MANAGEMENT.md`](codefest/TEAM_MANAGEMENT.md)
 
 ### Stress benchmark results
 
