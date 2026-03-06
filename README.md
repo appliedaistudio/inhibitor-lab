@@ -8,6 +8,13 @@
 
 ---
 
+## Philly Codefest OpenBuild kit
+
+- Start here: [`codefest/README.md`](codefest/README.md)
+- Team operations: [`codefest/TEAM_MANAGEMENT.md`](codefest/TEAM_MANAGEMENT.md)
+
+---
+
 ## Why teams ship with the Inhibitor
 
 - **Real-time guardrails** for LLM-driven agents, with interruptibility and course correction rather than post-hoc filters.
@@ -62,11 +69,6 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 - `benchmarks/` – latency and performance tracking.
 - `stress_benchmarks/` – stress benchmark notebooks plus progressive load and semantic-context result sets.
 - `codefest/` – Philly Codefest OpenBuild challenge kits, starter notebooks, shared logs, and team operations docs.
-
-### Philly Codefest OpenBuild kit
-
-- Start here: [`codefest/README.md`](codefest/README.md)
-- Team operations: [`codefest/TEAM_MANAGEMENT.md`](codefest/TEAM_MANAGEMENT.md)
 
 ### Stress benchmark results
 
