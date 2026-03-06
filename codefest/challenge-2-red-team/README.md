@@ -12,7 +12,7 @@ Your team will:
 
 ## Folder contents
 
-- `starter_agent_red_team.ipynb` - optional starter notebook for this challenge
+- `starter_agent_red_team.ipynb` - optional starter agent for this challenge
 - `codefest/team-workspaces/<your-team>/` - your team submission folder for attack code, logs, and findings
 
 ## Staff-supported steps
