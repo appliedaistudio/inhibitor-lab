@@ -6,33 +6,36 @@ Build an attack-oriented agent that tries to bypass the Inhibitor, then document
 
 Your team will:
 
-1. Start from the provided notebook agent
-2. Implement attack attempts (prompt injection, obfuscation, role confusion, etc.)
+1. Build an attack agent (you may start from the provided starter notebook)
+2. Use the agent to run attacks on your Inhibitor service (prompt injection, obfuscation, role confusion, etc.)
 3. Record outcomes so the results can be used for defensive patches
 
 ## Folder contents
 
-- `starter_agent_red_team.ipynb` - starter notebook for this challenge
-- `submissions/` - optional place for interim notes before check-in
+- `starter_agent_red_team.ipynb` - optional starter notebook for this challenge
+- `codefest/team-workspaces/<your-team>/` - your team submission folder for attack code, logs, and findings
 
 ## Staff-supported steps
 
-- Attack framing support: staff red/blue mentor helps scope realistic attack patterns.
-- Triage support: staff safety lead helps classify exploit severity.
-- Merge support: staff integration lead helps standardize benchmark-ready outputs.
+- Technical support: staff can answer technical questions during setup, testing, and debugging
+- API key support: staff will provide the Inhibitor API key
 
 ## Basic workflow
 
-1. Extend the starter agent with adversarial scenarios
-2. Run controlled tests and capture outcomes
-3. Identify successful bypasses and explain why they worked
-4. Prepare clean, reproducible notes for handoff
+1. Build your red-team agent (or adapt the provided starter)
+2. Run controlled attacks against your Inhibitor service
+3. Capture and organize outcomes in your team folder under `codefest/team-workspaces/`
+4. Identify successful and unsuccessful attack patterns
+5. Prepare reproducible submission notes for handoff
 
 ## Submission requirements
 
-- Updated notebook with attack agent logic and outcomes
+- Agent code or notebook with attack logic and outcomes
 - A short summary of successful and unsuccessful attack patterns
-- Reproduction steps for the strongest finding
+- Reproduction steps for your strongest finding
+- Submissions placed in your team folder under `codefest/team-workspaces/`
+
+Teams may use the provided starter assets or any other agent framework/notebook they prefer.
 
 ## Scoring rubric (100 points)
 
