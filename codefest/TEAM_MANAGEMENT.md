@@ -11,7 +11,7 @@ Use this guide to run teams safely in one shared project while keeping work priv
 
 - Create that team's folder in `codefest/team-workspaces/` if it does not exist yet.
 - Add a team `README.md` in that folder when missing.
-- Provide Inhibitor API key to the team.
+- Provide an Inhibitor API key to the team.
 - Confirm each team can run their chosen tooling (starter notebook or alternate stack).
 
 ## 3) GitHub workflow
