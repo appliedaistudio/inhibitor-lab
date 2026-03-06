@@ -14,6 +14,8 @@ Example structure:
 
 A starter file is available at `team-workspaces/team-template/README.md`.
 
+Team projects are expected to include AI agents where relevant to the challenge. Teams may use provided starter agents or any agent framework they prefer.
+
 If a team folder does not already contain a `README.md`, create one with:
 
 - Team name and members
@@ -44,4 +46,4 @@ When third-party assets or libraries are included, teams should also document:
 
 ## Staff note
 
-During team onboarding, staff should create the team folder immediately so teams have a known place to stage and submit their work.
+During team onboarding, staff should create the team folder immediately so teams have a known place to stage and submit their work. If needed, staff can provide teams with an OpenAI API key for agent development workflows.

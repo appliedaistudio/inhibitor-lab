@@ -2,7 +2,7 @@
 
 ## Mission
 
-Use real policy documents to improve the safety behavior of your team agent.
+Use real policy documents to improve the safety behavior of your team agent. This challenge requires teams to build and run AI agents; you may start from the provided starter notebook or use your own agent stack.
 
 Your team will:
 
@@ -23,6 +23,7 @@ Your team will:
 - Rule linking support: staff can link generated rules to your team Inhibitor service
 - Technical support: staff can answer technical questions that come up during implementation
 - API key support: staff will provide the Inhibitor API key
+- OpenAI API key support: if needed, staff can provide an OpenAI API key for agent development
 
 ## Basic workflow
 

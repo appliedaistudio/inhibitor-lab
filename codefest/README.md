@@ -14,6 +14,10 @@ This folder is the event workspace for the 3 Codefest challenges. Teams build in
 
 A shared `team-workspaces/` area is available in this repository. Staff should create one folder per team (if missing), and each team should place their submission code and docs in their own folder. See the [Team workspaces guide](team-workspaces/README.md) for required README, license, and attribution details.
 
+## Agent expectation
+
+All challenge projects are expected to use AI agents as part of the build and testing workflow. Starter agent notebooks are provided in relevant challenge folders, but teams may use any agent framework or implementation approach they prefer.
+
 ## Shared scoring rubric
 
 Each challenge is scored out of 100 using the same baseline rubric:
@@ -27,4 +31,4 @@ Challenge-specific scoring details are repeated in each challenge README.
 
 ## Staff support model
 
-Staff will be available for technical support, to answer questions about this material, and to help teams get submissions merged.
+Staff will be available for technical support, to answer questions about this material, and to help teams get submissions merged. If needed, staff can also provide an OpenAI API key for teams to use with their agents.
