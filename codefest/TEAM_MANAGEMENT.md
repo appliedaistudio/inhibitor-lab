@@ -8,9 +8,18 @@ Use this guide to run teams safely in one shared project while keeping work priv
 - Each team works in a private fork or private mirror repository.
 - Teams only open a PR (or submit a patch bundle) during official merge windows.
 
+## 1.5) Shared team workspace in this repo
+
+- Keep all team folders under `codefest/team-workspaces/`.
+- Use one folder per team (for example `team-alpha`).
+- If a team `README.md` is missing, create it and include run instructions plus attribution.
+- Require license/copyright notices for each team submission (MIT-compatible).
+
 ## 2) Team setup checklist (staff)
 
 - Create a private team repo from the starter template.
+- Create that team's folder in `codefest/team-workspaces/` if it does not exist yet.
+- Add a team `README.md` in that folder when missing.
 - Add all team members with write access to that team repo.
 - Add at least one staff mentor with maintainer access.
 - Provide API key onboarding instructions.
@@ -36,7 +45,7 @@ Every team submission should include:
 - Code and any required configs
 - A short README with run instructions
 - Notes describing team decisions and assumptions
-- License/attribution confirmation for contributed content
+- License/attribution confirmation for contributed content (include copyright + SPDX identifier)
 
 ## 6) Staff support points
 

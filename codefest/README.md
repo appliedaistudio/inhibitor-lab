@@ -8,6 +8,11 @@ This folder is the event workspace for the 3 Codefest challenges. Teams build in
 - [Challenge 2: Red Team Gauntlet](challenge-2-red-team/README.md)
 - [Challenge 3: Glass Box Dashboard](challenge-3-glass-box/README.md)
 - [Team management guide](TEAM_MANAGEMENT.md)
+- [Team workspaces](team-workspaces/README.md)
+
+## Team workspace area
+
+A shared `team-workspaces/` area is available in this repository. Staff should create one folder per team (if missing), and each team should place their submission code and docs in their own folder. See the [Team workspaces guide](team-workspaces/README.md) for required README, license, and attribution details.
 
 ## Shared scoring rubric
 
