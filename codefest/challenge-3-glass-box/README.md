@@ -11,7 +11,7 @@ Do **not** modify files in `sample_logs/`. These logs are intentionally identica
 ## Folder contents
 
 - `sample_logs/set_a/` - fixed sample logs
-- `sample_logs/set_b/` - same fixed sample logs for parity checks
+- `sample_logs/set_b/` - fixed sample logs
 - `codefest/team-workspaces/<your-team>/` - your team submission folder for dashboard code, visuals, and presentation materials
 
 ## Staff-supported steps
