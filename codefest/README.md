@@ -27,9 +27,4 @@ Challenge-specific scoring details are repeated in each challenge README.
 
 ## Staff support model
 
-Staff provide active support at key steps:
-
-- Kickoff support: architecture and challenge Q&A
-- Mid-build support: policy interpretation, red/blue triage, or UI/data contract help
-- Merge support: pull request review and integration assistance
-- Demo support: final story stitching for the combined Sunday demo
+Staff will be available for technical support, to answer questions about this material, and to help teams get submissions merged.

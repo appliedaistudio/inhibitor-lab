@@ -1,61 +1,37 @@
 # Team Management Guide for Codefest
 
-Use this guide to run teams safely in one shared project while keeping work private until check-in.
+Use this guide to run teams safely in one shared project while keeping work private until the final merge window.
 
 ## 1) Repository model
 
 - Staff maintain the main `inhibitor-lab` repository.
-- Each team works in a private fork or private mirror repository.
-- Teams only open a PR (or submit a patch bundle) during official merge windows.
-
-## 1.5) Shared team workspace in this repo
-
-- Keep all team folders under `codefest/team-workspaces/`.
-- Use one folder per team (for example `team-alpha`).
-- If a team `README.md` is missing, create it and include run instructions plus attribution.
-- Require license/copyright notices for each team submission (MIT-compatible).
+- Teams submit their challenge work to `codefest/team-workspaces/`.
+- Keep team work private during build time and merge all team submissions in the final merge window.
 
 ## 2) Team setup checklist (staff)
 
-- Create a private team repo from the starter template.
 - Create that team's folder in `codefest/team-workspaces/` if it does not exist yet.
 - Add a team `README.md` in that folder when missing.
-- Add all team members with write access to that team repo.
-- Add at least one staff mentor with maintainer access.
 - Provide API key onboarding instructions.
-- Confirm each team can run their starter notebook.
+- Confirm each team can run their chosen tooling (starter notebook or alternate stack).
 
-## 3) Branching and check-in workflow
+## 3) GitHub workflow
 
-- Teams work on feature branches in their private repo.
-- Teams tag a release candidate branch before check-in.
+- Keep workflow simple: teams work in their own team folder under `codefest/team-workspaces/`.
+- Teams prepare their final submission for the end-of-event merge window.
 - Staff review and merge selected changes into the main event branch.
-- Staff then promote validated changes into `main`.
 
-## 4) Merge windows
+## 4) Merge window
 
-- Saturday midday: first merge window (priority: challenge 1 rules)
-- Sunday morning: second merge window (priority: challenge 2 outputs)
-- Sunday afternoon: UI integration merge window (challenge 3)
+- One final merge window at the end of the event so teams cannot see other teams' work during build time.
 
-## 5) Required submission items
+## 5) Staff support points
 
-Every team submission should include:
+- Staff support merge window execution and integration.
+- Staff answer technical support questions.
 
-- Code and any required configs
-- A short README with run instructions
-- Notes describing team decisions and assumptions
-- License/attribution confirmation for contributed content (include copyright + SPDX identifier)
+## 6) Visibility and fairness policy
 
-## 6) Staff support points
-
-- Staff mentor: supports technical blockers and architecture choices.
-- Staff compliance lead: supports policy interpretation in challenge 1.
-- Staff triage lead: supports exploit severity review in challenge 2.
-- Staff integration lead: supports data contract and demo stitching in challenge 3.
-
-## 7) Visibility and fairness policy
-
-- Teams should not access other teams' private repos during build time.
+- Teams should not access other teams' work during build time.
 - Shared sample logs and starter assets must remain unchanged.
 - Final scoring uses the challenge rubrics in each challenge README.

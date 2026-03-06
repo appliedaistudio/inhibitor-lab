@@ -2,40 +2,43 @@
 
 ## Mission
 
-Turn real policy documents into enforceable Inhibitor rules for your team agent.
+Use real policy documents to improve the safety behavior of your team agent.
 
 Your team will:
 
-1. Pick one or more policy documents from `policy_documents/`
-2. Translate policy statements into executable Inhibitor rule logic
-3. Connect those rules into your starter agent notebook
-4. Show the agent safely blocking risky behavior at runtime
+1. Collect policy documents and place them under the policy document folder in your team folder in `codefest/team-workspaces/`
+2. Ask a support staff member to generate Inhibitor rules from those policy documents
+3. Ask support staff to link those generated rules to your Inhibitor service
+4. Create or update your agent and test it with the newly linked rules
 
 ## Folder contents
 
-- `policy_documents/` - place policy files your team will map into rules
-- `starter_agent_policy_to_code.ipynb` - starter notebook for this challenge
-- `submissions/` - optional place for interim artifacts before check-in
+- `policy_documents/` - reference examples only; teams should submit their policy documents in their own folder under `codefest/team-workspaces/`
+- `starter_agent_policy_to_code.ipynb` - optional starter notebook for this challenge
+- `codefest/team-workspaces/<your-team>/` - your team submission folder for policy docs, agent code, and notes
 
 ## Staff-supported steps
 
-- Policy interpretation review: staff compliance mentor helps clarify ambiguous policy text.
-- Rule design review: staff technical mentor helps map language to runtime checks.
-- Merge prep review: staff merge lead helps ensure your branch is ready for integration.
+- Rule generation support: staff can generate rules from your team's policy documents
+- Rule linking support: staff can link generated rules to your team Inhibitor service
+- Technical support: staff can answer technical questions that come up during implementation
+- API key support: staff will provide the Inhibitor API key
 
 ## Basic workflow
 
-1. Add policy files to `policy_documents/`
-2. Build rule mappings in your notebook
-3. Wire rules into your agent request flow
-4. Validate behavior with safe and unsafe test prompts
-5. Prepare submission notes for check-in
+1. Put policy documents into your team folder under `codefest/team-workspaces/`
+2. Request staff support to generate rules from those policy documents
+3. Request staff support to link those rules to your Inhibitor service
+4. Wire your Inhibitor-backed safety checks into your agent
+5. Test your agent and verify the new rules work as expected
+6. Prepare your final submission materials in your team folder
 
 ## Submission requirements
 
-- Updated notebook showing policy-to-rule translation and agent behavior
-- Policy source files used by your team
-- Short notes on assumptions and edge cases
+- Policy documents used by your team in your team folder
+- Agent code or notebook showing integration with your Inhibitor-linked rules
+- Test evidence showing expected safe/unsafe behavior
+- A required use case story that explains the real context and scenario your policy rules are meant to handle
 
 ## Scoring rubric (100 points)
 

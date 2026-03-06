@@ -12,20 +12,18 @@ Do **not** modify files in `sample_logs/`. These logs are intentionally identica
 
 - `sample_logs/set_a/` - fixed sample logs
 - `sample_logs/set_b/` - same fixed sample logs for parity checks
-- `submissions/` - optional place for interim dashboard artifacts
+- `codefest/team-workspaces/<your-team>/` - your team submission folder for dashboard code, visuals, and presentation materials
 
 ## Staff-supported steps
 
-- Data contract support: staff integration mentor helps teams consume logs consistently.
-- UX support: staff design mentor helps make the dashboard understandable to non-technical users.
-- Demo support: staff showcase lead helps stitch visual components into the final event demo.
+- Sample log support: staff can answer questions about the provided sample logs
 
 ## Basic workflow
 
-1. Load sample logs (read-only)
-2. Build timeline and summary visuals from the data
-3. Highlight why actions were blocked and what policy triggered
-4. Prepare demo notes and run instructions
+1. Access and review the sample logs (read-only)
+2. Build a visualization or dashboard from the log data
+3. Prepare demo notes and run instructions for your visualization
+4. Submit your work in your team folder under `codefest/team-workspaces/`
 
 ## Submission requirements
 
