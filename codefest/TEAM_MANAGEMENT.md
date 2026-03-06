@@ -22,7 +22,7 @@ Use this guide to run teams safely in one shared project while keeping work priv
 
 ## 4) Merge window
 
-- One final merge window at the end of the event so teams cannot see other teams' work during build time.
+- One final merge window at the end of the event.
 
 ## 5) Staff support points
 
