@@ -107,4 +107,4 @@ Let us know if you want this formatted for public docs, turned into a deck, or v
 - Build on this flow in the [Inhibitor Application Sprint](./inhibitor-application-sprint.md) and its [policy-to-rule examples](./policy-rule-examples/README.md).
 - Compare the narrative here with the conceptual [ethical inference theory](./ethical-inference-theory.md) and the operational [ROA pattern](./roa-pattern.md).
 - Validate runtime behaviors in the [Inhibitor API reference](./inhibitor-api.md) and ensure deployments align with [GDPR compliance](./gdpr-compliance.md), [global edge placement](./global-edge-deployment.md), and [supported regulations](./supported-regulations.md).
-- Check [Release Notes 1.1](./release-notes-1.1.md) for how this walkthrough fits into the broader documentation updates.
+- Check [Release Notes 1.1](./release-notes/1.1.md) for how this walkthrough fits into the broader documentation updates.
