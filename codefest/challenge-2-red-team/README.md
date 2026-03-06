@@ -2,7 +2,7 @@
 
 ## Mission
 
-Build an attack-oriented agent that tries to bypass the Inhibitor, then document what worked and what failed.
+Build an attack-oriented agent that tries to bypass the Inhibitor, then document what worked and what failed. Teams are expected to use AI agents for this challenge; you can use the provided starter notebook or any other agent framework.
 
 Your team will:
 
@@ -19,6 +19,7 @@ Your team will:
 
 - Technical support: staff can answer technical questions during setup, testing, and debugging
 - API key support: staff will provide the Inhibitor API key
+- OpenAI API key support: if needed, staff can provide an OpenAI API key for agent development
 
 ## Basic workflow
 

@@ -2,7 +2,7 @@
 
 ## Mission
 
-Build UI and analysis components that explain Inhibitor interventions using shared log datasets.
+Build UI and analysis components that explain Inhibitor interventions using shared log datasets. If your approach uses AI agents for analysis or generation, you may use starter patterns from other challenge folders or your own agent implementation.
 
 ## Important rule
 
@@ -17,6 +17,7 @@ Do **not** modify files in `sample_logs/`. These logs are intentionally identica
 ## Staff-supported steps
 
 - Sample log support: staff can answer questions about the provided sample logs
+- OpenAI API key support: if needed for agent-assisted workflows, staff can provide an OpenAI API key
 
 ## Basic workflow
 
