@@ -4,7 +4,6 @@ Use this guide to run teams safely in one shared project while keeping work priv
 
 ## 1) Repository model
 
-- Staff maintain the main `inhibitor-lab` repository.
 - Teams submit their challenge work to `codefest/team-workspaces/`.
 - Keep team work private during build time and merge all team submissions in the final merge window.
 
