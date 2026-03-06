@@ -82,7 +82,7 @@ The stress benchmarks complement the latency benchmarks by exercising the Inhibi
 - **Case studies** – See how the inhibitor performs in production with the [healthcare case impact report](docs/case-studies/healthcare-case-impact.md).
 - **Policy to runtime** – Trace how written policies become DILL rules in the [policy-to-rule examples](docs/policy-rule-examples/README.md), then compare enforcement outcomes in the [API reference](docs/inhibitor-api.md) and [supported regulations](docs/supported-regulations.md).
 - **Governance and compliance** – Pair [GDPR guidance](docs/gdpr-compliance.md) with [global edge deployment](docs/global-edge-deployment.md) and zoom out to the [ethical inference theory](docs/ethical-inference-theory.md) that underpins the system.
-- **Change history** – Review [release notes 1.2](docs/release-notes-1.2.md) for the latest documentation and benchmark updates, or [release notes 1.1](docs/release-notes-1.1.md) for earlier onboarding improvements.
+- **Change history** – Review [release notes 1.3](docs/release-notes/1.3.md) for Codefest event enablement updates, [release notes 1.2](docs/release-notes/1.2.md) for documentation and benchmark updates, or [release notes 1.1](docs/release-notes/1.1.md) for earlier onboarding improvements.
 
 ---
 

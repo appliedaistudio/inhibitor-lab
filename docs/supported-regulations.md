@@ -76,5 +76,5 @@ This document represents the authoritative list of supported regulations in the 
 - Connect each regulation to enforcement flows in the [Inhibitor API](./inhibitor-api.md) and the [policy-to-rule examples](./policy-rule-examples/README.md).
 - Pair with [GDPR compliance](./gdpr-compliance.md) and [global edge deployment](./global-edge-deployment.md) to understand privacy and locality guardrails.
 - Trace how regulations shape design choices in the [Inhibitor Application Sprint](./inhibitor-application-sprint.md) and the [Inside the Inhibitor](./inhibitor-inside.md) walkthrough.
-- Track how this list has evolved in [Release Notes 1.1](./release-notes-1.1.md) and the conceptual framing in [ethical inference theory](./ethical-inference-theory.md).
+- Track how this list has evolved in [Release Notes 1.1](./release-notes/1.1.md) and the conceptual framing in [ethical inference theory](./ethical-inference-theory.md).
 
