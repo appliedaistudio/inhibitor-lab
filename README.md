@@ -46,12 +46,15 @@ References:
 
 1. **Get an API key** from [appliedAIstudio](https://www.appliedai.studio/iaas).
 2. **Review the REST API**: [docs/inhibitor-api.md](docs/inhibitor-api.md).
-3. **Run an example notebook** (pick one):
+3. **Fetch the latest OpenAPI spec** (no API key required):
+   - JSON: `curl https://iaas.appliedai.studio/openapi.json`
+   - YAML: `curl https://iaas.appliedai.studio/openapi.yaml`
+4. **Run an example notebook** (pick one):
    - [Quickstart: Inhibitor API](notebooks/quickstart_inhibitor.ipynb)
    - [Adaptive Feedback Agent](notebooks/adaptive_agent_feedback_loops.ipynb)
    - [Real-Time Moderation Agent](notebooks/realtime_moderation_agent.ipynb)
-4. **Layer the Inhibitor into your agent loop** (oversight, critique, and action correction).
-5. **Stress-test and monitor** using the [Inhibitor Application Sprint](docs/inhibitor-application-sprint.md).
+5. **Layer the Inhibitor into your agent loop** (oversight, critique, and action correction).
+6. **Stress-test and monitor** using the [Inhibitor Application Sprint](docs/inhibitor-application-sprint.md).
 
 ---
 
