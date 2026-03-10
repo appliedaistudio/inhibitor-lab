@@ -21,6 +21,38 @@ https://iaas.appliedai.studio
 
 ---
 
+
+## 📘 Live OpenAPI Documentation
+
+The service now publishes machine-readable API documentation directly from the production endpoint.
+
+These docs are **public** and do **not** require an `X-API-Key` header.
+
+Available routes:
+
+```
+GET /openapi       # JSON
+GET /openapi.json  # JSON
+GET /openapi.yaml  # YAML
+```
+
+Using the production base URL (`https://iaas.appliedai.studio`), you can fetch the latest schema with:
+
+```bash
+# Fetch JSON OpenAPI schema
+curl https://iaas.appliedai.studio/openapi.json
+
+# Save JSON OpenAPI schema locally
+curl -o inhibitor-openapi.json https://iaas.appliedai.studio/openapi.json
+
+# Save YAML OpenAPI schema locally
+curl -o inhibitor-openapi.yaml https://iaas.appliedai.studio/openapi.yaml
+```
+
+Tip: pull this file in CI or local tooling to keep generated clients and endpoint checks synced to the latest API contract.
+
+---
+
 ## 🚀 Endpoints
 
 ### 1. Health Check
