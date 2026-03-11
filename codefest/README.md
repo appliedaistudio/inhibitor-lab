@@ -16,7 +16,9 @@ A shared `team-workspaces/` area is available in this repository. Staff should c
 
 ## Agent expectation
 
-All challenge projects are expected to use AI agents as part of the build and testing workflow. Starter agent notebooks are provided in relevant challenge folders, but teams may use any agent framework or implementation approach they prefer.
+All challenge projects are expected to use AI agents as part of the build and testing workflow. For guidance on structuring your agent loop, use the [ROA (Reason-Observe-Adjust) pattern documentation](../docs/roa-pattern.md). Starter agent notebooks are provided in relevant challenge folders, but teams may use any agent framework or implementation approach they prefer.
+
+Tip: only inhibit when the Inhibitor response includes violation predictions or concrete rule violations. The Inhibitor may also return observations, but observations alone do not require the agent to adjust.
 
 ## Shared scoring rubric
 
