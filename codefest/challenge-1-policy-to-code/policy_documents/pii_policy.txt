@@ -1,0 +1,7 @@
+PII Policy – Storage & Masking (v3.3)
+
+- Do not store SSN except last 4 digits, and mask as ***-**-1234 in logs.
+- If full SSN is detected, block the operation and require redaction.
+- Emails must match local@domain.tld; otherwise reject the record.
+- Phone numbers must be in E.164 format (e.g., +15551234567); otherwise reject.
+- EU residents: do not store street address; store only country and postal code.
