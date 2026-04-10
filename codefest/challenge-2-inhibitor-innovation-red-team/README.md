@@ -15,6 +15,8 @@ This generalized challenge supports both offensive assurance testing and constru
 
 Create an original agent use case that demonstrates how Inhibitor improves trust, safety, or controllability in real workflows.
 
+This track is also a strong fit for teams that already have an existing agent and want to enhance it with Inhibitor.
+
 Examples:
 
 - Trust-aware copilots for regulated domains
