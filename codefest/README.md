@@ -4,8 +4,8 @@ This folder is the event workspace for the 3 Codefest challenges. Teams build in
 
 ## Challenge index
 
-- [Challenge 1: Policy-to-Code](challenge-1-policy-to-code/README.md)
-- [Challenge 2: Red Team Gauntlet](challenge-2-red-team/README.md)
+- [Challenge 1: Trust Accelerator Campaign (Digital Awareness)](challenge-1-trust-accelerator-campaign/README.md)
+- [Challenge 2: Inhibitor Innovation & Red Team Gauntlet](challenge-2-inhibitor-innovation-red-team/README.md)
 - [Challenge 3: Glass Box Dashboard](challenge-3-glass-box/README.md)
 - [Team management guide](TEAM_MANAGEMENT.md)
 - [Team workspaces](team-workspaces/README.md)
@@ -20,16 +20,9 @@ All challenge projects are expected to use AI agents as part of the build and te
 
 Tip: only inhibit when the Inhibitor response includes violation predictions or concrete rule violations. The Inhibitor may also return observations, but observations alone do not require the agent to adjust.
 
-## Shared scoring rubric
+## Scoring model
 
-Each challenge is scored out of 100 using the same baseline rubric:
-
-- 40 pts: Technical quality (correctness, reliability, testability)
-- 25 pts: Integration quality (fits repository contracts and merge readiness)
-- 20 pts: Documentation quality (clear setup, decisions, and handoff)
-- 15 pts: Demo clarity (easy to explain and show in final unified demo)
-
-Challenge-specific scoring details are repeated in each challenge README.
+Each challenge is scored out of 100 points, with challenge-specific rubrics defined in each challenge README. Judges should always use the rubric published in the relevant challenge folder.
 
 ## Staff support model
 
