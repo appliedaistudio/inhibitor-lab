@@ -55,6 +55,10 @@ This phase scaffolds the Reason–Observe–Adjust cycle. It’s not just about 
 
 Now we activate the Inhibitor. Every reasoning step is checked in real time. Bad paths get flagged, corrected, or blocked. Good decisions get reinforced. The agent doesn’t just avoid mistakes—it starts adjusting its course as it moves.
 
+**Implementation default:** Start with `performance` mode for most runtime checks. Only switch a step (or workflow) to `insight` mode when you need expanded rationale for audits, debugging, or post-incident review.
+
+**Response contract:** After each inhibitor observation, require the agent to respond directly to the feedback in concrete terms (for example: revised action, blocked action, or requested clarification). Avoid courtesy filler so correction signals remain clear and machine-reviewable.
+
 *Example reference: See how the Inhibitor layer interacts with agent decisions in the example notebooks—especially where scoring and annotations are shown.*
 
 **Inputs:**

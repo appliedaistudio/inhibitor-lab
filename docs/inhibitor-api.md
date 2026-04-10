@@ -170,8 +170,9 @@ print(response.json())
 
 ## 📌 Best Practices
 
-* Use **insight mode** when developing, auditing, or debugging.
-* Use **performance mode** in production for low-latency, high-volume use.
+* Default to **performance mode** for most agent loops (including many development and staging runs) to keep feedback fast and iterative.
+* Use **insight mode** selectively when you need detailed rationale (compliance audits, deep debugging, incident retrospectives).
+* In your agent loop, require each post-check message to **respond directly to observed feedback** (no filler text) so corrections are explicit and measurable.
 * Always **request an API key** from [appliedAIstudio](https://www.appliedai.studio/) before use.
 
 ## 🔗 Explore next
@@ -180,4 +181,3 @@ print(response.json())
 - Follow the build sequence in the [Inhibitor Application Sprint](./inhibitor-application-sprint.md) and its [policy-to-rule examples](./policy-rule-examples/README.md) to see how rules surface in `/check` responses.
 - Align deployments with [GDPR compliance](./gdpr-compliance.md), [global edge placement](./global-edge-deployment.md), and the broader [supported regulations](./supported-regulations.md).
 - See how this reference evolved in [Release Notes 1.1](./release-notes/1.1.md) and pair it with the [ROA pattern](./roa-pattern.md) used in the example notebooks.
-
