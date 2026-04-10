@@ -56,7 +56,7 @@ Examples:
 
 All teams must include:
 
-- Agent code/notebook and reproducible run steps
+- Agent implementation access details and reproducible run steps (for example: code/notebook in the workspace, or clear instructions for integrating with an externally hosted/existing agent)
 - `README.md` describing track selection, architecture, and assumptions
 - Evidence logs/results demonstrating outcomes
 - A concise summary of key findings and next-step recommendations
@@ -73,6 +73,8 @@ Additional required content by track:
   - Highest-value failed attack and explanation of why defenses held
 
 Teams may use the provided starter assets or any other agent framework/notebook they prefer.
+
+Teams are **not required** to re-upload an agent that is already developed and hosted elsewhere, as long as judges can reliably run or verify the Inhibitor integration through the submitted instructions and evidence.
 
 ## Scoring rubric (100 points)
 
