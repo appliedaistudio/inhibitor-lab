@@ -69,6 +69,17 @@ This tri-phase loop continues until the agent produces a response that satisfies
 
 ---
 
+### Practical Agent Response Guidance
+
+When wiring ROA into production agents, apply these defaults unless your domain requires otherwise:
+
+* **Default to Performance Mode** during Observe checks. In most loops, agents self-correct effectively from minimal flag feedback, and lower latency improves end-to-end task quality.
+* **Escalate to Insight Mode selectively** for audit workflows, incident analysis, or cases where operators explicitly need narrative rationale.
+* **Require direct remediation responses** after each observation. Each agent turn should address inhibitor feedback explicitly (what changed, what was removed, or why execution is paused), without filler language.
+* **Keep correction messages concise and operational** so downstream evaluators can parse intent and changes quickly.
+
+---
+
 ### Examples
 
 * Inhibitor’s AI assistant evaluating company compliance reports.
@@ -108,7 +119,7 @@ async function runAgent(prompt) {
     // Evaluate the ethical and contextual risk of the current plan
     const evaluation = await callInhibitor(thought);
 
-    // If evaluation returns high risk, adjust the plan
+    // If evaluation returns high risk, apply feedback directly and retry
     if (evaluation.totalSeverity > 0.2) {
       thought = applyInhibitorFeedback(thought, evaluation);
       continue; // Reassess after applying feedback
