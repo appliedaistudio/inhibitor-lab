@@ -4,14 +4,16 @@ Use this README as a starting point.
 
 ## Team
 
-- Team name:
-- Team members:
+- Team name: Guardians of the Galaxy
+- Team members:  Khushboo Patel (kp3329@drexel.edu)
+                 Rutvij Hiteshkumar Upadhyay (ru45@drexel.edu)
+                 Neel Patel (np928@drexel.edu)
 
 ## Challenges implemented
 
 - Challenge 1:
 - Challenge 2:
-- Challenge 3:
+- Challenge 3: Glass Box (Audit Dashboard) (Applied AI Studio)
 
 ## Run instructions
 
