@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  font-family: "Aptos", "Segoe UI", "Helvetica Neue", sans-serif;
+  --canvas: #060a10;
+  --canvas-strong: #0b1118;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(129, 140, 248, 0.08), transparent 28%),
+    radial-gradient(circle at 80% 20%, rgba(110, 231, 183, 0.06), transparent 24%),
+    linear-gradient(180deg, #070b10 0%, #04070b 100%);
+  color: #f8fafc;
+}
+
+::selection {
+  background: rgba(165, 180, 252, 0.24);
+  color: #f8fafc;
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 90%);
+}
+
+.break-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+input::-webkit-search-cancel-button {
+  display: none;
+}
