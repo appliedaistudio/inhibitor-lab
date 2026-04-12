@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+httpx
+openai
+pyyaml
+firebase-admin>=6.5.0
+beautifulsoup4

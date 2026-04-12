@@ -1,0 +1,11 @@
+[
+  {"feed_id": "4603",  "label": "PPD Citywide",            "coverage": "J-Band (priority), T-Band (traffic), Events 1 & 2", "verified_date": "2026-04-11"},
+  {"feed_id": "17310", "label": "PPD Central",             "coverage": "6th & 9th Districts", "verified_date": "2026-04-11"},
+  {"feed_id": "21297", "label": "PPD East",                "coverage": "24th, 25th & 26th Districts", "verified_date": "2026-04-11"},
+  {"feed_id": "45495", "label": "PPD Northeast",           "coverage": "2nd, 7th, 8th & 15th Districts", "verified_date": "2026-04-11"},
+  {"feed_id": "18836", "label": "PPD Northwest",           "coverage": "5th, 14th, 35th & 39th Districts", "verified_date": "2026-04-11"},
+  {"feed_id": "15102", "label": "PPD South",               "coverage": "1st, 3rd & 17th Districts", "verified_date": "2026-04-11"},
+  {"feed_id": "15195", "label": "PPD Southwest/West",      "coverage": "12th, 16th, 18th & 19th Districts", "verified_date": "2026-04-11"},
+  {"feed_id": "34250", "label": "PFD South Fire/Medics",   "coverage": "South fire dispatch + south medics", "verified_date": "2026-04-11"},
+  {"feed_id": "15747", "label": "PFD North Fire",          "coverage": "North of Lehigh Ave, east of Schuylkill River", "verified_date": "2026-04-11"}
+]
