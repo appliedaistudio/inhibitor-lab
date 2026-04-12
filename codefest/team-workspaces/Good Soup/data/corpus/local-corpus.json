@@ -1,0 +1,50 @@
+[
+  {
+    "id": "LC-001",
+    "title": "Retrieved Evidence Helps Reduce Hallucination",
+    "snippet": "Grounded answers are more reliable when the assistant cites retrieved sources instead of improvising unsupported claims.",
+    "body": "Research assistants should cite retrieved evidence, soften confidence when evidence is thin, and avoid unsupported novelty claims.",
+    "tags": ["research", "grounding", "hallucination", "citations"],
+    "url": "local://corpus/retrieved-evidence"
+  },
+  {
+    "id": "LC-002",
+    "title": "Students Need Honest Critique, Not Empty Praise",
+    "snippet": "Learning systems should correct misconceptions directly and avoid rewarding wrong reasoning with encouragement that implies correctness.",
+    "body": "A learning companion should identify missing steps, check whether the learner understands the causal chain, and avoid sycophantic praise.",
+    "tags": ["learning", "sycophancy", "misconceptions"],
+    "url": "local://corpus/honest-critique"
+  },
+  {
+    "id": "LC-003",
+    "title": "Before Sending Email, Confirm Recipient and Attachment",
+    "snippet": "Unsafe action patterns often involve wrong recipients, missing attachments, or ambiguous instructions that should trigger a clarification step.",
+    "body": "If a user asks the assistant to send or draft an email, the system should confirm the recipient, attachment status, and intent before acting.",
+    "tags": ["actions", "email", "attachments", "verification"],
+    "url": "local://corpus/email-confirmation"
+  },
+  {
+    "id": "LC-004",
+    "title": "Policy Excerpts Can Be Incomplete",
+    "snippet": "Partial policy text should not be treated as definitive without checking the surrounding clauses and scope.",
+    "body": "Student-facing assistants should avoid overconfident policy claims when the underlying handbook or syllabus excerpt is incomplete.",
+    "tags": ["policy", "privacy", "uncertainty"],
+    "url": "local://corpus/policy-excerpts"
+  },
+  {
+    "id": "LC-005",
+    "title": "Newton's Second Law Requires the Ratio F Over m",
+    "snippet": "Acceleration depends on net force divided by mass, so increasing both quantities does not automatically increase acceleration.",
+    "body": "A student may reach a correct answer for the wrong reason. Learning feedback should identify the missing step from F = ma to the final conclusion.",
+    "tags": ["learning", "physics", "newton", "reasoning"],
+    "url": "local://corpus/newtons-second-law"
+  },
+  {
+    "id": "LC-006",
+    "title": "Protected Records Should Be Summarized Safely",
+    "snippet": "Sensitive identifiers like SSNs, dates of birth, salaries, and another student's records should be removed from summaries.",
+    "body": "Privacy-aware systems redact direct identifiers and avoid repeating protected content unless there is a clear authorized need.",
+    "tags": ["privacy", "policy", "redaction", "student-records"],
+    "url": "local://corpus/privacy-redaction"
+  }
+]

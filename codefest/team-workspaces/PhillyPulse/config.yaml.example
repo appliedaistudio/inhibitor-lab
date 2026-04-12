@@ -1,0 +1,110 @@
+# config.yaml - Configuration for RadioTranscriber
+# Edit values as needed for your feed. Use quotes for strings with special chars.
+
+credentials:
+  username: "username"  # Your Broadcastify username
+  password: "password"  # Your Broadcastify password
+
+feed_specific:
+  feed_number: 4603                   # Philadelphia Police - Citywide (Broadcastify feed ID)
+  description: "PhillyPD"             # Human-readable name for log files
+  output_folder: "philly_transcripts/"  # Path to save logs; relative or absolute; creates if missing
+
+vad_and_silence:
+  vad_aggressiveness: 1               # VAD sensitivity: 0=least aggressive (more false positives), 3=most (misses quiet speech)
+  min_speech_seconds: 1.5             # Min audio length to transcribe; shorter skipped
+  silence_limit: 3.0                  # Seconds of silence to end recording
+
+tuning:
+  model_size: "large-v3"              # Whisper model: tiny/base/small/medium/large/large-v3/turbo
+  language: "en"                      # Language code
+  initial_prompt: >-                  # Prompt to guide transcription; include common terms; last 224 tokens used
+    Philadelphia PA police radio dispatch. PPD districts 1-26. Units: Charlie, David, Edward, Frank, King, Mary, Nora. Locations: Broad St, Market St, Kensington Ave, Germantown Ave, Roosevelt Blvd, Girard Ave, Spring Garden, Fairmount, University City, Center City, North Philly, South Philly, West Philly, Fishtown, Manayunk, Chestnut Hill, Mt Airy, Olney, Frankford. Hospitals: Temple, Jefferson, Penn, Hahnemann, Einstein. Phrases: responding, en route, on location, in service, 10-4, copy, radio, highway, shots fired, person with a gun, robbery in progress, assist officer. Short dispatch. Numbers spoken separately.
+  beam_size: 12                        # Beams in search; higher=accurate but slow
+  best_of: 1                          # Unused with faster-whisper (temperature=0.0, no sampling)
+  no_speech_threshold: 0.75           # Prob threshold to discard non-speech; higher=more strict; sane: 0.6-0.8
+  normalization: 95                   # Percentile for audio normalization; sane: 90-99
+
+post_generation_cleanup:
+  full_block_phrases:                 # Block entire transcript if contains any; common hallucinations
+    - "CastingWords"
+    - "ESO"
+    - "Rev.com"
+    - "amara.org"
+    - "amara"
+    - "ESA, Inc."
+    - "U.S. Department of"
+    - "Transcripts translated by"
+    - "Transcription Outsourcing"
+    - "Transcription Outsourcing, Inc"
+
+  cutoff_phrases:                     # Truncate after these phrases if found
+    - "We'll be right back"
+    - "We will be right back"
+    - "Thank you for watching"
+    - "Thanks for watching"
+    - "Thank you for your patience"
+    - "Stay tuned"
+    - "Commercial break"
+    - "you're under arrest"
+    - "Transcription by"
+    - "Translation by"
+    - "Captions by"
+    - "Subtitle"
+    - "Subtitles"
+    - "I'll narrate everything"
+    - "the following is a"
+    - "this is a test"
+    - "end of transmission"
+    - "end of message"
+
+  unit_mapping:                       # Map spoken unit phrases to standard IDs
+    "eight one": "A1"
+    "8 1": "A1"
+    "eight-one": "A1"
+    "5 2 8 1": "52A1"
+    "five two eight one": "52A1"
+    "52 81": "52A1"
+    "five-two-eight-one": "52A1"
+    "5-2-8-1": "52A1"
+    "52-81": "52A1"
+    "eight two": "A2"
+    "8 2": "A2"
+    "eight-two": "A2"
+    "5 2 8 2": "52A2"
+    "five two eight two": "52A2"
+    "52 82": "52A2"
+    "five-two-eight-two": "52A2"
+    "5-2-8-2": "52A2"
+    "52-82": "52A2"
+    "eight three": "A3"
+    "8 3": "A3"
+    "eight-three": "A3"
+    "5 2 8 3": "52A3"
+    "five two eight three": "52A3"
+    "52 83": "52A3"
+    "five-two-eight-three": "52A3"
+    "5-2-8-3": "52A3"
+    "52-83": "52A3"
+    "5-2-N-J-1": "52E1"
+    "N-J-1": "52E1"
+
+  unit_normalization:                 # Regex for unit ID cleanup
+    pattern: "\\b5-?2-?([A-ELB]|BS|BL)-?(\\d+)\\b"  # Pattern to match; escape backslashes in code use
+    prefix: "52"                                      # Prefix for normalized units
+
+mqtt:
+  enabled: false
+  host: 192.168.123.45
+  port: 1883
+  username: mqtt_user
+  password: "mqtt_password"
+  topic_base: "radiotranscriber/philly"
+  retain: true
+  recent_max_lines: 25
+  clip_state_chars: 255
+  availability: true
+
+philly_pulse:
+  enabled: true
+  bridge_url: "http://127.0.0.1:8765/api/ingest"

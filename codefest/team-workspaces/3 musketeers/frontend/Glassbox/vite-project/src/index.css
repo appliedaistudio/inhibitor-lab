@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+   themes: luxury;
+ }
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  padding: 20px;
+  margin: 20px;
+  background-color: teal;
+}
+
+.section h1 {
+  font-size: 26px;
+  text-indent: 0%;
+}
+
+.section p {
+  font-size: 15px;
+}
+
+.question, .open {
+  margin-inline: 5%;
+  width: 87.5%;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.question:hover, .open:hover {
+  background-color: skyblue;
+}
+
+.question:after{
+  content: "\002B";
+  font-size: 24px;
+  float: right;
+}
+
+.open:after {
+  font-size: 24px;
+  float: right;
+  content: "\2212";
+}
+
+.answer {
+  margin-inline: 5%;
+  width: 87.5%;
+  max-height: fit-content;
+  text-indent: 7.5%;
+  font-size: 18px;
+  transition: max-height 0.2s ease-out;
+  margin-top: 10px;
+}

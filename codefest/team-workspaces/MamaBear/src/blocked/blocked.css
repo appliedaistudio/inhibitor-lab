@@ -1,0 +1,110 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100vh;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(circle at top, #ffe6b5 0%, #fff6e8 42%, #f6eee2 100%);
+  color: #402800;
+}
+
+.blocked-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.blocked-card {
+  width: min(100%, 560px);
+  padding: 32px 28px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18px 50px rgba(94, 56, 0, 0.14);
+  text-align: center;
+}
+
+.blocked-logo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.blocked-kicker {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9c6721;
+}
+
+.blocked-title {
+  margin: 0 0 12px;
+  font-size: 34px;
+  line-height: 1.05;
+}
+
+.blocked-copy {
+  margin: 0 0 18px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #6d5430;
+}
+
+.blocked-query {
+  margin: 0 0 14px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #8a2d00;
+  word-break: break-word;
+}
+
+.blocked-reason-card {
+  margin: 0 0 16px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: #fff3dd;
+  border: 1px solid rgba(156, 103, 33, 0.18);
+  text-align: left;
+}
+
+.blocked-reason-label {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9c6721;
+}
+
+.blocked-reason {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #5a4324;
+}
+
+.blocked-meta {
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #8a7b66;
+  word-break: break-word;
+}
+
+.blocked-meta:last-child {
+  margin-bottom: 0;
+}
+
+.blocked-meta span {
+  color: #5a4e3b;
+}
