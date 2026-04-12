@@ -1,7 +1,7 @@
 ## Team
 
 - Team name: Prompt Siege
-- Team members: Andrew Brown, Aaron Joyce, Daniel Davis
+- Team members: Andrew Brown, Aaron Joyce, Daniel Davis, Will Feid
 
 ## Challenges implemented
 
@@ -67,7 +67,7 @@ INHIBITOR_MIN_INTERVAL_SECONDS=0
 
 ## License and copyright
 
-Copyright (c) 2025 <Team Name / Author Names>
+Copyright (c) 2025 <Prompt Siege / Andrew Brown, Aaron Joyce, Daniel Davis, Will Feid>
 
 This team's submission is provided under the MIT License.
 
