@@ -2,7 +2,7 @@
 
 ## Team
 
-- **Team name:** Guardians of the Galaxy
+- **Team name:** Guardians of the Galaxy 
 - **Team members:**
   - Neel Rakeshbhai Patel (np928@drexel.edu)
   - Rutvij Upadhyay (ru45@drexel.edu)
