@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inhibitor — Glass Box Audit Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f4f0;
+  --surface: #ffffff;
+  --surface2: #fafaf8;
+  --border: #e6e6e0;
+  --border2: #d4d4cc;
+  --text: #1c1c1a;
+  --muted: #7a7a72;
+  --muted2: #b0b0a8;
+  --high: #c8291a;
+  --high-bg: #fdf2f0;
+  --high-border: #f5c5be;
+  --med: #c97a0a;
+  --med-bg: #fdf8ee;
+  --med-border: #f5dfa0;
+  --low: #1a8a4a;
+  --low-bg: #f0faf4;
+  --low-border: #a8e8c0;
+  --unknown: #6b7280;
+  --unknown-bg: #f9fafb;
+  --unknown-border: #e5e7eb;
+  --accent: #2255cc;
+  --accent-bg: #eef3ff;
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.09);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.6; min-height: 100vh; }
+
+/* HEADER */
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 36px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.logo { font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: .08em; display: flex; align-items: center; gap: 10px; }
+.logo-icon { width: 28px; height: 28px; background: var(--text); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.logo-icon svg { width: 16px; height: 16px; fill: white; }
+.logo-sep { color: var(--muted2); }
+.logo-sub { color: var(--muted); font-size: 11px; }
+.header-right { display: flex; align-items: center; gap: 14px; }
+.live-badge { display: flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--low); background: var(--low-bg); border: 1px solid var(--low-border); padding: 5px 12px; border-radius: 100px; }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--low); animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+.header-date { font-size: 12px; color: var(--muted); font-family: var(--mono); }
+
+/* MAIN */
+.main { padding: 28px 36px; max-width: 1440px; margin: 0 auto; }
+
+/* SECTION TITLE */
+.section-title { font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* KPI ROW */
+.kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 28px; }
+.kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+.kpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--border2); }
+.kpi.high::before { background: var(--high); }
+.kpi.med::before  { background: var(--med); }
+.kpi.low::before  { background: var(--low); }
+.kpi.accent::before { background: var(--accent); }
+.kpi-label { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.kpi-value { font-size: 32px; font-weight: 600; line-height: 1; margin-bottom: 5px; color: var(--text); }
+.kpi.high .kpi-value { color: var(--high); }
+.kpi.med  .kpi-value { color: var(--med); }
+.kpi.low  .kpi-value { color: var(--low); }
+.kpi-sub { font-size: 12px; color: var(--muted); }
+
+/* CHARTS ROW */
+.charts-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+.chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow); }
+.chart-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+.chart-subtitle { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+
+/* DONUT */
+.donut-wrap { display: flex; align-items: center; gap: 24px; }
+.donut-legend { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.legend-item { display: flex; align-items: center; gap: 9px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.legend-label { font-size: 13px; color: var(--muted); flex: 1; }
+.legend-value { font-size: 14px; font-weight: 600; color: var(--text); }
+
+/* HEATMAP */
+.heatmap { display: flex; flex-direction: column; gap: 7px; }
+.heatmap-row { display: flex; align-items: center; gap: 8px; }
+.heatmap-label { font-family: var(--mono); font-size: 10px; color: var(--muted); width: 52px; flex-shrink: 0; }
+.heatmap-cells { display: flex; gap: 5px; flex: 1; }
+.heatmap-cell { flex: 1; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 10px; font-weight: 500; cursor: default; transition: transform .15s; border: 1px solid transparent; }
+.heatmap-cell:hover { transform: scale(1.1); z-index: 1; box-shadow: var(--shadow-md); }
+.heatmap-cell.c0 { background: var(--surface2); color: var(--muted2); border-color: var(--border); }
+.heatmap-cell.c1 { background: #fef9c3; color: #854d0e; border-color: #fef08a; }
+.heatmap-cell.c2 { background: #fed7aa; color: #9a3412; border-color: #fdba74; }
+.heatmap-cell.c3 { background: #fca5a5; color: #7f1d1d; border-color: #f87171; }
+.heatmap-cell.c4 { background: #ef4444; color: #fff; border-color: #dc2626; }
+.heatmap-legend { display: flex; align-items: center; gap: 6px; margin-top: 10px; justify-content: flex-end; }
+.heatmap-legend span { font-size: 10px; color: var(--muted); }
+.heatmap-legend-cells { display: flex; gap: 3px; }
+.heatmap-legend-cell { width: 14px; height: 14px; border-radius: 3px; }
+
+/* REG BARS */
+.reg-bars { display: flex; flex-direction: column; gap: 10px; }
+.reg-bar-row { display: flex; align-items: center; gap: 10px; }
+.reg-bar-name { font-size: 12px; font-weight: 500; color: var(--text); width: 60px; flex-shrink: 0; }
+.reg-bar-track { flex: 1; height: 9px; background: var(--bg); border-radius: 100px; overflow: hidden; border: 1px solid var(--border); }
+.reg-bar-fill { height: 100%; border-radius: 100px; background: var(--accent); transition: width .8s cubic-bezier(.4,0,.2,1); }
+.reg-bar-count { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 22px; text-align: right; }
+
+/* FILTER BAR */
+.filter-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.filter-btn { font-size: 13px; font-weight: 500; padding: 7px 18px; border-radius: 100px; border: 1px solid var(--border2); background: var(--surface); color: var(--muted); cursor: pointer; transition: all .15s; }
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+.filter-btn.active { background: var(--text); border-color: var(--text); color: white; }
+.filter-btn.active.high { background: var(--high); border-color: var(--high); }
+.filter-btn.active.med  { background: var(--med);  border-color: var(--med); }
+.filter-btn.active.low  { background: var(--low);  border-color: var(--low); }
+.result-count { font-size: 12px; color: var(--muted); margin-left: auto; font-family: var(--mono); }
+
+/* CARDS GRID */
+.cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.session-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); cursor: pointer; transition: box-shadow .2s, transform .2s, border-color .2s; position: relative; overflow: hidden; }
+.session-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); border-color: var(--border2); }
+.session-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+.session-card.high::before    { background: var(--high); }
+.session-card.medium::before  { background: var(--med); }
+.session-card.low::before     { background: var(--low); }
+.session-card.unknown::before { background: var(--muted2); }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
+.card-id { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.card-time { font-family: var(--mono); font-size: 11px; color: var(--muted2); }
+.card-risk-row { display: flex; align-items: center; gap: 8px; margin-bottom: 11px; }
+.risk-badge { font-size: 10px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; border: 1px solid; }
+.risk-badge.high    { background: var(--high-bg);    color: var(--high);    border-color: var(--high-border); }
+.risk-badge.medium  { background: var(--med-bg);     color: var(--med);     border-color: var(--med-border); }
+.risk-badge.low     { background: var(--low-bg);     color: var(--low);     border-color: var(--low-border); }
+.risk-badge.unknown { background: var(--unknown-bg); color: var(--unknown); border-color: var(--unknown-border); }
+.score-pill { font-family: var(--mono); font-size: 11px; color: var(--muted); background: var(--surface2); padding: 3px 9px; border-radius: 100px; border: 1px solid var(--border); }
+.card-summary { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.card-regs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; min-height: 22px; }
+.reg-tag { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 4px; background: var(--accent-bg); color: var(--accent); border: 1px solid #c7d9ff; }
+.card-footer { padding-top: 10px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-footer-label { font-weight: 600; color: var(--text); margin-bottom: 3px; font-size: 10px; letter-spacing: .05em; text-transform: uppercase; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 300; display: none; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(4px); }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--surface); border-radius: 18px; box-shadow: 0 24px 64px rgba(0,0,0,0.16); width: 100%; max-width: 600px; max-height: 88vh; overflow-y: auto; animation: modalIn .2s ease; }
+@keyframes modalIn { from{opacity:0;transform:scale(.96) translateY(10px)} to{opacity:1;transform:none} }
+.modal-header { padding: 24px 28px 16px; display: flex; align-items: flex-start; justify-content: space-between; position: sticky; top: 0; background: var(--surface); border-bottom: 1px solid var(--border); z-index: 1; }
+.modal-close { width: 32px; height: 32px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border); cursor: pointer; font-size: 15px; color: var(--muted); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: 12px; transition: background .15s; }
+.modal-close:hover { background: var(--border); }
+.modal-body { padding: 24px 28px; display: flex; flex-direction: column; gap: 22px; }
+.modal-section-title { font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.modal-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.modal-meta-item { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; }
+.modal-meta-label { font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.modal-meta-value { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--text); }
+.modal-summary { font-size: 14px; line-height: 1.65; color: var(--muted); background: var(--surface2); border-radius: var(--radius-sm); padding: 14px 16px; border: 1px solid var(--border); }
+.modal-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.modal-list li { font-size: 13px; color: var(--muted); padding: 9px 12px; background: var(--surface2); border-radius: var(--radius-sm); border: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
+.modal-list li::before { content: '›'; color: var(--accent); font-weight: 700; font-size: 16px; line-height: 1.2; flex-shrink: 0; }
+.modal-action { background: var(--accent-bg); border: 1px solid #c7d9ff; border-left: 4px solid var(--accent); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 13px; color: var(--text); line-height: 1.55; }
+.modal-regs { display: flex; flex-wrap: wrap; gap: 7px; }
+.modal-reg { font-size: 12px; font-weight: 500; padding: 5px 12px; border-radius: 6px; background: var(--accent-bg); color: var(--accent); border: 1px solid #c7d9ff; }
+
+/* FOOTER */
+.footer { margin-top: 40px; border-top: 1px solid var(--border); padding: 16px 36px; display: flex; justify-content: space-between; font-size: 11px; color: var(--muted2); font-family: var(--mono); }
+
+.loading { text-align: center; padding: 60px; color: var(--muted); font-size: 14px; }
+.no-results { text-align: center; padding: 48px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 16 16"><path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7 3.5-.6 6-3.7 6-7V4L8 1z"/></svg>
+    </div>
+    <span>WELCOME TO INSIGHTERS' INHIBITOR</span>
+    <span class="logo-sep">/</span>
+    <span class="logo-sub">GLASS BOX AUDIT</span>
+  </div>
+  <div class="header-right">
+    <span class="header-date">Feb 17–18, 2026</span>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button onclick="switchSet('a')" id="btn-set-a" style="font-family:var(--mono);font-size:11px;padding:5px 12px;border-radius:100px;border:1px solid var(--low-border);background:var(--low-bg);color:var(--low);cursor:pointer;font-weight:500">SET A</button>
+      <button onclick="switchSet('b')" id="btn-set-b" style="font-family:var(--mono);font-size:11px;padding:5px 12px;border-radius:100px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);cursor:pointer;font-weight:500">SET B</button>
+    </div>
+    <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="section-title">Overview</div>
+  <div class="kpi-row">
+    <div class="kpi accent">
+      <div class="kpi-label">Total Sessions</div>
+      <div class="kpi-value" id="kpi-total">—</div>
+      <div class="kpi-sub">Feb 17–18, 2026</div>
+    </div>
+    <div class="kpi high">
+      <div class="kpi-label">High Risk</div>
+      <div class="kpi-value" id="kpi-high">—</div>
+      <div class="kpi-sub" id="kpi-high-pct">—</div>
+    </div>
+    <div class="kpi med">
+      <div class="kpi-label">Medium Risk</div>
+      <div class="kpi-value" id="kpi-med">—</div>
+      <div class="kpi-sub" id="kpi-med-pct">—</div>
+    </div>
+    <div class="kpi low">
+      <div class="kpi-label">Low Risk</div>
+      <div class="kpi-value" id="kpi-low">—</div>
+      <div class="kpi-sub" id="kpi-low-pct">—</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Auth Failures</div>
+      <div class="kpi-value" style="color:var(--high)">5</div>
+      <div class="kpi-sub">invalid API key attempts</div>
+    </div>
+  </div>
+
+  <div class="section-title">Analytics</div>
+  <div class="charts-row">
+
+    <div class="chart-card">
+      <div class="chart-title">Risk breakdown</div>
+      <div class="chart-subtitle">Distribution across all 120 sessions</div>
+      <div class="donut-wrap">
+        <svg width="110" height="110" viewBox="0 0 110 110" style="flex-shrink:0">
+          <circle cx="55" cy="55" r="40" fill="none" stroke="#eeeeea" stroke-width="18"/>
+          <circle id="donut-high" cx="55" cy="55" r="40" fill="none" stroke="#c8291a" stroke-width="18" stroke-dasharray="0 251.2" stroke-dashoffset="0" transform="rotate(-90 55 55)" style="transition:stroke-dasharray .8s"/>
+          <circle id="donut-med"  cx="55" cy="55" r="40" fill="none" stroke="#c97a0a" stroke-width="18" stroke-dasharray="0 251.2" stroke-dashoffset="0" transform="rotate(-90 55 55)" style="transition:stroke-dasharray .8s .1s"/>
+          <circle id="donut-low"  cx="55" cy="55" r="40" fill="none" stroke="#1a8a4a" stroke-width="18" stroke-dasharray="0 251.2" stroke-dashoffset="0" transform="rotate(-90 55 55)" style="transition:stroke-dasharray .8s .2s"/>
+          <text x="55" y="51" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="18" font-weight="600" fill="#1c1c1a" id="donut-center">—</text>
+          <text x="55" y="64" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#7a7a72">sessions</text>
+        </svg>
+        <div class="donut-legend" id="donut-legend"></div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">Session activity timeline</div>
+      <div class="chart-subtitle">Sessions per hour — hover to see count</div>
+      <div class="heatmap" id="heatmap"></div>
+      <div class="heatmap-legend">
+        <span>Fewer</span>
+        <div class="heatmap-legend-cells">
+          <div class="heatmap-legend-cell" style="background:#f4f4f0;border:1px solid #e6e6e0;border-radius:3px"></div>
+          <div class="heatmap-legend-cell" style="background:#fef9c3;border:1px solid #fef08a;border-radius:3px"></div>
+          <div class="heatmap-legend-cell" style="background:#fed7aa;border:1px solid #fdba74;border-radius:3px"></div>
+          <div class="heatmap-legend-cell" style="background:#fca5a5;border:1px solid #f87171;border-radius:3px"></div>
+          <div class="heatmap-legend-cell" style="background:#ef4444;border:1px solid #dc2626;border-radius:3px"></div>
+        </div>
+        <span>More</span>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">Regulations triggered</div>
+      <div class="chart-subtitle">Sessions that flagged each regulation</div>
+      <div class="reg-bars" id="reg-bars">
+        <div style="font-size:13px;color:var(--muted)">Loading...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Session audit log</div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="setFilter('all')">All sessions</button>
+    <button class="filter-btn high"   onclick="setFilter('high')">High risk</button>
+    <button class="filter-btn med"    onclick="setFilter('medium')">Medium risk</button>
+    <button class="filter-btn low"    onclick="setFilter('low')">Low risk</button>
+    <span class="result-count" id="result-count"></span>
+  </div>
+  <div class="cards-grid" id="cards-grid">
+    <div class="loading" style="grid-column:1/-1">Loading sessions...</div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <span>INHIBITOR AUDIT SYSTEM · PHILLY CODEFEST 2026 · CHALLENGE 3 — GLASS BOX · appliedAIStudio</span>
+  <span id="footer-ts"></span>
+</footer>
+
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div id="modal-id" style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:7px"></div>
+        <div id="modal-risk-row" style="display:flex;align-items:center;gap:10px"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:8000';
+let allSessions = [];
+let currentFilter = 'all';
+
+const hourData = {
+  '2026-02-17T16':5,'2026-02-17T18':8,'2026-02-17T19':17,
+  '2026-02-17T20':20,'2026-02-17T21':10,'2026-02-17T22':3,
+  '2026-02-17T23':2,'2026-02-18T00':21,'2026-02-18T01':18,
+  '2026-02-18T02':1,'2026-02-18T17':6,'2026-02-18T18':9
+};
+
+function fmtTime(iso) {
+  return new Date(iso).toISOString().replace('T',' ').slice(0,16) + ' UTC';
+}
+function fmtShort(iso) {
+  return new Date(iso).toISOString().slice(11,16);
+}
+
+async function switchSet(set) {
+  document.getElementById('btn-set-a').style.background = set === 'a' ? 'var(--low-bg)' : 'var(--surface)';
+  document.getElementById('btn-set-a').style.color = set === 'a' ? 'var(--low)' : 'var(--muted)';
+  document.getElementById('btn-set-a').style.borderColor = set === 'a' ? 'var(--low-border)' : 'var(--border2)';
+  document.getElementById('btn-set-b').style.background = set === 'b' ? 'var(--low-bg)' : 'var(--surface)';
+  document.getElementById('btn-set-b').style.color = set === 'b' ? 'var(--low)' : 'var(--muted)';
+  document.getElementById('btn-set-b').style.borderColor = set === 'b' ? 'var(--low-border)' : 'var(--border2)';
+
+  try {
+    const res = await fetch(`./session_cache_inhibitor_logs_set_${set}.json`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    allSessions = Array.isArray(data) ? data : (data.sessions || []);
+    renderAll();
+  } catch(e) {
+    document.getElementById('cards-grid').innerHTML =
+      `<div class="no-results" style="grid-column:1/-1">Cache for Set ${set.toUpperCase()} not found. Run the analysis for this set first.</div>`;
+  }
+}
+
+async function loadSessions() {
+  try {
+    const res = await fetch('./session_cache_inhibitor_logs_set_a.json');
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    allSessions = Array.isArray(data) ? data : (data.sessions || []);
+    renderAll();
+  } catch(e) {
+    try {
+      const res = await fetch(`${API}/sessions`);
+      const data = await res.json();
+      allSessions = data.sessions || [];
+      renderAll();
+    } catch(e2) {
+      document.getElementById('cards-grid').innerHTML =
+        `<div class="no-results" style="grid-column:1/-1">Could not load data.<br>Make sure session_cache.json is in the same folder, or the server is running at ${API}.</div>`;
+    }
+  }
+}
+
+function renderAll() {
+  renderKPIs();
+  renderDonut();
+  renderHeatmap();
+  renderRegBars();
+  renderCards();
+  document.getElementById('footer-ts').textContent =
+    'LOADED ' + new Date().toISOString().slice(0,19).replace('T',' ') + ' UTC';
+}
+
+function renderKPIs() {
+  const total = allSessions.length;
+  const high  = allSessions.filter(s => s.risk_level === 'high').length;
+  const med   = allSessions.filter(s => s.risk_level === 'medium').length;
+  const low   = allSessions.filter(s => s.risk_level === 'low').length;
+  document.getElementById('kpi-total').textContent = total;
+  document.getElementById('kpi-high').textContent  = high;
+  document.getElementById('kpi-med').textContent   = med;
+  document.getElementById('kpi-low').textContent   = low;
+  document.getElementById('kpi-high-pct').textContent = total ? Math.round(high/total*100) + '% of sessions' : '—';
+  document.getElementById('kpi-med-pct').textContent  = total ? Math.round(med/total*100)  + '% of sessions' : '—';
+  document.getElementById('kpi-low-pct').textContent  = total ? Math.round(low/total*100)  + '% of sessions' : '—';
+}
+
+function renderDonut() {
+  const total = allSessions.length;
+  const high  = allSessions.filter(s => s.risk_level === 'high').length;
+  const med   = allSessions.filter(s => s.risk_level === 'medium').length;
+  const low   = allSessions.filter(s => s.risk_level === 'low').length;
+  const circ  = 2 * Math.PI * 40;
+  function setArc(id, pct, offset) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.strokeDasharray = `${circ * pct} ${circ * (1 - pct)}`;
+    el.style.strokeDashoffset = -offset;
+  }
+  const hp = high / total, mp = med / total, lp = low / total;
+  setTimeout(() => {
+    setArc('donut-high', hp, 0);
+    setArc('donut-med',  mp, circ * hp);
+    setArc('donut-low',  lp, circ * (hp + mp));
+  }, 100);
+  document.getElementById('donut-center').textContent = total;
+  document.getElementById('donut-legend').innerHTML = [
+    { label: 'High risk',   val: high, color: '#c8291a' },
+    { label: 'Medium risk', val: med,  color: '#c97a0a' },
+    { label: 'Low risk',    val: low,  color: '#1a8a4a' },
+  ].map(l => `<div class="legend-item">
+    <div class="legend-dot" style="background:${l.color}"></div>
+    <span class="legend-label">${l.label}</span>
+    <span class="legend-value">${l.val}</span>
+  </div>`).join('');
+}
+
+function renderHeatmap() {
+  const entries = Object.entries(hourData).sort();
+  const maxVal  = Math.max(...Object.values(hourData));
+  function cls(v) {
+    if (!v)              return 'c0';
+    if (v <= maxVal*.25) return 'c1';
+    if (v <= maxVal*.5)  return 'c2';
+    if (v <= maxVal*.75) return 'c3';
+    return 'c4';
+  }
+  const byDate = {};
+  for (const [k, v] of entries) {
+    const d = k.slice(0,10);
+    if (!byDate[d]) byDate[d] = [];
+    byDate[d].push({ h: k.slice(11,13), v });
+  }
+  document.getElementById('heatmap').innerHTML = Object.entries(byDate).map(([date, hrs]) =>
+    `<div class="heatmap-row">
+      <div class="heatmap-label">${date.slice(5)}</div>
+      <div class="heatmap-cells">${hrs.map(({h,v}) =>
+        `<div class="heatmap-cell ${cls(v)}" title="${date} ${h}:00 — ${v} session${v!==1?'s':''}">${v||''}</div>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderRegBars() {
+  const regCount = {};
+  for (const s of allSessions) {
+    for (const r of (s.regulations || [])) regCount[r] = (regCount[r]||0) + 1;
+  }
+  const sorted = Object.entries(regCount).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const el = document.getElementById('reg-bars');
+  if (!sorted.length) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--muted);padding:4px 0">No regulatory flags in current data.<br><span style="font-size:12px">Re-run analysis with a valid API key to populate this.</span></div>';
+    return;
+  }
+  const max = sorted[0][1];
+  el.innerHTML = sorted.map(([reg, cnt]) =>
+    `<div class="reg-bar-row">
+      <div class="reg-bar-name">${reg}</div>
+      <div class="reg-bar-track"><div class="reg-bar-fill" style="width:${Math.round(cnt/max*100)}%"></div></div>
+      <div class="reg-bar-count">${cnt}</div>
+    </div>`
+  ).join('');
+}
+
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  const map = { all:0, high:1, medium:2, low:3 };
+  document.querySelectorAll('.filter-btn')[map[f]].classList.add('active');
+  renderCards();
+}
+
+function renderCards() {
+  const filtered = currentFilter === 'all'
+    ? allSessions
+    : allSessions.filter(s => s.risk_level === currentFilter);
+  document.getElementById('result-count').textContent =
+    `${filtered.length} session${filtered.length!==1?'s':''}`;
+  if (!filtered.length) {
+    document.getElementById('cards-grid').innerHTML =
+      `<div class="no-results" style="grid-column:1/-1">No sessions match this filter.</div>`;
+    return;
+  }
+  document.getElementById('cards-grid').innerHTML = filtered.map(s => {
+    const rl = s.risk_level || 'unknown';
+    const regs = (s.regulations||[]).map(r=>`<span class="reg-tag">${r}</span>`).join('') ||
+      '<span style="font-size:11px;color:var(--muted2)">No regulations flagged</span>';
+    return `<div class="session-card ${rl}" onclick="openModal(${s.session_id})">
+      <div class="card-top">
+        <span class="card-id">SESSION ${String(s.session_id).padStart(3,'0')}</span>
+        <span class="card-time">${fmtShort(s.started_at)}</span>
+      </div>
+      <div class="card-risk-row">
+        <span class="risk-badge ${rl}">${rl}</span>
+        <span class="score-pill">Score: ${s.risk_score}</span>
+      </div>
+      <div class="card-summary">${s.summary || 'No summary available.'}</div>
+      <div class="card-regs">${regs}</div>
+      <div class="card-footer">
+        <div class="card-footer-label">Recommended action</div>
+        ${s.recommended_action || '—'}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openModal(id) {
+  const s = allSessions.find(x => x.session_id === id);
+  if (!s) return;
+  const rl = s.risk_level || 'unknown';
+  document.getElementById('modal-id').textContent =
+    `SESSION ${String(s.session_id).padStart(3,'0')} · ${fmtTime(s.started_at)}`;
+  document.getElementById('modal-risk-row').innerHTML =
+    `<span class="risk-badge ${rl}">${rl} risk</span>
+     <span class="score-pill">Risk score: ${s.risk_score} / 100</span>`;
+  const regs = (s.regulations||[]).length
+    ? s.regulations.map(r=>`<span class="modal-reg">${r}</span>`).join('')
+    : '<span style="color:var(--muted);font-size:13px">No regulations flagged in this session.</span>';
+  const obs  = (s.top_observations||[]).map(o=>`<li>${o}</li>`).join('') || '<li>None recorded</li>';
+  const reas = (s.top_reasons||[]).map(r=>`<li>${r}</li>`).join('') || '<li>None recorded</li>';
+  document.getElementById('modal-body').innerHTML = `
+    <div>
+      <div class="modal-section-title">Session metadata</div>
+      <div class="modal-meta">
+        <div class="modal-meta-item"><div class="modal-meta-label">Observations flagged</div><div class="modal-meta-value">${s.observation_count}</div></div>
+        <div class="modal-meta-item"><div class="modal-meta-label">Intervention reasons</div><div class="modal-meta-value">${s.reason_count}</div></div>
+        <div class="modal-meta-item"><div class="modal-meta-label">Rule checked</div><div class="modal-meta-value">${(s.rules||[]).join(', ')||'—'}</div></div>
+        <div class="modal-meta-item"><div class="modal-meta-label">Final validation</div><div class="modal-meta-value" style="color:var(--low)">${s.final_validation?'PASSED ✓':'FAILED ✗'}</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="modal-section-title">What happened — plain English</div>
+      <div class="modal-summary">${s.summary||'No summary available.'}</div>
+    </div>
+    <div>
+      <div class="modal-section-title">What the AI did wrong</div>
+      <ul class="modal-list">${obs}</ul>
+    </div>
+    <div>
+      <div class="modal-section-title">Why it was flagged</div>
+      <ul class="modal-list">${reas}</ul>
+    </div>
+    <div>
+      <div class="modal-section-title">Regulations triggered</div>
+      <div class="modal-regs">${regs}</div>
+    </div>
+    <div>
+      <div class="modal-section-title">Recommended action for auditor</div>
+      <div class="modal-action">${s.recommended_action||'—'}</div>
+    </div>`;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+loadSessions();
+</script>
+</body>
+</html>
