@@ -1,66 +1,41 @@
-# Inhibitor Audit Pipeline
+# GLASS BOX (AUDIT DASHBOARD) — appliedAIStudio
 
-Glass Box audit dashboard backend — Challenge 3.
+## Team
 
-## Setup
+- Team name: Insighters
+- Team members:
+  - Hitashi Kalra [hk835@drexel.edu]
+  - Puranjay Wadhera [pw425@drexel.edu]
+  - Haard Doshi [hhd27@drexel.edu]
+  - Aditya Raj [ar3989@drexel.edu]
+  - Parsa Ahmadi Nasab Emran [parsatempleowl@brandeis.edu]
 
-```bash
-pip install -r requirements.txt
-```
+## Challenges implemented
 
-Set your OpenAI API key:
-```bash
-export OPENAI_API_KEY=sk-...
-```
+- Challenge 3: Glass Box (Audit Dashboard)
 
-## Run
+## Run instructions
 
-```bash
-uvicorn main:app --reload --port 8000
-```
+1. Install dependencies: `pip install -r requirements.txt`
+2. Set your OpenAI API key: `export OPENAI_API_KEY=sk-...`
+3. Run Set A: `LOG_CSV=inhibitor_logs_set_a.csv uvicorn main:app --reload --port 8000` then POST /analyze at http://localhost:8000/docs. Wait for done, then Ctrl+C.
+4. Run Set B: `LOG_CSV=inhibitor_logs_set_b.csv uvicorn main:app --reload --port 8000` then POST /analyze again. Wait for done.
+5. Serve dashboard: `python3 -m http.server 3000`
+6. Open: http://localhost:3000/dashboard.html
+7. Use SET A / SET B toggle to switch datasets.
 
-## Usage
+Note: If session_cache_inhibitor_logs_set_a.json and session_cache_inhibitor_logs_set_b.json are already in the folder, skip steps 2-4 and just run step 5.
 
-### 1. Start the server
-```
-uvicorn main:app --reload --port 8000
-```
+## Assumptions and limitations
 
-### 2. Trigger AI analysis (runs in background, ~2-3 min for all 120 sessions)
-```
-POST http://localhost:8000/analyze
-```
+- Set A sessions are bounded by request_success events; Set B by rules_inhibition_skipped events
+- AI analysis via GPT-4o-mini is non-deterministic — re-running may produce slightly different results
+- Risk classification is AI-generated and not a substitute for formal legal or compliance review
+- The heatmap is optimized for Set A's time range (Feb 17-18 2026)
+- Dashboard is read-only and does not support exporting reports
 
-### 3. Poll progress
-```
-GET http://localhost:8000/status
-→ {"state": "running", "completed": 45, "total": 120}
-```
+## License and copyright
 
-### 4. Fetch results once done
-```
-GET http://localhost:8000/sessions              → all 120 session summaries
-GET http://localhost:8000/sessions/1            → single session detail
-GET http://localhost:8000/sessions?risk=high    → only high-risk sessions
-GET http://localhost:8000/sessions?regulation=HIPAA
-GET http://localhost:8000/overview              → aggregate stats
-GET http://localhost:8000/health
-```
-
-## API Docs
-Visit http://localhost:8000/docs for the interactive Swagger UI.
-
-## Files
-- `parser.py`   — loads CSV, groups into 120 session objects
-- `analyzer.py` — OpenAI GPT-4o-mini analysis per session
-- `main.py`     — FastAPI server with all endpoints
-- `session_cache.json` — auto-generated after first analysis run (skips re-analysis on restart)
-- `inhibitor_logs.csv` — source log file (read-only)
-
-## Embedding in the frontend
-Your teammate's website can fetch from these endpoints directly:
-```js
-const res = await fetch('http://localhost:8000/sessions');
-const { sessions } = await res.json();
-```
-Make sure the server is running and CORS is open (it is, by default).
+Copyright (c) 2025 Insighters (Hitashi Kalra, Puranjay Wadhera, Haard Doshi, Aditya Raj, Parsa Ahmadi Nasab Emran)
+This team's submission is provided under the MIT License.
+SPDX-License-Identifier: MIT
