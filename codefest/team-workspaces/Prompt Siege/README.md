@@ -67,7 +67,7 @@ INHIBITOR_MIN_INTERVAL_SECONDS=0
 
 ## License and copyright
 
-Copyright (c) 2025 <Prompt Siege / Andrew Brown, Aaron Joyce, Daniel Davis, Will Feid>
+Copyright (c) 2026 <Prompt Siege / Andrew Brown, Aaron Joyce, Daniel Davis, Will Feid>
 
 This team's submission is provided under the MIT License.
 
