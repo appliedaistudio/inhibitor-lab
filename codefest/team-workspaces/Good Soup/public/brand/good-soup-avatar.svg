@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
+  <title id="title">Good Soup avatar</title>
+  <desc id="desc">Circular bowl icon avatar for Good Soup.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#515f74"/>
+      <stop offset="100%" stop-color="#455368"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="28" fill="#f1f4f6"/>
+  <circle cx="48" cy="48" r="32" fill="url(#bg)"/>
+  <path d="M26 46c0 12.15 9.85 22 22 22s22-9.85 22-22H26Z" fill="#f8f9fa"/>
+  <path d="M36 34c-2.5-4.6 2.3-7.7 3.8-11.3M48 31c-2.5-4.6 2.3-7.7 3.8-11.3M60 34c-2.5-4.6 2.3-7.7 3.8-11.3" fill="none" stroke="#d5e3fd" stroke-linecap="round" stroke-width="3.5"/>
+</svg>
