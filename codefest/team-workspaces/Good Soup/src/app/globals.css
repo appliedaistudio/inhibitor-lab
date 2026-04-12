@@ -1189,6 +1189,8 @@ a {
   border-radius: 18px 18px 4px 18px;
   background: rgba(81, 95, 116, 0.1);
   box-shadow: 0 6px 16px rgba(16, 34, 44, 0.04);
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .user-turn__avatar {
@@ -1201,6 +1203,25 @@ a {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.user-turn__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-turn__avatar-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--display-sans);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-dim);
 }
 
 .user-turn__avatar svg {
@@ -1267,6 +1288,8 @@ a {
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid rgba(171, 179, 183, 0.2);
   box-shadow: 0 10px 24px rgba(16, 34, 44, 0.04);
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .assistant-turn__avatar {
@@ -1296,6 +1319,9 @@ a {
   display: grid;
   gap: 0.85rem;
   color: rgba(26, 31, 39, 0.96);
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .assistant-turn__markdown>* {
@@ -1308,6 +1334,13 @@ a {
 .assistant-turn__markdown pre,
 .assistant-turn__markdown blockquote {
   margin: 0;
+}
+
+.assistant-turn__markdown p,
+.assistant-turn__markdown li,
+.assistant-turn__markdown blockquote {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .assistant-turn__markdown ul,
@@ -1325,6 +1358,9 @@ a {
   background: rgba(81, 95, 116, 0.1);
   font-family: var(--mono);
   font-size: 0.88em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .assistant-turn__markdown pre {
@@ -1339,12 +1375,17 @@ a {
   padding: 0;
   background: transparent;
   color: inherit;
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
 }
 
 .assistant-turn__markdown a {
   color: var(--accent-strong);
   text-decoration: underline;
   text-underline-offset: 0.18rem;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .assistant-turn__markdown strong {
@@ -2755,12 +2796,22 @@ a {
 .session-sidebar__icon-btn,
 .add-folder-btn,
 .session-group__add-btn {
-  width: auto;
+  /* base button reset */
+  background: transparent;
+  border: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 100ms ease, color 100ms ease;
+  /* sizing / shape */
   min-width: 26px;
   height: 26px;
   padding: 0 0.45rem;
   gap: 0.25rem;
-  border-radius: 999px;
+  border-radius: 5px;
 }
 
 .session-sidebar__icon-btn:disabled {
@@ -2974,4 +3025,9 @@ a {
 
 .dialog-btn--danger:hover {
   background: #a93226;
+}
+.chat-input-area, .composer-shell, .composer-shell__textarea {
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow-wrap: break-word !important;
 }

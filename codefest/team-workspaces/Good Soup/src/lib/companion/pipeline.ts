@@ -110,9 +110,9 @@ async function buildLocalFixLoopResult(
 
   const judgmentsAfterFix = draftChanged
     ? await rerunVerifiers({
-      ...verifierInput,
-      draft: currentDraft
-    })
+        ...verifierInput,
+        draft: currentDraft
+      })
     : judgments;
   const judgmentsByVerifier = new Map(
     judgmentsAfterFix.map((judgment) => [judgment.verifier_name, judgment] as const)
@@ -271,19 +271,19 @@ function overrideLearningInhibitorResult(
   const raw =
     inhibitorResult.raw && typeof inhibitorResult.raw === "object" && !Array.isArray(inhibitorResult.raw)
       ? {
-        ...inhibitorResult.raw,
-        override: {
-          applied: true,
-          reason: "learning_mode_student_misconception"
+          ...inhibitorResult.raw,
+          override: {
+            applied: true,
+            reason: "learning_mode_student_misconception"
+          }
         }
-      }
       : {
-        raw: inhibitorResult.raw,
-        override: {
-          applied: true,
-          reason: "learning_mode_student_misconception"
-        }
-      };
+          raw: inhibitorResult.raw,
+          override: {
+            applied: true,
+            reason: "learning_mode_student_misconception"
+          }
+        };
 
   return {
     blocked: false,
@@ -298,19 +298,19 @@ function overrideInitialInvalidOutputResult(
   const raw =
     inhibitorResult.raw && typeof inhibitorResult.raw === "object" && !Array.isArray(inhibitorResult.raw)
       ? {
-        ...inhibitorResult.raw,
-        override: {
-          applied: true,
-          reason: "initial_invalid_output_requires_correction"
+          ...inhibitorResult.raw,
+          override: {
+            applied: true,
+            reason: "initial_invalid_output_requires_correction"
+          }
         }
-      }
       : {
-        raw: inhibitorResult.raw,
-        override: {
-          applied: true,
-          reason: "initial_invalid_output_requires_correction"
-        }
-      };
+          raw: inhibitorResult.raw,
+          override: {
+            applied: true,
+            reason: "initial_invalid_output_requires_correction"
+          }
+        };
 
   return {
     blocked: false,
@@ -563,19 +563,19 @@ export async function runCompanionPipeline(
   const fixResult =
     runtime.degraded || !hasFailJudgment(initialJudgments)
       ? await buildLocalFixLoopResult(
-        draft,
-        initialJudgments,
-        request.user_message,
-        verifierInput,
-        verifierRunner
-      )
+          draft,
+          initialJudgments,
+          request.user_message,
+          verifierInput,
+          verifierRunner
+        )
       : await fixLoopFn(
-        draft,
-        initialJudgments,
-        verifierInput,
-        primaryAgent,
-        runVerifierByName
-      );
+          draft,
+          initialJudgments,
+          verifierInput,
+          primaryAgent,
+          runVerifierByName
+        );
 
   const finalDraft = fixResult.final_draft;
   const finalJudgments = fixResult.judgments_after_fix;

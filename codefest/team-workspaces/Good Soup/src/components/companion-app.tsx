@@ -768,7 +768,7 @@ export function CompanionApp() {
         ) : null}
 
         <div className="sidebar-bottom">
-          {!sidebarCollapsed && <UserProfile />}
+          <UserProfile collapsed={sidebarCollapsed} />
           <SettingsButton className="sidebar-settings-btn" />
         </div>
       </aside>

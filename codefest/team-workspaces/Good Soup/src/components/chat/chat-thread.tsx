@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { useSession } from "next-auth/react";
 
 import type {
   AttachmentReference,
@@ -59,10 +60,29 @@ function UserBubbleIcon() {
   );
 }
 
+function UserAvatar({ image, fallback }: { image?: string | null; fallback: string }) {
+  if (image) {
+    return (
+      <img
+        src={image}
+        alt="User avatar"
+        className="user-turn__avatar-img"
+        referrerPolicy="no-referrer"
+      />
+    );
+  }
+  return (
+    <div className="user-turn__avatar-fallback">
+      {fallback}
+    </div>
+  );
+}
+
 export const ChatThread = forwardRef<HTMLDivElement, ChatThreadProps>(function ChatThread(
   { messages, activeResult, showProcess, onToggleProcess, onRegenerate, pending = false },
   ref
 ) {
+  const { data: session } = useSession();
   const hasMessages = messages.length > 0;
 
   return (
@@ -95,7 +115,14 @@ export const ChatThread = forwardRef<HTMLDivElement, ChatThreadProps>(function C
                     </div>
                   </div>
                   <span className="user-turn__avatar">
-                    <UserBubbleIcon />
+                    {session?.user ? (
+                      <UserAvatar
+                        image={session.user.image}
+                        fallback={session.user.name?.[0] ?? session.user.email?.[0] ?? "?"}
+                      />
+                    ) : (
+                      <UserBubbleIcon />
+                    )}
                   </span>
                 </div>
               ) : (

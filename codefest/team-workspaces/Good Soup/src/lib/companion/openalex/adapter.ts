@@ -1,6 +1,7 @@
 import type { EvidenceRecord } from "../contracts";
 import OpenAI from "openai";
 import { getRuntimeConfig } from "../config";
+
 interface OpenAlexWork {
   id?: string;
   display_name?: string;

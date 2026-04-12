@@ -37,6 +37,22 @@
   opacity: 0.82;
 }
 
+.user-profile-container.collapsed {
+  width: auto;
+  justify-content: center;
+}
+
+.user-profile-container.collapsed .user-profile-bubble {
+  grid-template-columns: 1fr;
+  padding: 0;
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
 .user-profile-skeleton {
   width: 100%;
   height: 58px;
@@ -44,6 +60,11 @@
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.45));
   background-size: 200% 100%;
   animation: user-profile-pulse 1.2s ease-in-out infinite;
+}
+
+.user-profile-container.collapsed .user-profile-skeleton {
+  width: 38px;
+  height: 38px;
 }
 
 .user-avatar-wrap {

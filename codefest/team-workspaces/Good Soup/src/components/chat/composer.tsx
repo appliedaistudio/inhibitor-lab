@@ -90,7 +90,7 @@ export function Composer({
             disabled={!hasText}
             onClick={onSubmit}
           >
-            Send
+            Initialize
           </button>
         </div>
       </div>

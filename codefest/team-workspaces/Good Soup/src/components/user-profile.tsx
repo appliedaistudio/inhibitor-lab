@@ -14,7 +14,7 @@ function UserAvatar({
   return (
     <div className="user-avatar-wrap">
       {image ? (
-        <img src={image} alt="User avatar" className="user-avatar" />
+        <img src={image} alt="User avatar" className="user-avatar" referrerPolicy="no-referrer" />
       ) : (
         <div className="user-avatar-fallback">{fallback}</div>
       )}
@@ -22,12 +22,12 @@ function UserAvatar({
   );
 }
 
-function AuthenticatedUserProfile() {
+function AuthenticatedUserProfile({ collapsed }: { collapsed?: boolean }) {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
     return (
-      <div className="user-profile-container loading">
+      <div className={`user-profile-container loading ${collapsed ? "collapsed" : ""}`}>
         <div className="user-profile-skeleton" />
       </div>
     );
@@ -35,43 +35,49 @@ function AuthenticatedUserProfile() {
 
   if (session?.user) {
     return (
-      <div className="user-profile-container auth-active">
+      <div className={`user-profile-container auth-active ${collapsed ? "collapsed" : ""}`}>
         <div className="user-profile-bubble">
           <UserAvatar
             image={session.user.image}
             fallback={session.user.name?.[0] ?? session.user.email?.[0] ?? "?"}
           />
-          <div className="user-info">
-            <h3 className="user-name">{session.user.name || "Student"}</h3>
-            <p className="user-email">{session.user.email || "Signed in"}</p>
-          </div>
-          <div className="user-status-dot" />
+          {!collapsed && (
+            <div className="user-info">
+              <h3 className="user-name">{session.user.name || "Student"}</h3>
+              <p className="user-email">{session.user.email || "Signed in"}</p>
+            </div>
+          )}
+          {!collapsed && <div className="user-status-dot" />}
         </div>
       </div>
     );
   }
 
   return (
-    <div className="user-profile-container">
+    <div className={`user-profile-container ${collapsed ? "collapsed" : ""}`}>
       <button
         className="user-profile-bubble user-profile-bubble--action"
         onClick={() => void signIn("google", { callbackUrl: "/" })}
         type="button"
+        title={collapsed ? "Sign in with Google" : undefined}
       >
         <UserAvatar fallback="G" />
-        <div className="user-info">
-          <h3 className="user-name">Sign in with Google</h3>
-          <p className="user-email">Enable account-linked workspace features</p>
-        </div>
+        {!collapsed && (
+          <div className="user-info">
+            <h3 className="user-name">Sign in with Google</h3>
+            <p className="user-email">Enable account-linked workspace features</p>
+          </div>
+        )}
       </button>
     </div>
   );
 }
 
-export function UserProfile() {
+export function UserProfile({ collapsed }: { collapsed?: boolean }) {
   const authEnabled = useAuthAvailability();
 
   if (!authEnabled) {
+    if (collapsed) return null;
     return (
       <div className="user-profile-container">
         <div className="user-profile-bubble user-profile-bubble--disabled">
@@ -85,5 +91,5 @@ export function UserProfile() {
     );
   }
 
-  return <AuthenticatedUserProfile />;
+  return <AuthenticatedUserProfile collapsed={collapsed} />;
 }

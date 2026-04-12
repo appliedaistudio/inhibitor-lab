@@ -258,23 +258,23 @@ export function normalizeDraft(raw: unknown, input: PrimaryAgentInput): PrimaryA
 
   const claims = Array.isArray(record.claims)
     ? record.claims.flatMap((item) => {
-      if (!item || typeof item !== "object") {
-        return [];
-      }
-      const claim = item as Record<string, unknown>;
-      return [
-        {
-          text: typeof claim.text === "string" ? claim.text : answer,
-          evidence_ref_ids: Array.isArray(claim.evidence_ref_ids)
-            ? claim.evidence_ref_ids.filter((value): value is string => typeof value === "string")
-            : [],
-          certainty:
-            claim.certainty === "high" || claim.certainty === "medium" || claim.certainty === "low"
-              ? claim.certainty
-              : "low"
-        } satisfies DraftClaim
-      ];
-    })
+        if (!item || typeof item !== "object") {
+          return [];
+        }
+        const claim = item as Record<string, unknown>;
+        return [
+          {
+            text: typeof claim.text === "string" ? claim.text : answer,
+            evidence_ref_ids: Array.isArray(claim.evidence_ref_ids)
+              ? claim.evidence_ref_ids.filter((value): value is string => typeof value === "string")
+              : [],
+            certainty:
+              claim.certainty === "high" || claim.certainty === "medium" || claim.certainty === "low"
+                ? claim.certainty
+                : "low"
+          } satisfies DraftClaim
+        ];
+      })
     : deriveClaims(answer, input.evidence);
 
   const studentModelRaw =
@@ -285,8 +285,8 @@ export function normalizeDraft(raw: unknown, input: PrimaryAgentInput): PrimaryA
   const studentModel: StudentModelSummary = {
     understanding_level:
       studentModelRaw?.understanding_level === "low" ||
-        studentModelRaw?.understanding_level === "partial" ||
-        studentModelRaw?.understanding_level === "strong"
+      studentModelRaw?.understanding_level === "partial" ||
+      studentModelRaw?.understanding_level === "strong"
         ? studentModelRaw.understanding_level
         : inferredStudentModel.understanding_level,
     misconceptions: Array.isArray(studentModelRaw?.misconceptions)
@@ -405,9 +405,9 @@ export function buildPrompt(input: PrimaryAgentInput): string {
       revision_mode: Boolean(input.revision_brief),
       revision_instructions: input.revision_brief
         ? [
-          "This is a revision pass.",
-          "Use revision_brief to amend the current answer rather than generating a fresh first-pass answer."
-        ]
+            "This is a revision pass.",
+            "Use revision_brief to amend the current answer rather than generating a fresh first-pass answer."
+          ]
         : []
     },
     ...(input.revision_brief ? { revision_brief: input.revision_brief } : {}),
