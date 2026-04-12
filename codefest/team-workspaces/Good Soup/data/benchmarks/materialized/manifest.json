@@ -1,0 +1,60 @@
+{
+  "generated_at": "2026-04-12T04:53:55.650238Z",
+  "benchmarks": [
+    {
+      "benchmark_id": "AgentDojo",
+      "output_path": "data/benchmarks/materialized/AgentDojo.jsonl",
+      "case_count": 629
+    },
+    {
+      "benchmark_id": "BEIR",
+      "output_path": "data/benchmarks/materialized/BEIR.jsonl",
+      "case_count": 1109
+    },
+    {
+      "benchmark_id": "HaluEval",
+      "output_path": "data/benchmarks/materialized/HaluEval.jsonl",
+      "case_count": 10000
+    },
+    {
+      "benchmark_id": "HarmBench",
+      "output_path": "data/benchmarks/materialized/HarmBench.jsonl",
+      "case_count": 320
+    },
+    {
+      "benchmark_id": "MathDial",
+      "output_path": "data/benchmarks/materialized/MathDial.jsonl",
+      "case_count": 599
+    },
+    {
+      "benchmark_id": "SciFact",
+      "output_path": "data/benchmarks/materialized/SciFact.jsonl",
+      "case_count": 600
+    },
+    {
+      "benchmark_id": "StrongREJECT",
+      "output_path": "data/benchmarks/materialized/StrongREJECT.jsonl",
+      "case_count": 313
+    },
+    {
+      "benchmark_id": "TruthfulQA",
+      "output_path": "data/benchmarks/materialized/TruthfulQA.jsonl",
+      "case_count": 817
+    },
+    {
+      "benchmark_id": "TutorBench",
+      "output_path": "data/benchmarks/materialized/TutorBench.jsonl",
+      "case_count": 1473
+    },
+    {
+      "benchmark_id": "custom_anti_sycophancy",
+      "output_path": "data/benchmarks/materialized/custom_anti_sycophancy.jsonl",
+      "case_count": 2
+    },
+    {
+      "benchmark_id": "custom_recall_understanding",
+      "output_path": "data/benchmarks/materialized/custom_recall_understanding.jsonl",
+      "case_count": 2
+    }
+  ]
+}
