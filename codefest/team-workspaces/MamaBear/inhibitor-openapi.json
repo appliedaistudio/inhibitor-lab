@@ -1,0 +1,568 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Inhibitor API",
+    "version": "2.3.0",
+    "description": "REST API for the Inhibitor service, including health checks, evaluation, logs, and OpenAPI discovery endpoints."
+  },
+  "servers": [
+    {
+      "url": "https://iaas.appliedai.studio/",
+      "description": "Production server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    },
+    "schemas": {
+      "PlainTextMessage": {
+        "type": "string"
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "ThoughtItem": {
+        "type": "object",
+        "required": [
+          "role",
+          "content"
+        ],
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "agent",
+              "human"
+            ]
+          },
+          "content": {
+            "type": "string"
+          }
+        }
+      },
+      "CheckRequest": {
+        "type": "object",
+        "required": [
+          "thought_chain"
+        ],
+        "properties": {
+          "thought_chain": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ThoughtItem"
+            }
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "insight",
+              "performance"
+            ],
+            "default": "insight"
+          },
+          "options": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "provider": {
+                "type": "string"
+              },
+              "model": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "HealthResponse": {
+        "type": "object",
+        "required": [
+          "content",
+          "timestamp"
+        ],
+        "properties": {
+          "content": {
+            "type": "object",
+            "required": [
+              "llmResponse"
+            ],
+            "properties": {
+              "llmResponse": {
+                "type": "string"
+              }
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CheckSuccessResponse": {
+        "type": "object",
+        "required": [
+          "result",
+          "version"
+        ],
+        "properties": {
+          "result": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "CheckErrorResponse": {
+        "type": "object",
+        "required": [
+          "success",
+          "error"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "const": false
+          },
+          "error": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "diagnostics": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "LogsListResponse": {
+        "type": "object",
+        "required": [
+          "logs",
+          "next_cursor",
+          "has_more"
+        ],
+        "properties": {
+          "logs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "has_more": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DeleteLogResponse": {
+        "type": "object",
+        "required": [
+          "deleted",
+          "id"
+        ],
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/openapi": {
+      "get": {
+        "summary": "Get OpenAPI specification (JSON alias)",
+        "description": "Returns the OpenAPI document in JSON format.",
+        "responses": {
+          "200": {
+            "description": "OpenAPI document in JSON format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "openapi",
+                    "info",
+                    "paths"
+                  ],
+                  "properties": {
+                    "openapi": {
+                      "type": "string"
+                    },
+                    "info": {
+                      "type": "object"
+                    },
+                    "paths": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/openapi.json": {
+      "get": {
+        "summary": "Get OpenAPI specification (JSON)",
+        "description": "Returns the OpenAPI document in JSON format.",
+        "responses": {
+          "200": {
+            "description": "OpenAPI document in JSON format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "openapi",
+                    "info",
+                    "paths"
+                  ],
+                  "properties": {
+                    "openapi": {
+                      "type": "string"
+                    },
+                    "info": {
+                      "type": "object"
+                    },
+                    "paths": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/openapi.yaml": {
+      "get": {
+        "summary": "Get OpenAPI specification (YAML)",
+        "description": "Returns the OpenAPI document in YAML format.",
+        "responses": {
+          "200": {
+            "description": "OpenAPI document in YAML format",
+            "content": {
+              "application/yaml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Health check and API verification",
+        "description": "Returns a simple LLM connectivity check payload.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Health check response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (missing or invalid API key)",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/check": {
+      "post": {
+        "summary": "Run inhibitor evaluation",
+        "description": "Evaluates a thought chain for ethical risks.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Evaluation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logs": {
+      "get": {
+        "summary": "List logs",
+        "description": "Returns paginated log entries owned by the authenticated API key.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Single-day filter (YYYY-MM-DD). Cannot be combined with start_date/end_date.",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Range start date (YYYY-MM-DD). Must be provided with end_date.",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "Range end date (YYYY-MM-DD). Must be provided with start_date.",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 500,
+              "maximum": 1000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Log entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogsListResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid query parameter(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized for logs access",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logs/{id}": {
+      "get": {
+        "summary": "Get a log entry by ID",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Log entry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized for logs access",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Log entry not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a log entry by ID",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Log entry deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteLogResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized for logs access",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
