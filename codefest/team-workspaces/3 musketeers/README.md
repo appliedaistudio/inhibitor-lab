@@ -4,28 +4,28 @@ Use this README as a starting point.
 
 ## Team
 
-- Team name:
-- Team members:
+- Team name: 3 musketeer
+- Team members: Judson, Zion, Uzoma
 
 ## Challenges implemented
 
-- Challenge 1:
-- Challenge 2:
-- Challenge 3:
+- Challenge 1: Not Implemented
+- Challenge 2: Not Implemented
+- Challenge 3: Implemented
 
 ## Run instructions
 
-1.
-2.
-3.
+1. cd to frontend/Glassbox/vite-project
+2. npm run dev
+3. go to localhost
 
 ## Assumptions and limitations
 
-- 
+- Having the structured json file
 
 ## License and copyright
 
-Copyright (c) 2025 <Team Name / Author Names>
+Copyright (c) 2025 <3 musketeers / Judson, Zion, Uzoma>
 
 This team's submission is provided under the MIT License.
 
