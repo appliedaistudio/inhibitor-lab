@@ -1,6 +1,11 @@
 # Team Bytes
 
 This folder contains our hackathon submission for the Applied AI Studio challenges. We worked across three tracks, so everything is organized by challenge folder.
+
+## Quick Access
+
+**PoliSwipe:** Start with [PoliSwipe.md](./PoliSwipe.md) for the top-level pointer to our civic engagement app, then open `challenges/challenge-2/` for the full source.
+
 ## Team
 
 **Team name:** Bytes
@@ -18,7 +23,8 @@ Folder: `challenges/challenge-1/`
 An interactive UI for reviewing agent activity, policy triggers, intervention logs, and decision traces in one place.
 
 **Challenge 2: PoliSwipe**  
-Folder: `challenges/challenge-2/`  
+Top-level pointer: `PoliSwipe.md`  
+Source folder: `challenges/challenge-2/`  
 A civic engagement app that uses Inhibitor to help users evaluate political content with more trust and transparency.
 
 **Challenge 3: Presented by Bytes**  
