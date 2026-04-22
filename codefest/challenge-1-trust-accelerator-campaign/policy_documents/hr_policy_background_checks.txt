@@ -1,7 +1,0 @@
-Human Resources Policy – Recruitment & Compliance (v2.2)
-
-- Background checks must be completed before a start date is assigned.
-- Offer letters may not be sent if the candidate is missing legal name or date of birth (YYYY-MM-DD).
-- Minors (under 18) cannot be hired for roles requiring late-night shifts.
-- Any role handling PII requires signed confidentiality agreement before system access.
-- If the candidate declines background check, the requisition must be closed as "withdrawn".
