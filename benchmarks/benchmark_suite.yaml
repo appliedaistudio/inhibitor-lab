@@ -1,0 +1,62 @@
+suites:
+  - id: capability_validation
+    name: Capability Validation
+    path: benchmarks/core/capability_validation
+    category: core
+    support_level: native
+    required: true
+    status: planned
+    description: "Preflight validation for the current Inhibitor API contract and response shape."
+  - id: observation_normalization
+    name: Observation Normalization
+    path: benchmarks/core/observation_normalization
+    category: core
+    support_level: native
+    required: true
+    status: planned
+    description: "Native benchmark area for temporal validation, subsumption, inference normalization, and prediction consistency."
+  - id: decision_compatibility
+    name: Decision Compatibility
+    path: benchmarks/core/decision_compatibility
+    category: core
+    support_level: compatibility_mapped
+    required: true
+    status: planned
+    description: "Compatibility layer for mapping current Inhibitor signals to paper-defined runtime decisions."
+  - id: runtime_trajectories
+    name: Runtime Trajectories
+    path: benchmarks/core/runtime_trajectories
+    category: core
+    support_level:
+      - native
+      - compatibility_mapped
+      - simulated
+    required: true
+    status: planned
+    description: "Trajectory-level benchmark area for runtime-control scenarios, including simulated controller outcomes where needed."
+  - id: operational_stress
+    name: Operational Stress
+    path: benchmarks/diagnostics/operational_stress
+    category: diagnostic
+    support_level: native
+    required: false
+    status: planned
+    description: "Diagnostic area for load, latency, throughput, errors, timeouts, and degradation behavior."
+  - id: large_context_robustness
+    name: Large Context Robustness
+    path: benchmarks/diagnostics/large_context_robustness
+    category: diagnostic
+    support_level: native
+    required: false
+    status: planned
+    description: "Diagnostic area for long or noisy context where risky content may be embedded in larger context."
+  - id: semantic_context_robustness
+    name: Semantic Context Robustness
+    path: benchmarks/diagnostics/semantic_context_robustness
+    category: diagnostic
+    support_level:
+      - native
+      - compatibility_mapped
+    required: false
+    status: planned
+    description: "Diagnostic area for risky, indirect, or hidden instructions embedded in semantically rich context."
