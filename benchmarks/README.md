@@ -24,3 +24,9 @@ Phase 2 adds lightweight benchmark-suite scaffolding without making the benchmar
 
 Full suite runners, fixtures, scoring, result reporting, and API integration are deferred to later phases.
 
+
+## Phase 3 capability validation
+
+Phase 3 makes [`core/capability_validation/`](core/capability_validation/) the first executable suite. It validates API compatibility and response shape for the current Inhibitor `/check` and `/catalog` contract using standard-library-only runner code.
+
+This suite is intentionally limited: it does not validate full safety efficacy, decision compatibility, observation-normalization quality, runtime trajectories, scoring frameworks, diagnostic robustness, or runtime execution prevention.
