@@ -126,7 +126,10 @@ def dry_run(cases):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Run capability-validation API compatibility checks.")
     parser.add_argument("--dry-run", action="store_true", help="Validate cases and print planned execution only.")
-    parser.add_argument("--endpoint", help="Override INHIBITOR_API_URL.")
+    parser.add_argument(
+        "--endpoint",
+        help="Inhibitor base URL, for example https://iaas.appliedai.studio. Overrides environment variables.",
+    )
     parser.add_argument("--require-live", action="store_true", help="Fail if no live endpoint is configured.")
     parser.add_argument("--run-id", help="Set the result run id.")
     parser.add_argument("--timeout", type=float, default=30.0, help="API call timeout in seconds.")
@@ -136,9 +139,12 @@ def main(argv=None):
     if args.dry_run:
         return dry_run(cases)
 
-    endpoint = args.endpoint or os.environ.get("INHIBITOR_API_URL")
+    endpoint = args.endpoint or os.environ.get("INHIBITOR_API_URL") or os.environ.get("INHIBITOR_BASE_URL")
     if not endpoint:
-        message = "Skipping live capability validation: INHIBITOR_API_URL is not set and --endpoint was not provided."
+        message = (
+            "Skipping live capability validation: no base URL was provided via --endpoint, "
+            "INHIBITOR_API_URL, or INHIBITOR_BASE_URL."
+        )
         print(message)
         return 1 if args.require_live else 0
     return run_live(args, cases, endpoint)

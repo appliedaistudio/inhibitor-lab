@@ -33,7 +33,7 @@ class InhibitorApiClient:
         if method == "POST":
             headers["Content-Type"] = "application/json"
         if self.api_key:
-            headers["Authorization"] = f"Bearer {self.api_key}"
+            headers["X-API-Key"] = self.api_key
         headers.update(self.headers)
         return headers
 

@@ -15,7 +15,7 @@ This suite performs focused compatibility checks against the current Inhibitor A
 - `/check` accepts valid requests in `performance` and `insight` modes.
 - `/check` exposes a structurally compatible response containing inhibition fields.
 - `/check` rejects structurally invalid requests such as an invalid mode or missing `thought_chain`.
-- `/catalog` is available and returns dictionary-shaped catalog-like content or metadata.
+- `/catalog` is available and returns dictionary-shaped catalog-like content or metadata. This is a required API compatibility check.
 
 ## What it does not validate
 
@@ -23,12 +23,13 @@ This suite validates API compatibility only. It does not measure full runtime sa
 
 ## Environment variables
 
-- `INHIBITOR_API_URL`: Base URL for the Inhibitor API under test.
-- `INHIBITOR_API_KEY`: Optional bearer token used as `Authorization: Bearer <token>`.
+- `INHIBITOR_BASE_URL`: Primary base URL for the Inhibitor API under test, for example `https://iaas.appliedai.studio`.
+- `INHIBITOR_API_URL`: Supported alias for the base URL.
+- `INHIBITOR_API_KEY`: Optional API key sent as `X-API-Key: <key>`.
 
 ## Example commands
 
 ```bash
 python benchmarks/core/capability_validation/runner.py --dry-run
-INHIBITOR_API_URL=https://example.com python benchmarks/core/capability_validation/runner.py
+INHIBITOR_BASE_URL=https://iaas.appliedai.studio python benchmarks/core/capability_validation/runner.py
 ```
