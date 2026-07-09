@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate benchmark suite manifest structure for Phase 2 scaffolding."""
+"""Validate benchmark suite manifest and available fixture files."""
 
 from pathlib import Path
 import json
