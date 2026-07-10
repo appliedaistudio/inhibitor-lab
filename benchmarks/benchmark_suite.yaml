@@ -5,7 +5,7 @@ suites:
     category: core
     support_level: native
     required: true
-    status: planned
+    status: implemented
     description: "Preflight validation for the current Inhibitor API contract and response shape."
   - id: observation_normalization
     name: Observation Normalization

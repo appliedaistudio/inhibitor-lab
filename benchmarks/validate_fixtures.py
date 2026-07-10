@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Validate benchmark suite manifest structure for Phase 2 scaffolding."""
+"""Validate benchmark suite manifest and available fixture files."""
 
 from pathlib import Path
+import json
 import sys
 
 try:
-    from lib.schema import require_fields, validate_support_level_value
+    from lib.schema import require_fields, validate_case_base, validate_support_level_value
 except ImportError:  # pragma: no cover
-    from benchmarks.lib.schema import require_fields, validate_support_level_value
+    from benchmarks.lib.schema import require_fields, validate_case_base, validate_support_level_value
 
 BENCHMARKS_DIR = Path(__file__).resolve().parent
 REPO_ROOT = BENCHMARKS_DIR.parent
@@ -101,8 +102,8 @@ def validate_manifest(manifest):
             seen.add(suite["id"])
             if suite["category"] not in {"core", "diagnostic"}:
                 raise ValueError("Field 'category' must be 'core' or 'diagnostic'.")
-            if suite["status"] != "planned":
-                raise ValueError("Field 'status' must be 'planned'.")
+            if suite["status"] not in {"planned", "implemented"}:
+                raise ValueError("Field 'status' must be 'planned' or 'implemented'.")
             if not isinstance(suite["required"], bool):
                 raise ValueError("Field 'required' must be true or false.")
             validate_support_level_value(suite["support_level"])
@@ -114,10 +115,36 @@ def validate_manifest(manifest):
     return errors
 
 
+
+def validate_capability_cases(path=BENCHMARKS_DIR / "core" / "capability_validation" / "cases.jsonl"):
+    """Validate capability-validation JSONL cases with generic case schema checks."""
+
+    errors = []
+    if not path.exists():
+        return errors
+
+    with path.open(encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, start=1):
+            stripped = line.strip()
+            if not stripped:
+                continue
+            try:
+                case = json.loads(stripped)
+            except json.JSONDecodeError as exc:
+                errors.append(f"{path.relative_to(REPO_ROOT)} line {line_number}: invalid JSON: {exc}")
+                continue
+            try:
+                validate_case_base(case)
+            except ValueError as exc:
+                case_id = case.get("id", "<unknown>") if isinstance(case, dict) else "<unknown>"
+                errors.append(f"{path.relative_to(REPO_ROOT)} line {line_number} ({case_id}): {exc}")
+    return errors
+
 def main():
     try:
         manifest = load_suite_manifest()
         errors = validate_manifest(manifest)
+        errors.extend(validate_capability_cases())
     except ValueError as exc:
         errors = [str(exc)]
         manifest = {"suites": []}
@@ -133,7 +160,7 @@ def main():
     diagnostic_count = sum(1 for suite in suites if suite["category"] == "diagnostic")
     print(
         "Benchmark suite manifest validation passed: "
-        f"{len(suites)} planned suites ({core_count} core, {diagnostic_count} diagnostic)."
+        f"{len(suites)} suites ({core_count} core, {diagnostic_count} diagnostic)."
     )
     return 0
 
