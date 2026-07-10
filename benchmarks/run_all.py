@@ -33,6 +33,11 @@ def main():
 
             runner_args = ["--dry-run"] if args.dry_run else []
             return runner.main(runner_args)
+        if suite["id"] == "observation_normalization":
+            from core.observation_normalization import runner
+
+            runner_args = ["--dry-run"] if args.dry_run else []
+            return runner.main(runner_args)
         print(f"Runner for suite '{suite['id']}' is planned for later phases; no benchmarks were executed.")
         return 0
 

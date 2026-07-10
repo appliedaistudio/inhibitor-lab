@@ -116,8 +116,8 @@ def validate_manifest(manifest):
 
 
 
-def validate_capability_cases(path=BENCHMARKS_DIR / "core" / "capability_validation" / "cases.jsonl"):
-    """Validate capability-validation JSONL cases with generic case schema checks."""
+def _validate_jsonl_cases(path, case_validator):
+    """Validate JSONL cases with a supplied case validator."""
 
     errors = []
     if not path.exists():
@@ -134,17 +134,50 @@ def validate_capability_cases(path=BENCHMARKS_DIR / "core" / "capability_validat
                 errors.append(f"{path.relative_to(REPO_ROOT)} line {line_number}: invalid JSON: {exc}")
                 continue
             try:
-                validate_case_base(case)
+                case_validator(case)
             except ValueError as exc:
                 case_id = case.get("id", "<unknown>") if isinstance(case, dict) else "<unknown>"
                 errors.append(f"{path.relative_to(REPO_ROOT)} line {line_number} ({case_id}): {exc}")
     return errors
+
+
+def validate_capability_cases(path=BENCHMARKS_DIR / "core" / "capability_validation" / "cases.jsonl"):
+    """Validate capability-validation JSONL cases with generic case schema checks."""
+
+    return _validate_jsonl_cases(path, validate_case_base)
+
+
+def _validate_observation_normalization_case(case):
+    validate_case_base(case)
+    if case.get("endpoint") != "/check":
+        raise ValueError("Field 'endpoint' must be '/check'.")
+    if not isinstance(case.get("expected"), dict):
+        raise ValueError("Field 'expected' must be a dictionary.")
+    if not case["expected"].get("validator"):
+        raise ValueError("Field 'expected.validator' is required.")
+    if not isinstance(case.get("thought_chain"), list):
+        raise ValueError("Field 'thought_chain' must exist and be a list.")
+    if not isinstance(case.get("paper_tags"), list) or not case["paper_tags"]:
+        raise ValueError("Field 'paper_tags' must exist and be a non-empty list.")
+    if not isinstance(case.get("risk_category"), str) or not case["risk_category"]:
+        raise ValueError("Field 'risk_category' must exist and be a string.")
+    if not isinstance(case.get("expected_signal_family"), str) or not case["expected_signal_family"]:
+        raise ValueError("Field 'expected_signal_family' must exist and be a string.")
+
+
+def validate_observation_normalization_cases(
+    path=BENCHMARKS_DIR / "core" / "observation_normalization" / "cases.jsonl",
+):
+    """Validate observation-normalization JSONL cases with generic and suite-specific checks."""
+
+    return _validate_jsonl_cases(path, _validate_observation_normalization_case)
 
 def main():
     try:
         manifest = load_suite_manifest()
         errors = validate_manifest(manifest)
         errors.extend(validate_capability_cases())
+        errors.extend(validate_observation_normalization_cases())
     except ValueError as exc:
         errors = [str(exc)]
         manifest = {"suites": []}

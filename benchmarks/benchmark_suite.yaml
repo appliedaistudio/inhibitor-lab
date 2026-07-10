@@ -13,7 +13,7 @@ suites:
     category: core
     support_level: native
     required: true
-    status: planned
+    status: implemented
     description: "Native benchmark area for temporal validation, subsumption, inference normalization, and prediction consistency."
   - id: decision_compatibility
     name: Decision Compatibility
