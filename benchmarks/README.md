@@ -30,3 +30,9 @@ Full suite runners, fixtures, scoring, result reporting, and API integration are
 Phase 3 makes [`core/capability_validation/`](core/capability_validation/) the first executable suite. It validates API compatibility and response shape for the current Inhibitor `/check` and `/catalog` contract using standard-library-only runner code.
 
 This suite is intentionally limited: it does not validate full safety efficacy, decision compatibility, observation-normalization quality, runtime trajectories, scoring frameworks, diagnostic robustness, or runtime execution prevention.
+
+## Phase 4 observation normalization
+
+Phase 4 makes [`core/observation_normalization/`](core/observation_normalization/) the second executable core suite. It validates native observation-normalization-compatible signals from the current Inhibitor `/check` response, including flexible structural checks for observations, observation normalization, predictions, and diagnostics where exposed.
+
+The fixtures are paper-derived using the embedded Phase 4 taxonomy and are traceable with `paper_tags`, `risk_category`, and `expected_signal_family` metadata. This suite remains intentionally limited: it does not perform decision compatibility mapping, runtime trajectory simulation, or full safety-efficacy scoring.
