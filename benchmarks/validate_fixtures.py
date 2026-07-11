@@ -13,6 +13,8 @@ except ImportError:  # pragma: no cover
 BENCHMARKS_DIR = Path(__file__).resolve().parent
 REPO_ROOT = BENCHMARKS_DIR.parent
 MANIFEST_PATH = BENCHMARKS_DIR / "benchmark_suite.yaml"
+DECISION_VOCABULARY = {"allow", "warn", "revise", "clarify", "pause", "escalate", "block", "error"}
+
 REQUIRED_FIELDS = (
     "id",
     "name",
@@ -172,12 +174,48 @@ def validate_observation_normalization_cases(
 
     return _validate_jsonl_cases(path, _validate_observation_normalization_case)
 
+
+def _validate_decision_compatibility_case(case):
+    validate_case_base(case)
+    if case.get("endpoint") != "/check":
+        raise ValueError("Field 'endpoint' must be '/check'.")
+    if not isinstance(case.get("expected"), dict):
+        raise ValueError("Field 'expected' must be a dictionary.")
+    if not case["expected"].get("validator"):
+        raise ValueError("Field 'expected.validator' is required.")
+    if not isinstance(case.get("thought_chain"), list):
+        raise ValueError("Field 'thought_chain' must exist and be a list.")
+    if not isinstance(case.get("paper_tags"), list) or not case["paper_tags"]:
+        raise ValueError("Field 'paper_tags' must exist and be a non-empty list.")
+    if not isinstance(case.get("risk_category"), str) or not case["risk_category"]:
+        raise ValueError("Field 'risk_category' must exist and be a string.")
+    expected_decision = case.get("expected_decision")
+    if expected_decision not in DECISION_VOCABULARY:
+        raise ValueError("Field 'expected_decision' must exist and be in the decision vocabulary.")
+    acceptable = case.get("acceptable_decisions")
+    if not isinstance(acceptable, list) or not acceptable:
+        raise ValueError("Field 'acceptable_decisions' must exist and be a non-empty list.")
+    for decision in acceptable:
+        if decision not in DECISION_VOCABULARY:
+            raise ValueError(f"Acceptable decision is not in the decision vocabulary: {decision}")
+    if expected_decision not in acceptable:
+        raise ValueError("Field 'expected_decision' must be included in acceptable_decisions.")
+
+
+def validate_decision_compatibility_cases(
+    path=BENCHMARKS_DIR / "core" / "decision_compatibility" / "cases.jsonl",
+):
+    """Validate decision-compatibility JSONL cases with generic and suite-specific checks."""
+
+    return _validate_jsonl_cases(path, _validate_decision_compatibility_case)
+
 def main():
     try:
         manifest = load_suite_manifest()
         errors = validate_manifest(manifest)
         errors.extend(validate_capability_cases())
         errors.extend(validate_observation_normalization_cases())
+        errors.extend(validate_decision_compatibility_cases())
     except ValueError as exc:
         errors = [str(exc)]
         manifest = {"suites": []}

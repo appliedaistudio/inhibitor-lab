@@ -21,7 +21,7 @@ suites:
     category: core
     support_level: compatibility_mapped
     required: true
-    status: planned
+    status: implemented
     description: "Compatibility layer for mapping current Inhibitor signals to paper-defined runtime decisions."
   - id: runtime_trajectories
     name: Runtime Trajectories
