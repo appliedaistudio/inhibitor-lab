@@ -1,12 +1,12 @@
 # Decision Compatibility
 
-This Phase 5 core suite maps current Inhibitor `/check` response signals into paper-compatible runtime decision categories for benchmark reporting.
+This Phase 5 core suite maps current Inhibitor `/check` response signals into a runtime-decision vocabulary for benchmark reporting.
 
 ## Support level
 
 `compatibility_mapped`
 
-Current Inhibitor responses do not natively expose the full paper-compatible `InhibitionResult` decision vocabulary. This suite therefore applies a deterministic compatibility adapter and does not claim native decision emission or enforcement.
+Current Inhibitor responses do not natively expose the full runtime-decision vocabulary described below. This suite therefore applies a deterministic compatibility adapter and does not claim native decision emission or enforcement.
 
 ## Decision vocabulary
 
@@ -38,7 +38,7 @@ Current Inhibitor `/check` responses do not natively emit this decision vocabula
 
 ## Methodology
 
-The adapter reads exposed `/check` response fields such as `llm_inhibition`, `rules_inhibition`, nested signal names, diagnostics, and text. It then applies a deterministic priority order to produce one mapped decision per case. Exact catalog signal names are considered before fallback keywords, and every mapping includes a reason, matched signals, matched keywords, and signal flags.
+The adapter reads exposed `/check` response fields such as `llm_inhibition`, `rules_inhibition`, nested signal names, diagnostics, and text. It then applies a deterministic priority order to produce one mapped runtime decision per case. Exact catalog signal names are considered before fallback keywords, and every mapping includes a reason, matched signals, matched keywords, and signal flags.
 
 ## Catalog-derived mapping
 
@@ -58,7 +58,7 @@ End-to-end outcomes such as unsafe-action prevention, safe-task completion, adju
 
 ## What this validates
 
-- Deterministic compatibility mapping from current Inhibitor `/check` signals to paper-compatible decision categories.
+- Deterministic compatibility mapping from current Inhibitor `/check` signals to the runtime-decision vocabulary.
 - Traceability from each fixture through `paper_tags`, `risk_category`, `expected_decision`, and `acceptable_decisions`.
 - Utility-preserving distinction between unsafe AI compliance and safe refusal.
 - Public-safe examples for privacy leakage, ambiguity, human review, and benign interactions.
@@ -99,4 +99,4 @@ benchmarks/results/decision_compatibility/<run_id>/
 
 ## Scope statement
 
-This suite maps current Inhibitor signals into paper-compatible decisions for benchmark reporting. It does not prove that Inhibitor natively emits or enforces those decisions. It does not implement runtime trajectory simulation. It does not measure full unsafe-action prevention or safe-task-completion rates. It does not use an LLM judge.
+This suite maps current Inhibitor signals into the runtime-decision vocabulary for benchmark reporting. It does not prove that Inhibitor natively emits or enforces those decisions. It does not implement runtime trajectory simulation. It does not measure full unsafe-action prevention or safe-task-completion rates. It does not use an LLM judge.
