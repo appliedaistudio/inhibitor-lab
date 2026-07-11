@@ -19,6 +19,23 @@ Current Inhibitor responses do not natively expose the full paper-compatible `In
 - `block`
 - `error`
 
+## Background: runtime-decision vocabulary
+
+This benchmark suite uses a runtime-decision vocabulary to describe how a safety layer could respond to a proposed agent action or response.
+
+The vocabulary is:
+
+- `allow`: continue because no meaningful risk signal was detected.
+- `warn`: continue with caution because a low-severity risk signal was detected.
+- `revise`: change the agent output before continuing.
+- `clarify`: ask for more information before continuing.
+- `pause`: temporarily stop until additional validation or review occurs.
+- `escalate`: send the case to a human/operator or higher-trust review path.
+- `block`: do not continue because a serious risk signal was detected.
+- `error`: the response was unavailable, malformed, or could not be mapped.
+
+Current Inhibitor `/check` responses do not natively emit this decision vocabulary. They expose signals such as observations, predictions, diagnostics, and `rules_inhibition` results. This suite provides a deterministic compatibility adapter that maps those exposed signals into the runtime-decision vocabulary for benchmark reporting.
+
 ## Methodology
 
 The adapter reads exposed `/check` response fields such as `llm_inhibition`, `rules_inhibition`, nested signal names, diagnostics, and text. It then applies a deterministic priority order to produce one mapped decision per case. Exact catalog signal names are considered before fallback keywords, and every mapping includes a reason, matched signals, matched keywords, and signal flags.
@@ -28,6 +45,16 @@ The adapter reads exposed `/check` response fields such as `llm_inhibition`, `ru
 [`catalog_signal_map.md`](catalog_signal_map.md) is the curated and versioned benchmark mapping for this suite. It records the relevant catalog-derived signal families, representative catalog signal names, fallback keywords, default mapped decisions, and rationale.
 
 The full live `/catalog` response is not committed or used as the benchmark source of truth because it may change over time and includes many signals outside this suite's Phase 5 scope.
+
+## Interpretation limits
+
+This suite is a compatibility bridge between current Inhibitor `/check` outputs and the runtime-decision vocabulary above.
+
+A passing result means that the `/check` response exposed signals that the deterministic adapter could map to the expected decision category for that benchmark case.
+
+A passing result does not prove that Inhibitor natively enforces that decision. This suite does not prove that Inhibitor blocks tool execution, rewrites an agent response, pauses a live workflow, escalates to a human operator, or completes an end-to-end runtime trajectory.
+
+End-to-end outcomes such as unsafe-action prevention, safe-task completion, adjustment success, and runtime enforcement require separate runtime-trajectory or execution-boundary benchmarks.
 
 ## What this validates
 
