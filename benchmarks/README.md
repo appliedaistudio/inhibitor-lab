@@ -36,3 +36,9 @@ This suite is intentionally limited: it does not validate full safety efficacy, 
 Phase 4 makes [`core/observation_normalization/`](core/observation_normalization/) the second executable core suite. It validates native observation-normalization-compatible signals from the current Inhibitor `/check` response, including flexible structural checks for observations, observation normalization, predictions, and diagnostics where exposed.
 
 The fixtures are paper-derived using the embedded Phase 4 taxonomy and are traceable with `paper_tags`, `risk_category`, and `expected_signal_family` metadata. This suite remains intentionally limited: it does not perform decision compatibility mapping, runtime trajectory simulation, or full safety-efficacy scoring.
+
+## Phase 5 decision compatibility
+
+Phase 5 makes [`core/decision_compatibility/`](core/decision_compatibility/) the third executable core suite. It maps current Inhibitor `/check` signals into paper-compatible decision categories for benchmark reporting.
+
+The suite support level is `compatibility_mapped`. It uses a curated and versioned [`catalog_signal_map.md`](core/decision_compatibility/catalog_signal_map.md) rather than committing or depending on the full live `/catalog` response. The suite does not claim native runtime enforcement, and it does not perform runtime trajectory simulation, LLM judging, or full safety-efficacy scoring.
