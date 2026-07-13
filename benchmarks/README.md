@@ -2,16 +2,16 @@
 
 The benchmark system separates historical benchmark evidence, implemented primary benchmark suites, operational diagnostics, shared utilities, and publication reporting guidance.
 
-Old IEB benchmark versions are preserved under [`legacy/ieb/`](legacy/ieb/) for traceability and comparison with prior work. Diagnostic materials are indexed under [`diagnostics/`](diagnostics/) for operational and robustness analysis.
+Old IEB benchmark versions are preserved under [`legacy/ieb/`](legacy/ieb/) for traceability and comparison with prior work. Historical diagnostic results are archived under [`legacy/diagnostics/`](legacy/diagnostics/), and retained diagnostic notebooks and fixtures live under [`diagnostics/`](diagnostics/) for operational and robustness analysis.
 
 ## Top-level areas
 
-- [`legacy/`](legacy/) preserves historical benchmark artifacts and evidence.
+- [`legacy/`](legacy/) preserves historical benchmark artifacts and evidence, including archived diagnostic result artifacts under [`legacy/diagnostics/`](legacy/diagnostics/).
 - [`core/`](core/) contains the implemented primary benchmark suites and any future core benchmark additions.
-- [`diagnostics/`](diagnostics/) indexes operational and robustness diagnostic materials. Diagnostics can support operational maturity and robustness analysis, but they are not replacements for primary safety-efficacy benchmarks.
+- [`diagnostics/`](diagnostics/) contains retained diagnostic notebooks and fixtures. Operational stress diagnostics and semantic-context robustness diagnostics can support operational maturity and robustness analysis, but they remain separate from core safety-efficacy claims.
 - [`reporting/`](reporting/) contains reproducibility, interpretation, publication-template, and claim-boundary documentation.
 
-This directory now contains historical benchmark artifacts, implemented core benchmark suites, diagnostic indexes, shared benchmark utilities, and reporting guidance for reproducibility and publication use.
+This directory now contains historical benchmark artifacts, implemented core benchmark suites, migrated diagnostic assets, shared benchmark utilities, and reporting guidance for reproducibility and publication use. Large-context testing is described as a dimension of semantic-context robustness, not as a separate diagnostic suite.
 
 ## Phase 2 scaffolding
 

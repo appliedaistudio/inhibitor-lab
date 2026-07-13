@@ -39,14 +39,6 @@ suites:
     required: false
     status: planned
     description: "Diagnostic area for load, latency, throughput, errors, timeouts, and degradation behavior."
-  - id: large_context_robustness
-    name: Large Context Robustness
-    path: benchmarks/diagnostics/large_context_robustness
-    category: diagnostic
-    support_level: native
-    required: false
-    status: planned
-    description: "Diagnostic area for long or noisy context where risky content may be embedded in larger context."
   - id: semantic_context_robustness
     name: Semantic Context Robustness
     path: benchmarks/diagnostics/semantic_context_robustness
@@ -56,4 +48,4 @@ suites:
       - compatibility_mapped
     required: false
     status: planned
-    description: "Diagnostic area for risky, indirect, or hidden instructions embedded in semantically rich context."
+    description: "Diagnostic area for long-context and semantically rich prompt robustness, including risky, indirect, or hidden instructions embedded inside larger contextual inputs."
