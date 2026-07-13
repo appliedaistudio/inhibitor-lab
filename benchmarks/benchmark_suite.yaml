@@ -27,13 +27,10 @@ suites:
     name: Runtime Trajectories
     path: benchmarks/core/runtime_trajectories
     category: core
-    support_level:
-      - native
-      - compatibility_mapped
-      - simulated
+    support_level: simulated
     required: true
-    status: planned
-    description: "Trajectory-level benchmark area for runtime-control scenarios, including simulated controller outcomes where needed."
+    status: implemented
+    description: "Simulated runtime-trajectory proxy suite using Phase 5 compatibility mapping and a deterministic simulated controller."
   - id: operational_stress
     name: Operational Stress
     path: benchmarks/diagnostics/operational_stress
