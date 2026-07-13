@@ -1,17 +1,17 @@
 # Benchmarks
 
-The benchmark system is being reorganized to separate historical benchmark evidence, planned primary benchmark definitions, operational diagnostics, and future reporting assets.
+The benchmark system separates historical benchmark evidence, implemented primary benchmark suites, operational diagnostics, shared utilities, and publication reporting guidance.
 
-Old IEB benchmark versions are preserved under [`legacy/ieb/`](legacy/ieb/) for traceability and comparison with prior work. Existing diagnostic assets may remain in their current repository locations until migration is completed in later phases.
+Old IEB benchmark versions are preserved under [`legacy/ieb/`](legacy/ieb/) for traceability and comparison with prior work. Diagnostic materials are indexed under [`diagnostics/`](diagnostics/) for operational and robustness analysis.
 
 ## Top-level areas
 
-- [`legacy/`](legacy/) preserves historical benchmark artifacts and evidence. The archived IEB versions live under [`legacy/ieb/`](legacy/ieb/).
-- [`core/`](core/) is reserved for the future primary paper-derived benchmark suite. Detailed benchmark behavior, runners, fixtures, validation logic, scoring, and API clients will be added in later phases.
+- [`legacy/`](legacy/) preserves historical benchmark artifacts and evidence.
+- [`core/`](core/) contains the implemented primary benchmark suites and any future core benchmark additions.
 - [`diagnostics/`](diagnostics/) indexes operational and robustness diagnostic materials. Diagnostics can support operational maturity and robustness analysis, but they are not replacements for primary safety-efficacy benchmarks.
-- [`reporting/`](reporting/) is reserved for future reproducibility and publication reporting materials.
+- [`reporting/`](reporting/) contains reproducibility, interpretation, publication-template, and claim-boundary documentation.
 
-This phase only establishes the directory layout and safe documentation needed before benchmark harness code exists.
+This directory now contains historical benchmark artifacts, implemented core benchmark suites, diagnostic indexes, shared benchmark utilities, and reporting guidance for reproducibility and publication use.
 
 ## Phase 2 scaffolding
 
@@ -48,3 +48,10 @@ The suite support level is `compatibility_mapped`. It uses a curated and version
 Phase 6 makes [`core/runtime_trajectories/`](core/runtime_trajectories/) the fourth executable core suite. The suite support level is `simulated`: it uses Phase 5 compatibility mapping and fixture-provided proposed agent responses rather than implementing an autonomous agent.
 
 The suite simulates deterministic controller behavior around current Inhibitor `/check` responses and produces simulated proxy outcomes for unsafe response prevention, safe completion preservation, adjustment success, and audit trace completion. These proxy outcomes do not claim native runtime enforcement, production unsafe-action prevention rates, or production safe-task-completion rates.
+
+## Phase 7: Reproducibility and publication reporting
+
+Phase 7 adds [`reporting/`](reporting/) documentation for reproducibility, support-level interpretation, publication report preparation, and public claim boundaries. The reporting materials define how completed benchmark runs should be packaged and described after execution.
+
+Phase 7 does not execute benchmarks, add results, add notebooks, introduce LLM judging, add new benchmark suites, or change Phase 1–6 benchmark behavior. Full-suite execution and validation remain a separate next task.
+
