@@ -4,7 +4,7 @@
 
 Diagnostics are separate from the implemented core benchmark suites under `benchmarks/core/`. Core suites are the primary structured benchmark layer used for current benchmark execution and reporting. Diagnostic assets are supporting tools for investigating system behavior under specific operating conditions, such as high load, long context windows, or semantically rich prompts with embedded risky instructions.
 
-Diagnostic notebooks may perform live API calls. Review notebooks before running them, and confirm endpoint configuration, API credentials, execution scope, and result-handling expectations. Historical diagnostic outputs live under [`../legacy/diagnostics/`](../legacy/diagnostics/). New current benchmark execution outputs should go under `benchmarks/results/`, not under diagnostics.
+Diagnostic notebooks may perform live API calls. Review notebooks before running them, and confirm endpoint configuration, API credentials, execution scope, and result-handling expectations. Historical diagnostic outputs live under [`../legacy/diagnostics/`](../legacy/diagnostics/). Diagnostic notebooks and fixtures live in this directory. When a diagnostic notebook is executed as a controlled current run, generated run artifacts should be written under `benchmarks/results/<diagnostic_area>/<run_id>/`, not into `benchmarks/diagnostics/`. For example, use `benchmarks/results/operational_stress/<run_id>/` or `benchmarks/results/semantic_context_robustness/<run_id>/`. Historical diagnostic outputs remain archived under `benchmarks/legacy/diagnostics/`.
 
 ## Diagnostic areas
 
