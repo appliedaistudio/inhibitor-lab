@@ -69,16 +69,15 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 - `notebooks/` – interactive scenarios showing oversight and moderation patterns.
 - `examples/` – lightweight code snippets for quick integration.
 - `docs/` – API reference, deployment guidance, and governance resources.
-- `benchmarks/` – latency and performance tracking.
-- `stress_benchmarks/` – stress benchmark notebooks plus progressive load and semantic-context result sets.
+- `benchmarks/` – core benchmark suites, retained diagnostic notebooks and fixtures, archived legacy diagnostic outputs, reporting guidance, and shared benchmark utilities. See `benchmarks/diagnostics/` for retained diagnostic notebooks and fixtures, and `benchmarks/legacy/diagnostics/` for archived diagnostic result outputs.
 - `codefest/` – Philly Codefest OpenBuild challenge kits, starter notebooks, shared logs, and team operations docs.
 
-### Stress benchmark results
+### Archived diagnostic result sets
 
-The stress benchmarks complement the latency benchmarks by exercising the Inhibitor under heavier load and longer-context prompts.
+Historical stress and semantic-context diagnostic results are archived for traceability. They are archived diagnostic result sets, not current benchmark-suite execution outputs, and should not be treated as current production safety-efficacy evidence.
 
-- **Progressive load results** – multi-scenario, high-concurrency runs that stress throughput and latency as user counts scale. See the latest report in [`stress_benchmarks/progressive_load_results/v1.21.0/README.md`](stress_benchmarks/progressive_load_results/v1.21.0/README.md).
-- **Semantic context results** – low-concurrency runs that validate detection quality across long, semantically rich prompts and large context windows. See the latest report in [`stress_benchmarks/semantic_context_results/v1.21.0/README.md`](stress_benchmarks/semantic_context_results/v1.21.0/README.md).
+- **Progressive load results** – multi-scenario, high-concurrency diagnostic runs that stress throughput and latency as user counts scale. See [`benchmarks/legacy/diagnostics/operational_stress/progressive_load_results/`](benchmarks/legacy/diagnostics/operational_stress/progressive_load_results/).
+- **Semantic context results** – diagnostic runs that validate detection quality across long, semantically rich prompts and large context windows. See [`benchmarks/legacy/diagnostics/semantic_context_robustness/semantic_context_results/`](benchmarks/legacy/diagnostics/semantic_context_robustness/semantic_context_results/).
 
 ### Documentation trails
 
