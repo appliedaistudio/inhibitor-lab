@@ -42,3 +42,9 @@ The fixtures are paper-derived using the embedded Phase 4 taxonomy and are trace
 Phase 5 makes [`core/decision_compatibility/`](core/decision_compatibility/) the third executable core suite. It maps current Inhibitor `/check` signals into paper-compatible decision categories for benchmark reporting.
 
 The suite support level is `compatibility_mapped`. It uses a curated and versioned [`catalog_signal_map.md`](core/decision_compatibility/catalog_signal_map.md) rather than committing or depending on the full live `/catalog` response. The suite does not claim native runtime enforcement, and it does not perform runtime trajectory simulation, LLM judging, or full safety-efficacy scoring.
+
+## Phase 6: Runtime trajectories
+
+Phase 6 makes [`core/runtime_trajectories/`](core/runtime_trajectories/) the fourth executable core suite. The suite support level is `simulated`: it uses Phase 5 compatibility mapping and fixture-provided proposed agent responses rather than implementing an autonomous agent.
+
+The suite simulates deterministic controller behavior around current Inhibitor `/check` responses and produces simulated proxy outcomes for unsafe response prevention, safe completion preservation, adjustment success, and audit trace completion. These proxy outcomes do not claim native runtime enforcement, production unsafe-action prevention rates, or production safe-task-completion rates.
