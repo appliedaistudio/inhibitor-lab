@@ -2,7 +2,7 @@
 
 The benchmark system separates historical benchmark evidence, implemented primary benchmark suites, operational diagnostics, shared utilities, and publication reporting guidance.
 
-Old IEB benchmark versions are preserved under [`legacy/ieb/`](legacy/ieb/) for traceability and comparison with prior work. The diagnostic audit is complete: historical diagnostic results are archived under [`legacy/diagnostics/`](legacy/diagnostics/), and retained diagnostic notebooks and fixtures live under [`diagnostics/`](diagnostics/) for operational and robustness analysis.
+Old IEB benchmark versions are preserved under [`legacy/ieb/`](legacy/ieb/) for traceability and comparison with prior work. Historical diagnostic results are archived under [`legacy/diagnostics/`](legacy/diagnostics/), and retained diagnostic notebooks and fixtures live under [`diagnostics/`](diagnostics/) for operational and robustness analysis.
 
 ## Top-level areas
 
