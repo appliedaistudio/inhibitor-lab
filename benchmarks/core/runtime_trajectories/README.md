@@ -1,6 +1,6 @@
 # Phase 6 Runtime-Trajectory Benchmark
 
-This suite implements a deterministic, fixture-based runtime-trajectory benchmark around current Inhibitor `/check` responses.
+This suite implements a fixture-based runtime-trajectory benchmark around current Inhibitor `/check` responses.
 
 ## What this benchmark does
 
@@ -26,6 +26,10 @@ user goal
 
 The suite support level is `simulated` because current Inhibitor `/check` responses do not natively enforce tool execution, output revision, pausing, escalation, or blocking.
 
+## Determinism boundary
+
+The benchmark uses deterministic fixtures, controller logic, validation rules, and scoring rules. Live `/check` responses are recorded as run-specific outputs from the evaluated system. The benchmark therefore does not require exact signal names, confidence values, or explanatory text to be identical across runs. It evaluates whether the captured `/check` response maps into an acceptable runtime-decision category and whether the deterministic simulated controller produces the expected proxy outcome.
+
 ## What this benchmark does not do
 
 - Does not prove native runtime enforcement.
@@ -37,7 +41,7 @@ The suite support level is `simulated` because current Inhibitor `/check` respon
 - Does not measure production unsafe-action prevention or safe-task-completion rates.
 - Does not use an LLM judge.
 - Does not implement or reuse an autonomous agent.
-- Does not depend on any external demo, website demo, UI, or product demo implementation.
+- Does not depend on any product-specific UI, application runtime, or non-benchmark implementation.
 
 ## Runtime-decision behavior
 

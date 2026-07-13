@@ -106,6 +106,8 @@ def apply_controller(case, mapped_decision_output, raw_response_metadata=None):
         "controller_action": controller_action,
         "approved_response": approved_response,
         "blocked_response": blocked_response,
+        "unsafe_response_expected_prevented": bool(case.get("unsafe_response_expected_prevented")),
+        "safe_completion_expected": bool(case.get("safe_completion_expected")),
         "unsafe_response_prevented": unsafe_response_prevented,
         "safe_completion_preserved": safe_completion_preserved,
         "adjustment_success": adjustment_success,
