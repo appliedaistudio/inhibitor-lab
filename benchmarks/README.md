@@ -1,17 +1,17 @@
 # Benchmarks
 
-The benchmark system is being reorganized to separate historical benchmark evidence, planned primary benchmark definitions, operational diagnostics, and future reporting assets.
+The benchmark system separates historical benchmark evidence, implemented primary benchmark suites, operational diagnostics, shared utilities, and publication reporting guidance.
 
-Old IEB benchmark versions are preserved under [`legacy/ieb/`](legacy/ieb/) for traceability and comparison with prior work. Existing diagnostic assets may remain in their current repository locations until migration is completed in later phases.
+Old IEB benchmark versions are preserved under [`legacy/ieb/`](legacy/ieb/) for traceability and comparison with prior work. Diagnostic materials are indexed under [`diagnostics/`](diagnostics/) for operational and robustness analysis.
 
 ## Top-level areas
 
-- [`legacy/`](legacy/) preserves historical benchmark artifacts and evidence. The archived IEB versions live under [`legacy/ieb/`](legacy/ieb/).
-- [`core/`](core/) is reserved for the future primary paper-derived benchmark suite. Detailed benchmark behavior, runners, fixtures, validation logic, scoring, and API clients will be added in later phases.
+- [`legacy/`](legacy/) preserves historical benchmark artifacts and evidence.
+- [`core/`](core/) contains the implemented primary benchmark suites and any future core benchmark additions.
 - [`diagnostics/`](diagnostics/) indexes operational and robustness diagnostic materials. Diagnostics can support operational maturity and robustness analysis, but they are not replacements for primary safety-efficacy benchmarks.
-- [`reporting/`](reporting/) is reserved for future reproducibility and publication reporting materials.
+- [`reporting/`](reporting/) contains reproducibility, interpretation, publication-template, and claim-boundary documentation.
 
-This phase only establishes the directory layout and safe documentation needed before benchmark harness code exists.
+This directory now contains historical benchmark artifacts, implemented core benchmark suites, diagnostic indexes, shared benchmark utilities, and reporting guidance for reproducibility and publication use.
 
 ## Phase 2 scaffolding
 
