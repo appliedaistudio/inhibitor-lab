@@ -1,57 +1,9 @@
 # Benchmarks
 
-The benchmark system separates historical benchmark evidence, implemented primary benchmark suites, operational diagnostics, shared utilities, and publication reporting guidance.
+This directory contains core benchmark suites, retained historical artifacts, diagnostics, shared utilities, and reporting guidance. Core suites preserve distinct layers: capability validation, observation normalization, decision compatibility, and runtime trajectories.
 
-Old IEB benchmark versions are preserved under [`legacy/ieb/`](legacy/ieb/) for traceability and comparison with prior work. Historical diagnostic results are archived under [`legacy/diagnostics/`](legacy/diagnostics/), and retained diagnostic notebooks and fixtures live under [`diagnostics/`](diagnostics/) for operational and robustness analysis.
+Runtime trajectories evaluate structured proposed actions. An action envelope is rendered deterministically into the current Inhibitor `/check` `thought_chain` format, native signal evidence is mapped through decision compatibility, and a benchmark controller records controller-enforced mock-tool outcomes. These controlled simulated outcomes are not production tool-execution evidence.
 
-## Top-level areas
+Support levels communicate the boundary of each result: `native` for exposed API evidence, `compatibility_mapped` for deterministic decision mapping, and `simulated` for controller/mock-tool enforcement. Diagnostics and legacy artifacts remain separate from core benchmark claims.
 
-- [`legacy/`](legacy/) preserves historical benchmark artifacts and evidence, including archived diagnostic result artifacts under [`legacy/diagnostics/`](legacy/diagnostics/).
-- [`core/`](core/) contains the implemented primary benchmark suites and any future core benchmark additions.
-- [`diagnostics/`](diagnostics/) contains retained diagnostic notebooks and fixtures. Operational stress diagnostics and semantic-context robustness diagnostics can support operational maturity and robustness analysis, but they remain separate from core safety-efficacy claims.
-- [`reporting/`](reporting/) contains reproducibility, interpretation, publication-template, and claim-boundary documentation.
-
-This directory now contains historical benchmark artifacts, implemented core benchmark suites, migrated diagnostic assets, shared benchmark utilities, and reporting guidance for reproducibility and publication use. Large-context testing is described as a dimension of semantic-context robustness, not as a separate diagnostic suite.
-
-## Phase 2 scaffolding
-
-Phase 2 adds lightweight benchmark-suite scaffolding without making the benchmarks executable end-to-end yet:
-
-- [`benchmark_suite.yaml`](benchmark_suite.yaml) defines the planned core and diagnostic suite registry.
-- [`lib/`](lib/) contains shared standard-library utilities for support level validation, generic schema checks, run manifest creation, and standard result artifact writing.
-- [`validate_fixtures.py`](validate_fixtures.py) validates the suite manifest shape and confirms referenced suite directories exist. It does not require or validate benchmark case fixtures yet.
-- [`run_all.py`](run_all.py) is a placeholder orchestrator that lists planned suites and confirms that actual suite runners will be added in later phases.
-
-Full suite runners, fixtures, scoring, result reporting, and API integration are deferred to later phases.
-
-
-## Phase 3 capability validation
-
-Phase 3 makes [`core/capability_validation/`](core/capability_validation/) the first executable suite. It validates API compatibility and response shape for the current Inhibitor `/check` and `/catalog` contract using standard-library-only runner code.
-
-This suite is intentionally limited: it does not validate full safety efficacy, decision compatibility, observation-normalization quality, runtime trajectories, scoring frameworks, diagnostic robustness, or runtime execution prevention.
-
-## Phase 4 observation normalization
-
-Phase 4 makes [`core/observation_normalization/`](core/observation_normalization/) the second executable core suite. It validates native observation-normalization-compatible signals from the current Inhibitor `/check` response, including flexible structural checks for observations, observation normalization, predictions, and diagnostics where exposed.
-
-The fixtures are paper-derived using the embedded Phase 4 taxonomy and are traceable with `paper_tags`, `risk_category`, and `expected_signal_family` metadata. This suite remains intentionally limited: it does not perform decision compatibility mapping, runtime trajectory simulation, or full safety-efficacy scoring.
-
-## Phase 5 decision compatibility
-
-Phase 5 makes [`core/decision_compatibility/`](core/decision_compatibility/) the third executable core suite. It maps current Inhibitor `/check` signals into paper-compatible decision categories for benchmark reporting.
-
-The suite support level is `compatibility_mapped`. It uses a curated and versioned [`catalog_signal_map.md`](core/decision_compatibility/catalog_signal_map.md) rather than committing or depending on the full live `/catalog` response. The suite does not claim native runtime enforcement, and it does not perform runtime trajectory simulation, LLM judging, or full safety-efficacy scoring.
-
-## Phase 6: Runtime trajectories
-
-Phase 6 makes [`core/runtime_trajectories/`](core/runtime_trajectories/) the fourth executable core suite. The suite support level is `simulated`: it uses Phase 5 compatibility mapping and fixture-provided proposed agent responses rather than implementing an autonomous agent.
-
-The suite simulates deterministic controller behavior around current Inhibitor `/check` responses and produces simulated proxy outcomes for unsafe response prevention, safe completion preservation, adjustment success, and audit trace completion. These proxy outcomes do not claim native runtime enforcement, production unsafe-action prevention rates, or production safe-task-completion rates.
-
-## Phase 7: Reproducibility and publication reporting
-
-Phase 7 adds [`reporting/`](reporting/) documentation for reproducibility, support-level interpretation, publication report preparation, and public claim boundaries. The reporting materials define how completed benchmark runs should be packaged and described after execution.
-
-Phase 7 does not execute benchmarks, add results, add notebooks, introduce LLM judging, add new benchmark suites, or change Phase 1–6 benchmark behavior. Full-suite execution and validation remain a separate next task.
-
+Run all fixture checks with `python benchmarks/validate_fixtures.py`, or use `python benchmarks/run_all.py --suite <suite> --dry-run` to validate a planned suite without network calls.

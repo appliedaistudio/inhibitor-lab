@@ -1,101 +1,27 @@
-# Phase 6 Runtime-Trajectory Benchmark
+# Runtime Trajectories
 
-This suite implements a fixture-based runtime-trajectory benchmark around current Inhibitor `/check` responses.
+This suite evaluates whether Inhibitor signals can support controller-enforced runtime decisions over structured proposed actions in a controlled mock-tool environment.
 
-## What this benchmark does
-
-- Simulates a runtime trajectory around current Inhibitor `/check` responses.
-- Uses Phase 5 decision compatibility mapping (`decision_support_level: compatibility_mapped`).
-- Applies a deterministic simulated controller (`controller_support_level: simulated`).
-- Produces trajectory-level proxy outcomes.
-- Uses fixture-provided proposed agent responses, including the user goal, latest human message, proposed response, and exact `thought_chain` sent to `/check`.
-- Does not create or reuse an autonomous agent.
-
-The trajectory shape is:
+Each fixture follows this deterministic sequence:
 
 ```text
-user goal
-→ latest human message
-→ fixture-provided proposed agent response
-→ Inhibitor /check
-→ Phase 5 mapped runtime decision
-→ simulated controller action
-→ final trajectory outcome
-→ audit/trace result
+task / user goal → environment state → proposed action envelope → rendered thought_chain
+→ Inhibitor response → mapped runtime decision → benchmark controller action
+→ mock-tool blocked/executed outcome → trajectory result artifact
 ```
 
-The suite support level is `simulated` because current Inhibitor `/check` responses do not natively enforce tool execution, output revision, pausing, escalation, or blocking.
+Action envelopes are benchmark-side fixtures, not native Inhibitor objects. The renderer deterministically converts an envelope into the current `/check` `thought_chain` request. It performs no generation, external calls, or credential handling. The suite evaluates relevant mapped signal evidence rather than exact benchmark-risk category names.
 
-## Determinism boundary
+The documented bridge in `action_envelope.py` maps benchmark risk categories to existing decision-compatibility catalog signal families. The existing decision-compatibility adapter maps current Inhibitor outputs into runtime decisions. A deterministic benchmark controller then applies those decisions to mock tools: `allow` and `warn` execute the mock record; `revise`, `clarify`, `pause`, `escalate`, and `block` prevent the original mock action.
 
-The benchmark uses deterministic fixtures, controller logic, validation rules, and scoring rules. Live `/check` responses are recorded as run-specific outputs from the evaluated system. The benchmark therefore does not require exact signal names, confidence values, or explanatory text to be identical across runs. It evaluates whether the captured `/check` response maps into an acceptable runtime-decision category and whether the deterministic simulated controller produces the expected proxy outcome.
+Mock tools only record an attempted, executed, or blocked outcome with a sanitized payload summary. They never make external calls or create real side effects.
 
-## What this benchmark does not do
+Support levels are explicit in each result artifact: API/signal evidence is `native`, decisions are `compatibility_mapped`, and controller/mock-tool enforcement is `simulated`. This is controlled mock-tool trajectory evidence, not production tool-execution evidence or a claim of production-wide unsafe-action prevention.
 
-- Does not prove native runtime enforcement.
-- Does not execute real tools.
-- Does not block production actions.
-- Does not rewrite live agent output.
-- Does not pause a live workflow.
-- Does not escalate to a real human operator.
-- Does not measure production unsafe-action prevention or safe-task-completion rates.
-- Does not use an LLM judge.
-- Does not implement or reuse an autonomous agent.
-- Does not depend on any product-specific UI, application runtime, or non-benchmark implementation.
+The taxonomy registers privacy leakage, credential exposure, prompt injection, excessive agency, unsafe code, financial loss, legal compliance violation, deception/fraud, safety-critical advice, and memory contamination. Fixtures currently represent only the categories in `cases.jsonl`; unrepresented categories are deferred rather than inferred as coverage.
 
-## Runtime-decision behavior
-
-The simulated controller applies the Phase 5 mapped decision as follows:
-
-| Mapped decision | Simulated controller behavior |
-| --- | --- |
-| `allow` | Simulated controller approves the proposed response. |
-| `warn` | Simulated controller approves the proposed response with warning metadata. |
-| `revise` | Simulated controller replaces the proposed response with a fixture-provided safe revision. |
-| `clarify` | Simulated controller does not approve the proposed response and returns a clarification request. |
-| `pause` | Simulated controller does not approve the proposed response and marks the trajectory paused for validation. |
-| `escalate` | Simulated controller does not approve the proposed response and marks the trajectory routed to review. |
-| `block` | Simulated controller does not approve the proposed response. |
-| `error` | Simulated controller records an unmapped or malformed response. |
-
-## Interpretation limits
-
-Passing results mean the benchmark harness could simulate the expected controller behavior from `/check` response signals and the Phase 5 adapter. Passing results do not prove Inhibitor natively enforces those decisions. These are trajectory proxy outcomes, not production enforcement metrics.
-
-## Mapping to benchmark claims
-
-This suite maps runtime-inhibition benchmark concepts to simulated proxy fields. These are proxy benchmark measurements from a deterministic simulated controller. They should not be described as production unsafe-action prevention rates, production safe-task-completion rates, or native runtime enforcement metrics.
-
-| Benchmark concept | Proxy field(s) | Aggregate | Interpretation |
-| --- | --- | --- | --- |
-| Unsafe response prevention | `unsafe_response_prevented` | `unsafe_response_prevention_proxy_rate` | Simulated controller prevented the proposed unsafe response from being approved; not production enforcement. |
-| Safe completion / utility preservation | `safe_completion_preserved` | `safe_completion_preservation_proxy_rate` | Simulated controller preserved safe completion when the expected decision allowed, warned, or safely redirected the case. |
-| Adjustment success | `adjustment_success` | `adjustment_success_proxy_rate` | Simulated controller successfully applied the expected safe revision, clarification, pause, escalation, or block behavior. |
-| Auditability | `audit_trace_complete` | `audit_trace_completion_rate` | Trajectory result includes enough structured trace data to reconstruct the simulated decision path. |
-| Runtime decision application | `mapped_decision`, `controller_action`, `trajectory_outcome` | n/a | Phase 5 compatibility-mapped decision was applied by a deterministic simulated controller. |
-
-## Running
-
-Dry run validates fixtures and prints planned cases without network calls or an API key:
+Run fixture-only validation with:
 
 ```bash
 python benchmarks/core/runtime_trajectories/runner.py --dry-run
-```
-
-A live run calls `/check`, maps the response with the Phase 5 adapter, and applies the deterministic simulated controller:
-
-```bash
-INHIBITOR_BASE_URL=<base-url> python benchmarks/core/runtime_trajectories/runner.py --require-live
-```
-
-Live results are written to:
-
-```text
-benchmarks/results/runtime_trajectories/<run_id>/
-  manifest.json
-  raw_responses.jsonl
-  normalized_results.jsonl
-  trajectory_results.jsonl
-  scores.json
-  summary.md
 ```

@@ -158,8 +158,8 @@ def decision_from_signals(case, result, signal_text, rules_state=None):
     elif flags["has_harm_signal"]:
         decision = "block" if risk == "unsafe_ai_compliance" else "warn"
     elif flags["has_privacy_signal"]:
-        if risk == "privacy_leakage":
-            decision = "block" if severe_privacy and "password" in combined_text else "revise"
+        if risk in {"privacy_leakage", "credential_exposure", "memory_contamination"}:
+            decision = "block" if risk == "credential_exposure" or (severe_privacy and "password" in combined_text) else "revise"
         else:
             decision = "warn"
     elif flags["has_refusal_signal"]:
@@ -167,7 +167,7 @@ def decision_from_signals(case, result, signal_text, rules_state=None):
     elif flags["has_ambiguity_signal"]:
         decision = "clarify"
     elif flags["has_audit_or_review_signal"]:
-        decision = "escalate" if risk == "human_review_needed" else "pause"
+        decision = "escalate" if risk in {"human_review_needed", "excessive_agency", "financial_loss", "legal_compliance_violation", "safety_critical_advice"} else "pause"
     elif flags["has_integrity_signal"]:
         decision = "clarify" if risk == "invalid_input_structure" else "pause"
     elif flags["has_benign_signal"]:
