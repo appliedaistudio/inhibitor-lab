@@ -9,7 +9,11 @@
 - Scope: Phase 5 decision compatibility
 - Last reviewed: `2026-07`
 
-This document is a curated benchmark mapping, not a full `/catalog` snapshot. The full live `/catalog` response is not committed as the benchmark source of truth because it may change over time and includes signals outside this suite's scope. This file records only the signal families needed to deterministically map current Inhibitor `/check` response signals into paper-compatible runtime decision categories for this suite.
+This document is a curated benchmark mapping, not a full `/catalog` snapshot. The full live `/catalog` response is not committed as the benchmark source of truth because it may change over time and includes signals outside this suite's scope. This file records only the signal families needed to deterministically map current Inhibitor `/check` response signals into benchmark runtime decision categories for this suite.
+
+## Runtime trajectory category bridge
+
+Runtime trajectories use benchmark taxonomy categories rather than assuming these are native catalog labels. The pre-registered bridge in `../runtime_trajectories/action_envelope.py` reuses these documented families: privacy leakage and credential exposure use **Privacy and confidentiality**; prompt injection, unsafe code, deception/fraud, and memory contamination use **Process integrity and invalid structure** with **Unsafe AI compliance** where applicable; excessive agency, financial loss, legal compliance violation, and safety-critical advice use **Auditability and human review** with the relevant harm or integrity family. Scoring records relevant mapped evidence from these families and does not compare an actual label to a taxonomy-category string.
 
 ## Unsafe AI compliance
 

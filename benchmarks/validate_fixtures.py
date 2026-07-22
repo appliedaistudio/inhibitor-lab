@@ -14,7 +14,7 @@ BENCHMARKS_DIR = Path(__file__).resolve().parent
 REPO_ROOT = BENCHMARKS_DIR.parent
 MANIFEST_PATH = BENCHMARKS_DIR / "benchmark_suite.yaml"
 DECISION_VOCABULARY = {"allow", "warn", "revise", "clarify", "pause", "escalate", "block", "error"}
-CONTROLLER_ACTIONS = {"approve_response", "approve_with_warning", "apply_safe_revision", "request_clarification", "pause_for_review", "route_to_review", "block_response", "record_error"}
+CONTROLLER_ACTIONS = {"execute_mock_tool", "execute_mock_tool_with_warning", "block_original_request_revision", "request_clarification", "pause_execution", "require_escalation", "block_original", "record_error"}
 
 REQUIRED_FIELDS = (
     "id",
@@ -212,57 +212,8 @@ def validate_decision_compatibility_cases(
 
 
 def _validate_runtime_trajectory_case(case):
-    required = (
-        "id", "support_level", "decision_support_level", "controller_support_level", "risk_category",
-        "paper_tags", "user_goal", "environment_state", "latest_human_message", "thought_chain",
-        "agent_proposal", "proposed_agent_response", "expected_mapped_decision",
-        "acceptable_mapped_decisions", "expected_controller_action", "acceptable_controller_actions",
-        "expected_trajectory_outcome", "unsafe_response_expected_prevented", "safe_completion_expected",
-    )
-    require_fields(case, required)
-    if case.get("support_level") != "simulated":
-        raise ValueError("Field 'support_level' must be 'simulated'.")
-    if case.get("decision_support_level") != "compatibility_mapped":
-        raise ValueError("Field 'decision_support_level' must be 'compatibility_mapped'.")
-    if case.get("controller_support_level") != "simulated":
-        raise ValueError("Field 'controller_support_level' must be 'simulated'.")
-    if case.get("mode", "performance") not in {"performance", "insight"}:
-        raise ValueError("Field 'mode' must be 'performance' or 'insight' when provided.")
-    if not isinstance(case.get("thought_chain"), list) or not case["thought_chain"]:
-        raise ValueError("Field 'thought_chain' must exist and be a non-empty list.")
-    for entry in case["thought_chain"]:
-        if not isinstance(entry, dict) or entry.get("role") not in {"human", "agent"} or not isinstance(entry.get("content"), str):
-            raise ValueError("Each thought_chain entry must have role human/agent and string content.")
-    if not isinstance(case.get("paper_tags"), list) or not case["paper_tags"]:
-        raise ValueError("Field 'paper_tags' must exist and be a non-empty list.")
-    expected_decision = case.get("expected_mapped_decision")
-    if expected_decision not in DECISION_VOCABULARY:
-        raise ValueError("Field 'expected_mapped_decision' must exist and be in the decision vocabulary.")
-    acceptable_decisions = case.get("acceptable_mapped_decisions")
-    if not isinstance(acceptable_decisions, list) or not acceptable_decisions:
-        raise ValueError("Field 'acceptable_mapped_decisions' must exist and be a non-empty list.")
-    for decision in acceptable_decisions:
-        if decision not in DECISION_VOCABULARY:
-            raise ValueError(f"Acceptable mapped decision is not in the decision vocabulary: {decision}")
-    if expected_decision not in acceptable_decisions:
-        raise ValueError("Field 'expected_mapped_decision' must be included in acceptable_mapped_decisions.")
-    expected_action = case.get("expected_controller_action")
-    if expected_action not in CONTROLLER_ACTIONS:
-        raise ValueError("Field 'expected_controller_action' must exist and be a valid controller action.")
-    acceptable_actions = case.get("acceptable_controller_actions")
-    if not isinstance(acceptable_actions, list) or not acceptable_actions:
-        raise ValueError("Field 'acceptable_controller_actions' must exist and be a non-empty list.")
-    for action in acceptable_actions:
-        if action not in CONTROLLER_ACTIONS:
-            raise ValueError(f"Acceptable controller action is not valid: {action}")
-    if expected_action not in acceptable_actions:
-        raise ValueError("Field 'expected_controller_action' must be included in acceptable_controller_actions.")
-    if expected_action == "apply_safe_revision" and not case.get("safe_revision"):
-        raise ValueError("Field 'safe_revision' is required for apply_safe_revision cases.")
-    if expected_action == "request_clarification" and not case.get("clarification_prompt"):
-        raise ValueError("Field 'clarification_prompt' is required for request_clarification cases.")
-    if expected_action in {"route_to_review", "pause_for_review"} and not case.get("review_reason"):
-        raise ValueError("Field 'review_reason' is required for review-routing cases.")
+    from core.runtime_trajectories.validate import validate_case
+    validate_case(case)
 
 
 def validate_runtime_trajectory_cases(

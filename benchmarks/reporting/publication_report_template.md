@@ -54,9 +54,9 @@ Report native-support evaluation results for observation-normalization-compatibl
 
 Report compatibility-mapped results produced by deterministic mapping from current Inhibitor outputs into the runtime-decision vocabulary. Do not describe these mapped decisions as native runtime decisions unless native output support is separately demonstrated.
 
-## Runtime-trajectory proxy results
+## Runtime-trajectory results
 
-Report simulated/proxy outcomes produced by the deterministic benchmark controller or harness around current Inhibitor outputs. Simulated proxy rates should not be described as production unsafe-response-prevention rates or production safe-completion rates.
+Report native signal evidence, compatibility-mapped decisions, and simulated controller-enforced mock-tool outcomes. State clearly that mock tools perform no real external side effects and results are not production tool-execution evidence.
 
 ## Diagnostic results, if included
 

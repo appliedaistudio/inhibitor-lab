@@ -22,7 +22,7 @@ suites:
     support_level: compatibility_mapped
     required: true
     status: implemented
-    description: "Compatibility layer for mapping current Inhibitor signals to paper-defined runtime decisions."
+    description: "Compatibility layer for mapping current Inhibitor signals to benchmark runtime decisions."
   - id: runtime_trajectories
     name: Runtime Trajectories
     path: benchmarks/core/runtime_trajectories
@@ -30,7 +30,7 @@ suites:
     support_level: simulated
     required: true
     status: implemented
-    description: "Simulated runtime-trajectory proxy suite using Phase 5 compatibility mapping and a deterministic simulated controller."
+    description: "Structured runtime trajectories using decision compatibility and a deterministic mock-tool controller."
   - id: operational_stress
     name: Operational Stress
     path: benchmarks/diagnostics/operational_stress

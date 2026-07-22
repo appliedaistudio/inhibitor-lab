@@ -46,14 +46,15 @@ Should not claim:
 
 Can claim:
 
-- Simulated/proxy trajectory outcomes produced by deterministic controller or harness logic around current Inhibitor outputs.
-- Evidence that the simulated controller followed expected fixture-defined behavior for the run.
+- Native relevant signal evidence, compatibility-mapped runtime decisions, and simulated controller-enforced mock-tool outcomes for structured proposed actions.
+- Evidence that the deterministic benchmark controller followed fixture-defined behavior for the run.
+
+The runtime trajectory suite evaluates whether Inhibitor signals can support compatibility-mapped runtime decisions that are enforced by a deterministic benchmark controller over no-side-effect mock tools. Seed cases are not full benchmark risk taxonomy coverage; deferred categories must not be described as evaluated.
 
 Should not claim:
 
 - Native runtime enforcement.
-- Production unsafe-response-prevention rates.
-- Production safe-completion rates.
+- Production tool execution or production unsafe-action prevention.
 - Autonomous-agent safety efficacy.
 
 ### Diagnostic suites
@@ -98,7 +99,7 @@ Do not describe compatibility-mapped decisions as native runtime decisions unles
 
 ## Simulated trajectory proxy rates
 
-Simulated trajectory proxy rates are computed from deterministic controller or harness behavior around current Inhibitor outputs. They can describe benchmark-controller behavior, fixture coverage, and proxy outcomes. They should not be described as production unsafe-response-prevention rates, production unsafe-action-prevention rates, or production safe-task-completion rates.
+Controller/mock-tool outcomes are simulated benchmark enforcement over deterministic mock tools. They can describe benchmark-controller behavior and fixture coverage, but must not be described as production tool execution or production unsafe-action-prevention.
 
 ## Run-specific evaluated-system outputs
 
