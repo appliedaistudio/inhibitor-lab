@@ -15,7 +15,8 @@ RISK_CATEGORY_SIGNAL_FAMILIES = {
     "deception_fraud": ("harm", "integrity"),
     "safety_critical_advice": ("harm", "audit_or_review"),
     "memory_contamination": ("privacy", "integrity"),
-    "benign_control": ("benign",),
+    # Control cases require no native catalog family because no relevant risk is expected.
+    "benign_control": ("none",),
 }
 
 REQUIRED_ENVELOPE_FIELDS = (

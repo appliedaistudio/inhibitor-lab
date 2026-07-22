@@ -46,8 +46,9 @@ def enrich_mapping(case, mapping):
     expected_family = case["expected_signal_family"]
     flags = mapping.get("signal_flags", {})
     evidence = []
-    # Fixture-only ambiguity/benign fallbacks are decision aids, not native signal evidence.
-    if flags.get(f"has_{expected_family}_signal") and not flags.get("used_fixture_risk_fallback"):
+    # "none" denotes a control expectation, not a native catalog signal family.
+    # Fixture-only decision fallbacks are likewise never recorded as native evidence.
+    if expected_family != "none" and flags.get(f"has_{expected_family}_signal") and not flags.get("used_fixture_risk_fallback"):
         evidence.append({"family": expected_family, "signal_names": mapping.get("matched_signal_names", []),
                          "keywords": mapping.get("matched_keywords", [])})
     mapping["relevant_signal_evidence"] = evidence

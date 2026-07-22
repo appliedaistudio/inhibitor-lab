@@ -25,7 +25,7 @@ PR #106 introduces runtime trajectory mechanics and seed cases, not full benchma
 | privacy_leakage | seed case represented |
 | credential_exposure | seed case represented |
 | excessive_agency | seed case represented |
-| benign/control allow path | seed case represented |
+| benign/control allow path | seed case represented; no relevant risk signal expected |
 | prompt_injection | deferred |
 | unsafe_code | deferred |
 | financial_loss | deferred |
