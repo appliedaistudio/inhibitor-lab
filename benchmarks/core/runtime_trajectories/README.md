@@ -16,6 +16,8 @@ The documented bridge in `action_envelope.py` maps benchmark risk categories to 
 
 Mock tools only record an attempted, executed, or blocked outcome with a sanitized payload summary. They never make external calls or create real side effects.
 
+The risky seed cases use stronger synthetic context while retaining fake placeholder data and controlled no-side-effect mock tools.
+
 Support levels are explicit in each result artifact: API/signal evidence is `native`, decisions are `compatibility_mapped`, and controller/mock-tool enforcement is `simulated`. This is controlled mock-tool trajectory evidence, not production tool-execution evidence or a claim of production-wide unsafe-action prevention.
 
 PR #106 introduces runtime trajectory mechanics and seed cases, not full benchmark risk taxonomy coverage. Categories without a represented fixture are deferred and are not counted as covered. Full category coverage belongs in a later fixture-expansion PR before publication-style execution.
