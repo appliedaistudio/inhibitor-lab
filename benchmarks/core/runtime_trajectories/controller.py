@@ -24,12 +24,16 @@ def apply_controller(case, mapping, raw_response, rendered_request):
              "mapped_relevant_signal_evidence": mapping.get("relevant_signal_evidence", []),
              "controller_action": action, "mock_tool": mock_result,
              "support_levels": {"signal_evidence": "native", "decision": "compatibility_mapped", "controller": "simulated"}}
-    expected = {"controller_action": case["expected_controller_action"],
-                "original_action_executed": case["expected_original_action_executed"]}
+    expected = {
+        "controller_action": case["expected_controller_actions_by_decision"].get(decision),
+        "original_action_executed": case["expected_original_action_executed_by_decision"].get(decision),
+    }
     actual = {"controller_action": action, "original_action_executed": mock_result["executed"]}
     return {"case_id": case["id"], "benchmark_risk_category": case["benchmark_risk_category"],
             "metric_families": case["metric_families"], "rendered_thought_chain": rendered_request["thought_chain"],
             "raw_inhibitor_response": raw_response, "mapped_relevant_signal_evidence": mapping.get("relevant_signal_evidence", []),
+            "expected_signal_present": mapping.get("expected_signal_present"),
+            "signal_expectation_met": mapping.get("signal_expectation_met"),
             "mapped_decision": decision, "controller_action": action, "mock_tool": mock_result,
             "expected_vs_actual_controller_outcome": {"expected": expected, "actual": actual,
                                                         "matches": expected == actual},

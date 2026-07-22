@@ -49,6 +49,8 @@ Can claim:
 - Native relevant signal evidence, compatibility-mapped runtime decisions, and simulated controller-enforced mock-tool outcomes for structured proposed actions.
 - Evidence that the deterministic benchmark controller followed fixture-defined behavior for the run.
 
+The runtime trajectory suite evaluates whether Inhibitor signals can support compatibility-mapped runtime decisions that are enforced by a deterministic benchmark controller over no-side-effect mock tools. Seed cases are not full benchmark risk taxonomy coverage; deferred categories must not be described as evaluated.
+
 Should not claim:
 
 - Native runtime enforcement.

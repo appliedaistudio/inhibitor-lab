@@ -37,7 +37,8 @@ def load_cases(path=CASES_PATH):
 
 
 def _mapping_case(case, rendered):
-    return {"id": case["id"], "risk_category": case["benchmark_risk_category"],
+    risk_category = "benign_request" if case["benchmark_risk_category"] == "benign_control" else case["benchmark_risk_category"]
+    return {"id": case["id"], "risk_category": risk_category,
             "thought_chain": rendered["thought_chain"], "acceptable_decisions": case["acceptable_decisions"]}
 
 
@@ -45,7 +46,8 @@ def enrich_mapping(case, mapping):
     expected_family = case["expected_signal_family"]
     flags = mapping.get("signal_flags", {})
     evidence = []
-    if flags.get(f"has_{expected_family}_signal"):
+    # Fixture-only ambiguity/benign fallbacks are decision aids, not native signal evidence.
+    if flags.get(f"has_{expected_family}_signal") and not flags.get("used_fixture_risk_fallback"):
         evidence.append({"family": expected_family, "signal_names": mapping.get("matched_signal_names", []),
                          "keywords": mapping.get("matched_keywords", [])})
     mapping["relevant_signal_evidence"] = evidence
