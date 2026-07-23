@@ -86,9 +86,13 @@ summary.md
 | Signal expectation met rate | Implemented | Native signal evidence + fixture expectation | Checks whether observed signal evidence matches fixture expectation |
 | Acceptable decision rate | Implemented | Compatibility-mapped | Checks whether mapped decision is acceptable for the fixture |
 | Controller outcome match rate | Implemented | Simulated | Checks controller behavior against expected per-decision outcome |
-| API success rate | Implemented | Live API call | `/check` success rate |
-| Latency min/max/mean | Implemented | Live API call | Percentiles planned |
-| Trace completeness | Partial | Benchmark artifact | Full audit completeness scoring planned |
+| API success, timeout, and error rates | Implemented | Live API call | Includes conservative error-type aggregation |
+| Latency min/max/mean/p50/p95/p99 | Implemented | Live API call | Reported for all and successful responses |
+| Wilson confidence intervals | Implemented | Benchmark scoring | 95% Wilson intervals for binomial rates |
+| Harm-weighted unsafe execution rate | Implemented | Simulated | Eligible unsafe mock trajectories weighted by fixture severity |
+| Severity and risk-category breakdowns | Implemented | Mixed / simulated outcomes | Outcome metrics remain eligibility-gated |
+| Audit field completeness | Implemented | Benchmark artifact | Scores expected benchmark audit fields; not production audit completeness |
+| Trace completeness | Partial | Benchmark artifact | Benchmark audit-like fields do not represent production audit logs |
 
 Outcome metrics must be gated by metric eligibility:
 
@@ -103,20 +107,12 @@ This prevents API failures or malformed results from being counted as safety win
 
 | Metric / feature | Why not implemented yet | Can be implemented in inhibitor-lab? | Planned stage |
 | --- | --- | --- | --- |
-| Harm-weighted unsafe execution rate | Needs severity-weighted scoring | Yes | Metric completeness |
 | Policy violation capture rate | Needs policy IDs and TP/FN labels | Partly | Policy/audit schema |
 | Revision success rate | Needs revise-and-retry loop | Yes | Adjustment loop |
 | Adjustment compliance rate | Needs adjustment attempts and retry outcomes | Yes | Adjustment loop |
 | User-goal preservation | Needs final response and utility target scoring | Yes | Agent/adjustment loop |
 | Minimality of intervention | Needs action-diff rubric or reviewer scoring | Yes | Adjustment quality |
-| Latency p50/p95/p99 | Reporting not yet added | Yes | Metric completeness |
-| Timeout rate | Needs error classification | Yes | Metric completeness |
-| Error rate by class | Needs normalized error taxonomy | Yes | Metric completeness |
 | Throughput / stress aggregation | Needs stress runner integration | Yes | Operations integration |
-| Confidence intervals | Needs scoring helper and enough cases | Yes | Metric completeness |
-| Category-level rates | Needs broader fixture coverage | Yes | Fixture expansion |
-| Severity-stratified rates | Needs severity-aware scoring | Yes | Metric completeness |
-| Audit field completeness percentage | Needs required audit-field schema | Yes | Audit schema |
 | Human-review agreement | Requires independent reviewers and adjudication | Process dependency | Human labeling |
 | Official external prompt-injection benchmark score | Requires dataset integration | Yes, later | External benchmark slices |
 | Composite benchmark score | Requires mature safety, utility, adjustment, operations, and audit subscores | Yes, later | Publication scoring |
@@ -217,12 +213,12 @@ High-quality runtime inhibition benchmark cases should define ground truth befor
 | `required_clarification` | Clarification needed for ambiguous cases | Planned |
 | `escalation_requirement` | When human/reviewer escalation is required | Planned |
 | `severity` | Pre-registered harm severity | Implemented |
-| `severity_weight` | Numeric weight for harm-weighted scoring | Planned |
+| `severity_weight` | Numeric weight for harm-weighted scoring | Implemented locally from fixture severity labels |
 | `policy_ids` | Expected benchmark policy identifiers | Planned |
 | `utility_target` | Required safe-task outcome or user-goal preservation target | Planned |
 | `reversibility` | Whether the action can be undone | Implemented inside action envelope |
 | `data_sensitivity` | Sensitivity level of touched data | Implemented inside action envelope |
-| `expected_audit_fields` | Required trace fields for auditability checks | Partially implemented |
+| `expected_audit_fields` | Required trace fields for auditability checks | Implemented for benchmark artifact completeness |
 | `human_labels` | Independent reviewer labels and adjudication | Not measured / process dependency |
 
 The current seed cases include enough labels for signal, decision, and simulated controller outcome validation. They do not yet include the full target label schema needed for final publication-style safety efficacy, utility, adjustment, and human-agreement claims.
@@ -236,8 +232,8 @@ Publication preparation should produce five result tables: safety results, utili
 | Safety | Partial | Simulated UAPR/UER over eligible mock trajectories; no production prevention claim |
 | Utility | Partial | Simulated safe task completion and over-inhibition over benign mock trajectories |
 | Adjustment | Not measured / partial | Current benchmark can record revise decisions, but does not yet execute revise-and-retry loops |
-| Operations | Partial | API success and latency min/max/mean implemented; percentiles, throughput, timeout/error-class rates planned |
-| Auditability | Partial | Trajectory artifact exists, but full audit completeness, policy IDs, trace IDs, incident reconstructability, and explanation usefulness are planned |
+| Operations | Partial | API success, latency percentiles, and timeout/error-class rates implemented; throughput/stress aggregation planned |
+| Auditability | Partial | Benchmark audit-field completeness is implemented; production audit logs, native policy IDs, trace IDs, incident reconstructability, and explanation usefulness remain not measured or planned for separate implementation |
 
 Missing values must be reported explicitly as `not_measured`, `partial`, or `not_applicable`. Detection or signal-trigger rates must not be reported as prevention rates unless eligible controller/execution outcome evidence exists.
 
@@ -287,26 +283,25 @@ The current runtime trajectory suite is closest to V4/V5 mechanics, but only wit
 
 ## Completion Roadmap
 
-1. Reporting/schema improvements — completed or in progress by PR #107.
-2. Methodology and limitations document — this PR.
-3. Metric completeness:
-   - Wilson confidence intervals
-   - latency percentiles
-   - timeout/error rates
-   - harm-weighted unsafe execution
-   - severity/category breakdowns
-   - audit completeness scoring
-4. Risk-category fixture expansion.
-5. Adjustment-loop support.
-6. Baseline variants.
-7. Agent-loop prototype.
-8. Prompt-injection slices:
+Completed:
+
+1. Reporting/schema improvements.
+2. Methodology and limitations document.
+3. Metric completeness.
+
+Remaining:
+
+1. Risk-category fixture expansion.
+2. Adjustment-loop support.
+3. Baseline variants.
+4. Agent-loop prototype.
+5. Prompt-injection slices:
    - local prompt-injection fixtures
    - local diagnostic/semantic-context prompt-injection-style artifacts
    - official AgentDojo adapter
    - official InjecAgent adapter
-9. Human labeling workflow.
-10. Full implemented-suite execution and publication result package.
+6. Human labeling workflow.
+7. Full implemented-suite execution and publication result package.
 
 Local prompt-injection runtime trajectory fixtures and local diagnostic/semantic-context prompt-injection-style artifacts must not be described as official AgentDojo or InjecAgent scores. Official external benchmark scores require adapter implementation, dataset/task mapping, and separate execution.
 
@@ -330,4 +325,5 @@ Discrepancies should be documented rather than silently hidden by fixture change
 
 ```text
 v0.1 — Initial methodology document. Documents current runtime trajectory seed benchmark, support levels, implemented metrics, limitations, and completion roadmap.
+v0.2 — Adds metric completeness for confidence intervals, latency percentiles, timeout/error rates, harm-weighted unsafe execution, severity/category breakdowns, and benchmark audit-field completeness.
 ```
