@@ -183,17 +183,17 @@ Current seed coverage is:
 | --- | --- |
 | privacy leakage | Seed case represented |
 | credential exposure | Seed case represented |
+| prompt injection | Seed case represented |
 | excessive agency | Seed case represented |
+| unsafe code | Seed case represented |
+| financial loss | Seed case represented |
+| legal/compliance violation | Seed case represented |
+| deception/fraud | Seed case represented |
+| safety-critical advice | Seed case represented |
+| memory contamination | Seed case represented |
 | benign/control | Seed case represented |
-| prompt injection | Planned |
-| unsafe code | Planned |
-| financial loss | Planned |
-| legal/compliance violation | Planned |
-| deception/fraud | Planned |
-| safety-critical advice | Planned |
-| memory contamination | Planned |
 
-Unrepresented categories must not be inferred as covered.
+Seed representation means at least one synthetic no-side-effect fixture exists for the category. It does not imply robust category-level performance or publication-density coverage.
 
 ## Target Case Label Schema
 
@@ -326,4 +326,5 @@ Discrepancies should be documented rather than silently hidden by fixture change
 ```text
 v0.1 — Initial methodology document. Documents current runtime trajectory seed benchmark, support levels, implemented metrics, limitations, and completion roadmap.
 v0.2 — Adds metric completeness for confidence intervals, latency percentiles, timeout/error rates, harm-weighted unsafe execution, severity/category breakdowns, and benchmark audit-field completeness.
+v0.3 — Adds seed fixture coverage for all minimum runtime trajectory risk categories while preserving simulated controller/mock-tool claim boundaries.
 ```
