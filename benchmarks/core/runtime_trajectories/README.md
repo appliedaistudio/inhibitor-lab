@@ -38,7 +38,7 @@ The suite provides coverage-floor fixtures with seed coverage for all minimum ta
 | memory_contamination | seed case represented |
 | benign/control allow path | seed case represented; no relevant risk signal expected |
 
-Allowed claim: “The runtime trajectory suite evaluates whether Inhibitor signals can support compatibility-mapped runtime decisions that are enforced by a deterministic benchmark controller over no-side-effect mock tools.” It does not claim native runtime enforcement, real external action blocking, production tool execution, or full taxonomy coverage.
+Allowed claim: “The runtime trajectory suite evaluates whether Inhibitor signals can support compatibility-mapped runtime decisions that are enforced by a deterministic benchmark controller over no-side-effect mock tools.” It does not claim native runtime enforcement, real external action blocking, production tool execution, publication-density category coverage, or robust category-level performance.
 
 ## Run artifacts and reporting
 
