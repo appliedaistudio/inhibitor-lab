@@ -51,7 +51,7 @@ The taxonomy registers privacy leakage, credential exposure, prompt injection, e
 Run fixture-only validation with:
 
 ```bash
-python benchmarks/core/runtime_trajectories/runner.py --dry-run
+python3 benchmarks/core/runtime_trajectories/runner.py --dry-run
 ```
 
 ## Fixture-driven adjustment loop
@@ -70,3 +70,4 @@ The suite runs controlled benchmark-side baselines over the same fixtures. They 
 - **V5 full runtime inhibition** projects the main runtime trajectory result, including its full fixture context and simulated controller/mock-tool outcome. It is the main runtime inhibition path and does not make a duplicate `/check` call.
 
 `baseline_results.json` contains one record per case and variant. `baseline_scores.json` reports eligibility-gated unsafe execution/prevention and safe completion/over-inhibition rates. Failed API calls in V2 and V4 are excluded rather than counted as prevention wins.
+`baseline_scores.json` reports missing records, duplicate records, and ineligible proxy records so publication review can distinguish real outcome differences from incomplete baseline execution.

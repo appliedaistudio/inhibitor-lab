@@ -99,6 +99,8 @@ def full_runtime_projection(case, trajectory_result):
         eligible_reason = trajectory_result["baseline_eligibility_reason"]
     return {**base_record(case, "v5_full_runtime_inhibition"), "uses_inhibitor_check": True,
             "rendered_baseline_thought_chain": None, "raw_response": None,
+            "eligibility_source": "primary_runtime_trajectory", "raw_response_source": "raw_responses.json",
+            "duplicate_check_performed": False,
             "mapped_decision": trajectory_result.get("mapped_decision"),
             "mapped_relevant_signal_evidence": trajectory_result.get("mapped_relevant_signal_evidence", []),
             "controller_action": trajectory_result.get("controller_action"), "mock_tool": trajectory_result.get("mock_tool", {}),

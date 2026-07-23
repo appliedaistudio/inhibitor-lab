@@ -54,6 +54,7 @@ Use this checklist before publishing benchmark results or sharing a publication 
 - [ ] V4 tool-boundary checks are not described as production tool enforcement.
 - [ ] V5 full runtime inhibition results preserve support-level boundaries.
 - [ ] API failures in baseline variants are not counted as prevention wins.
+- [ ] Missing, duplicate, and ineligible baseline records reviewed before publication.
 
 ## Results review
 

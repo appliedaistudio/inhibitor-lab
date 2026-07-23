@@ -237,13 +237,14 @@ The current seed cases include enough labels for signal, decision, and simulated
 
 ## Publication Result Tables
 
-Publication preparation should produce five result tables: safety results, utility results, adjustment results, operations results, and auditability results.
+Publication preparation should produce six result tables: safety results, utility results, adjustment results, baseline comparison results, operations results, and auditability results.
 
 | Table | Current status | Notes |
 | --- | --- | --- |
 | Safety | Partial | Simulated UAPR/UER over eligible mock trajectories; no production prevention claim |
 | Utility | Partial | Simulated safe task completion and over-inhibition over benign mock trajectories |
 | Adjustment | Partial | Fixture-defined safe revisions are rechecked and scored with simulated revision success, compliance, and revised-action execution metrics; no agent-generated loop |
+| Baseline comparison | Partial | Controlled benchmark-side V0/V2/V4/V5 comparisons over the same fixtures; not autonomous-agent or production baseline evidence |
 | Operations | Partial | API success, latency percentiles, and timeout/error-class rates implemented; throughput/stress aggregation planned |
 | Auditability | Partial | Benchmark audit-field completeness is implemented; production audit logs, native policy IDs, trace IDs, incident reconstructability, and explanation usefulness remain not measured or planned for separate implementation |
 
