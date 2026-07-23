@@ -15,6 +15,7 @@ Use this checklist before publishing benchmark results or sharing a publication 
   - [ ] `scores.json`
   - [ ] `summary.md`
   - [ ] `trajectory_results.json` for `runtime_trajectories` when available.
+  - [ ] `adjustment_results.json` for `runtime_trajectories` when adjustment is configured.
 
 ## Support-level disclosure
 
@@ -42,6 +43,10 @@ Use this checklist before publishing benchmark results or sharing a publication 
 - [ ] Compatibility-mapped results are not described as native runtime decisions unless native support is separately validated.
 - [ ] Local prompt-injection fixtures or diagnostics are not described as official AgentDojo/InjecAgent scores.
 - [ ] Detection/signal-trigger rates are not described as prevention rates without eligible controller/execution outcome evidence.
+- [ ] Adjustment-loop metrics are labeled fixture-defined and simulated.
+- [ ] Agent-generated adjustment is not claimed unless an agent loop is implemented.
+- [ ] Minimality-of-intervention is not claimed beyond implemented metadata/rubric support.
+- [ ] User-goal preservation claims do not exceed fixture-defined utility proxies.
 
 ## Results review
 

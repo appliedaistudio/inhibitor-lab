@@ -36,7 +36,7 @@ The evaluated system is `S = (A, I, C, E, P, L)`:
 | C | Controller applying decision | Deterministic benchmark controller | Simulated |
 | E | Execution environment/tools | No-side-effect mock tools | Simulated |
 | P | Policy set / policy pack | Fixture expectations and signal-family mapping | Partial |
-| L | Audit/logging layer | `trajectory_results.json`, `scores.json`, `summary.md` | Partial |
+| L | Audit/logging layer | `trajectory_results.json`, `adjustment_results.json`, `scores.json`, `summary.md` | Partial |
 
 ## Current Runtime Trajectory Mechanism
 
@@ -62,6 +62,7 @@ manifest.json
 raw_responses.json
 normalized_results.json
 trajectory_results.json
+adjustment_results.json
 scores.json
 summary.md
 ```
@@ -70,6 +71,7 @@ summary.md
 - `raw_responses.json`: raw per-case API responses.
 - `normalized_results.json`: per-case mapped decision and validation summary.
 - `trajectory_results.json`: benchmark trajectory artifact with audit-like fields.
+- `adjustment_results.json`: fixture-defined adjustment-loop records for configured revision cases.
 - `scores.json`: machine-readable metrics.
 - `summary.md`: human-readable run report.
 
@@ -103,19 +105,23 @@ Outcome metrics must be gated by metric eligibility:
 
 This prevents API failures or malformed results from being counted as safety wins.
 
-## Metrics Planned But Not Yet Implemented
+## Partially Implemented and Remaining Metrics
 
 | Metric / feature | Why not implemented yet | Can be implemented in inhibitor-lab? | Planned stage |
 | --- | --- | --- | --- |
 | Policy violation capture rate | Needs policy IDs and TP/FN labels | Partly | Policy/audit schema |
-| Revision success rate | Needs revise-and-retry loop | Yes | Adjustment loop |
-| Adjustment compliance rate | Needs adjustment attempts and retry outcomes | Yes | Adjustment loop |
-| User-goal preservation | Needs final response and utility target scoring | Yes | Agent/adjustment loop |
-| Minimality of intervention | Needs action-diff rubric or reviewer scoring | Yes | Adjustment quality |
+| Revision success rate | Implemented for triggered fixture-defined safe revisions; simulated | Yes | Partial, not agent-generated |
+| Adjustment compliance rate | Implemented as required-string removal/retention checks; simulated | Yes | Partial fixture proxy |
+| User-goal preservation | Partial fixture proxy via required retained strings and utility targets; no final response scoring | Yes | Agent/adjustment loop |
+| Minimality of intervention | Partial changed-envelope-path metadata; needs action-diff rubric or reviewer scoring | Yes | Adjustment quality |
 | Throughput / stress aggregation | Needs stress runner integration | Yes | Operations integration |
 | Human-review agreement | Requires independent reviewers and adjudication | Process dependency | Human labeling |
 | Official external prompt-injection benchmark score | Requires dataset integration | Yes, later | External benchmark slices |
 | Composite benchmark score | Requires mature safety, utility, adjustment, operations, and audit subscores | Yes, later | Publication scoring |
+
+## Fixture-defined adjustment support
+
+The current adjustment loop is fixture-defined: when an original action maps to a configured `revise` decision, the benchmark applies a known safe revision, rechecks it, and evaluates it through simulated controller and mock-tool outcomes. It is not an agent-generated revision or autonomous agent loop. The agent-loop prototype remains roadmap work.
 
 ## Current Limitations
 
@@ -142,8 +148,9 @@ This prevents API failures or malformed results from being counted as safety win
 - human-review agreement
 - official AgentDojo / InjecAgent score
 - full baseline comparison
-- revision success
-- user-goal preservation
+- agent-generated revision success
+- full user-goal preservation beyond fixture string-retention and utility-target proxies
+- full minimality-of-intervention scoring
 - incident reconstructability
 - explanation usefulness
 
@@ -209,13 +216,13 @@ High-quality runtime inhibition benchmark cases should define ground truth befor
 | `allowed_outcome` | What a safe successful outcome looks like | Planned |
 | `unsafe_outcome` | What failure would look like | Planned |
 | `acceptable_decisions` | Decisions considered safe for the fixture | Implemented |
-| `acceptable_revision` | Safe revised action when revision is possible | Planned |
+| `acceptable_revision` | Fixture-defined safe revised action when revision is possible | Partial |
 | `required_clarification` | Clarification needed for ambiguous cases | Planned |
 | `escalation_requirement` | When human/reviewer escalation is required | Planned |
 | `severity` | Pre-registered harm severity | Implemented |
 | `severity_weight` | Numeric weight for harm-weighted scoring | Implemented locally from fixture severity labels |
 | `policy_ids` | Expected benchmark policy identifiers | Planned |
-| `utility_target` | Required safe-task outcome or user-goal preservation target | Planned |
+| `utility_target` | Fixture-defined utility proxy for a safe revised action | Partial |
 | `reversibility` | Whether the action can be undone | Implemented inside action envelope |
 | `data_sensitivity` | Sensitivity level of touched data | Implemented inside action envelope |
 | `expected_audit_fields` | Required trace fields for auditability checks | Implemented for benchmark artifact completeness |
@@ -231,7 +238,7 @@ Publication preparation should produce five result tables: safety results, utili
 | --- | --- | --- |
 | Safety | Partial | Simulated UAPR/UER over eligible mock trajectories; no production prevention claim |
 | Utility | Partial | Simulated safe task completion and over-inhibition over benign mock trajectories |
-| Adjustment | Not measured / partial | Current benchmark can record revise decisions, but does not yet execute revise-and-retry loops |
+| Adjustment | Partial | Fixture-defined safe revisions are rechecked and scored with simulated revision success, compliance, and revised-action execution metrics; no agent-generated loop |
 | Operations | Partial | API success, latency percentiles, and timeout/error-class rates implemented; throughput/stress aggregation planned |
 | Auditability | Partial | Benchmark audit-field completeness is implemented; production audit logs, native policy IDs, trace IDs, incident reconstructability, and explanation usefulness remain not measured or planned for separate implementation |
 
@@ -252,16 +259,7 @@ Composite scoring remains `not_measured` until:
 
 ## Baseline and Variant Roadmap
 
-Target variants are:
-
-- V0: unprotected agent or unprotected mock execution
-- V1: prompt-only safety
-- V2: final-output moderation
-- V3: input-output/content guardrail
-- V4: tool-boundary inhibition
-- V5: fuller runtime inhibition with adjustment, audit, and escalation
-
-The current runtime trajectory suite is closest to V4/V5 mechanics, but only with simulated mock tools. The V0 mock baseline and V2 final-output baseline are planned. Prompt-only and full agent variants require agent-loop support.
+The remaining comparison work includes unprotected mock execution, prompt-only safety, final-output moderation, and tool-boundary inhibition variants. The current runtime trajectory suite uses simulated mock tools and does not implement these baselines. Prompt-only and full agent variants require agent-loop support.
 
 ## Allowed and Disallowed Claims
 
@@ -270,7 +268,7 @@ The current runtime trajectory suite is closest to V4/V5 mechanics, but only wit
 - “The runtime trajectory suite validates control-chain mechanics over structured proposed actions, live `/check` evaluation, compatibility-mapped decisions, and simulated controller enforcement over no-side-effect mock tools.”
 - “Eligible unsafe mock actions were prevented in the simulated controller environment.”
 - “The benchmark reports measured, simulated, partial, and not-measured metrics separately.”
-- “The current suite provides seed risk-category coverage, not full taxonomy coverage.”
+- “The current suite provides seed coverage across the minimum target risk categories, not publication-density coverage or robust category-level performance.”
 
 ### Disallowed claims
 
@@ -288,20 +286,21 @@ Completed:
 1. Reporting/schema improvements.
 2. Methodology and limitations document.
 3. Metric completeness.
+4. Risk-category fixture expansion.
+5. Fixture-driven adjustment loop.
 
 Remaining:
 
-1. Risk-category fixture expansion.
-2. Adjustment-loop support.
-3. Baseline variants.
-4. Agent-loop prototype.
-5. Prompt-injection slices:
+1. Baseline variants.
+2. Agent-loop prototype for agent-generated revisions.
+3. Full minimality and human-reviewed adjustment-quality scoring.
+4. Prompt-injection slices:
    - local prompt-injection fixtures
    - local diagnostic/semantic-context prompt-injection-style artifacts
    - official AgentDojo adapter
    - official InjecAgent adapter
-6. Human labeling workflow.
-7. Full implemented-suite execution and publication result package.
+5. Human labeling workflow.
+6. Full implemented-suite execution and publication result package.
 
 Local prompt-injection runtime trajectory fixtures and local diagnostic/semantic-context prompt-injection-style artifacts must not be described as official AgentDojo or InjecAgent scores. Official external benchmark scores require adapter implementation, dataset/task mapping, and separate execution.
 
@@ -327,4 +326,5 @@ Discrepancies should be documented rather than silently hidden by fixture change
 v0.1 — Initial methodology document. Documents current runtime trajectory seed benchmark, support levels, implemented metrics, limitations, and completion roadmap.
 v0.2 — Adds metric completeness for confidence intervals, latency percentiles, timeout/error rates, harm-weighted unsafe execution, severity/category breakdowns, and benchmark audit-field completeness.
 v0.3 — Adds seed fixture coverage for all minimum runtime trajectory risk categories while preserving simulated controller/mock-tool claim boundaries.
+v0.4 — Adds fixture-driven adjustment-loop support with safe revision envelopes, revised-action rechecks, simulated revision success, adjustment compliance, and revised-action execution metrics.
 ```
