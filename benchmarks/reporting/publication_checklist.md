@@ -50,6 +50,12 @@ Use this checklist before publishing benchmark results or sharing a publication 
 - [ ] Discrepancies reviewed before fixture changes.
 - [ ] Any fixture changes after live execution are justified in PR notes.
 - [ ] Metric eligibility exclusions reviewed.
+- [ ] Confidence intervals reviewed for every reported binomial rate.
+- [ ] Latency p50/p95/p99 values reviewed.
+- [ ] Timeout and API error rates, including error-type counts, reviewed.
+- [ ] Simulated harm-weighted unsafe execution rate reviewed.
+- [ ] Severity and risk-category breakdowns reviewed for eligibility gating and limited coverage.
+- [ ] Benchmark audit-field completeness reviewed; it is not described as production audit-log completeness.
 
 ## Data and repository hygiene
 
