@@ -25,11 +25,13 @@ Each run should record:
 A reproducibility package should include:
 
 - `manifest.json`
-- `raw_responses.jsonl`
-- `normalized_results.jsonl`
+- `raw_responses.jsonl` (or `raw_responses.json` JSON array for `runtime_trajectories`)
+- `normalized_results.jsonl` (or `normalized_results.json` JSON array for `runtime_trajectories`)
 - `scores.json`
 - `summary.md`
-- `trajectory_results.jsonl` for `runtime_trajectories` when available
+- `trajectory_results.json` JSON array for `runtime_trajectories` when available
+
+For runtime trajectories, `summary.md` is the human-readable run report. The controller and mock-tool outcomes are simulated, and `trajectory_results.json` is a benchmark trajectory artifact with audit-like fields rather than a production audit log. Unsupported metrics are retained under `not_measured` in `scores.json`.
 
 ## Reproducibility expectations
 

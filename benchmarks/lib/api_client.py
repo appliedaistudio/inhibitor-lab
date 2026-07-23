@@ -12,7 +12,11 @@ class InhibitorApiClient:
     def __init__(self, base_url, api_key=None, headers=None, timeout=None):
         self.base_url = str(base_url).rstrip("/")
         self.api_key = api_key
-        self.headers = dict(headers or {})
+        self.headers = {
+            "User-Agent": "inhibitor-lab-benchmark/0.1",
+            "Accept": "application/json",
+            **(headers or {}),
+        }
         self.timeout = timeout
 
     def check(self, thought_chain, mode="performance", options=None):
