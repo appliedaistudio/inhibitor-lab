@@ -18,20 +18,30 @@ Use this checklist before publishing benchmark results or sharing a publication 
 
 ## Support-level disclosure
 
+- [ ] Runtime inhibition benchmark methodology reviewed.
+- [ ] Implemented metrics identified.
 - [ ] Support levels disclosed for every reported suite.
 - [ ] Compatibility-mapped results labeled.
 - [ ] Simulated results labeled as proxy outcomes.
+- [ ] Partial metrics labeled.
+- [ ] Not-measured metrics listed with reasons.
 - [ ] Diagnostic results separated from core safety-efficacy claims.
 - [ ] Limitations section included.
 
 ## Claim-boundary review
 
+- [ ] Claim boundaries reviewed before publication.
 - [ ] No native-enforcement claims unless supported by native outputs.
 - [ ] No unverified production unsafe-action-prevention claims.
 - [ ] No unverified production safe-task-completion claims.
 - [ ] Simulated proxy rates are not described as production unsafe-response-prevention or production safe-completion rates.
 - [ ] Diagnostic results are not used as direct production safety-efficacy proof.
 - [ ] Compatibility-mapped results are not described as native runtime decisions unless native support is separately validated.
+
+## Results review
+
+- [ ] Results reviewed for publication accuracy.
+- [ ] Discrepancies and issues documented.
 
 ## Data and repository hygiene
 
