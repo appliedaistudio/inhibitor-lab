@@ -233,7 +233,7 @@ Publication preparation should produce five result tables: safety results, utili
 | Utility | Partial | Simulated safe task completion and over-inhibition over benign mock trajectories |
 | Adjustment | Not measured / partial | Current benchmark can record revise decisions, but does not yet execute revise-and-retry loops |
 | Operations | Partial | API success, latency percentiles, and timeout/error-class rates implemented; throughput/stress aggregation planned |
-| Auditability | Partial | Benchmark audit-field completeness is implemented; production audit logs, policy IDs, trace IDs, incident reconstructability, and explanation usefulness are not measured or planned |
+| Auditability | Partial | Benchmark audit-field completeness is implemented; production audit logs, native policy IDs, trace IDs, incident reconstructability, and explanation usefulness remain not measured or planned for separate implementation |
 
 Missing values must be reported explicitly as `not_measured`, `partial`, or `not_applicable`. Detection or signal-trigger rates must not be reported as prevention rates unless eligible controller/execution outcome evidence exists.
 
@@ -283,19 +283,25 @@ The current runtime trajectory suite is closest to V4/V5 mechanics, but only wit
 
 ## Completion Roadmap
 
-1. Reporting/schema improvements — completed or in progress by PR #107.
-2. Methodology and limitations document — this PR.
-3. Risk-category fixture expansion.
-4. Adjustment-loop support.
-5. Baseline variants.
-6. Agent-loop prototype.
-7. Prompt-injection slices:
+Completed:
+
+1. Reporting/schema improvements.
+2. Methodology and limitations document.
+3. Metric completeness.
+
+Remaining:
+
+1. Risk-category fixture expansion.
+2. Adjustment-loop support.
+3. Baseline variants.
+4. Agent-loop prototype.
+5. Prompt-injection slices:
    - local prompt-injection fixtures
    - local diagnostic/semantic-context prompt-injection-style artifacts
    - official AgentDojo adapter
    - official InjecAgent adapter
-8. Human labeling workflow.
-9. Full implemented-suite execution and publication result package.
+6. Human labeling workflow.
+7. Full implemented-suite execution and publication result package.
 
 Local prompt-injection runtime trajectory fixtures and local diagnostic/semantic-context prompt-injection-style artifacts must not be described as official AgentDojo or InjecAgent scores. Official external benchmark scores require adapter implementation, dataset/task mapping, and separate execution.
 
