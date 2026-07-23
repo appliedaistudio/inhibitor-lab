@@ -29,7 +29,10 @@ class InhibitorApiClient:
         return self._get_json("/catalog")
 
     def _build_headers(self, method):
-        headers = {}
+        headers = {
+            "User-Agent": "inhibitor-lab-benchmark/0.1",
+            "Accept": "application/json",
+        }
         if method == "POST":
             headers["Content-Type"] = "application/json"
         if self.api_key:
