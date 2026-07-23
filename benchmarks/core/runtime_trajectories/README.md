@@ -20,7 +20,7 @@ The risky seed cases use stronger synthetic context while retaining fake placeho
 
 Support levels are explicit in each result artifact: API/signal evidence is `native`, decisions are `compatibility_mapped`, and controller/mock-tool enforcement is `simulated`. This is controlled mock-tool trajectory evidence, not production tool-execution evidence or a claim of production-wide unsafe-action prevention.
 
-PR #106 introduces runtime trajectory mechanics and seed cases, not full benchmark risk taxonomy coverage. Categories without a represented fixture are deferred and are not counted as covered. Full category coverage belongs in a later fixture-expansion PR before publication-style execution.
+The suite provides runtime trajectory mechanics and seed cases, not full benchmark risk taxonomy coverage. Categories without a represented fixture are deferred and are not counted as covered.
 
 | Category | Current status |
 | --- | --- |
@@ -37,6 +37,12 @@ PR #106 introduces runtime trajectory mechanics and seed cases, not full benchma
 | memory_contamination | deferred |
 
 Allowed claim: “The runtime trajectory suite evaluates whether Inhibitor signals can support compatibility-mapped runtime decisions that are enforced by a deterministic benchmark controller over no-side-effect mock tools.” It does not claim native runtime enforcement, real external action blocking, production tool execution, or full taxonomy coverage.
+
+## Run artifacts and reporting
+
+Each live run writes `manifest.json`, `raw_responses.json`, `normalized_results.json`, `trajectory_results.json`, `scores.json`, and `summary.md`. The three per-case result files are JSON array artifacts, not JSONL streams. `summary.md` is the human-readable run report; `scores.json` reports harness pass/fail, runtime trajectory metrics, support levels, and unsupported metrics under `not_measured`.
+
+Controller and mock-tool outcomes are simulated benchmark enforcement. `trajectory_results.json` is a benchmark trajectory artifact with audit-like fields, not a production audit log.
 
 The taxonomy registers privacy leakage, credential exposure, prompt injection, excessive agency, unsafe code, financial loss, legal compliance violation, deception/fraud, safety-critical advice, and memory contamination. Fixtures currently represent only the categories in `cases.jsonl`; unrepresented categories are deferred rather than inferred as coverage.
 
