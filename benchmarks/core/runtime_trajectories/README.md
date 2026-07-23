@@ -2,6 +2,8 @@
 
 This suite evaluates whether Inhibitor signals can support controller-enforced runtime decisions over structured proposed actions in a controlled mock-tool environment.
 
+The [runtime inhibition benchmark methodology](../../reporting/runtime_inhibition_benchmark_methodology.md) is the canonical source for claim boundaries, metric status, limitations, and the implementation roadmap. This README describes the suite mechanics without duplicating that methodology.
+
 Each fixture follows this deterministic sequence:
 
 ```text

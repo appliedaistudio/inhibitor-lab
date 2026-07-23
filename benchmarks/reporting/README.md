@@ -13,11 +13,12 @@ Use this folder after running the benchmark suite to prepare a reproducibility p
 
 ## How to use these docs after executing the suite
 
-1. Follow [`reproducibility.md`](reproducibility.md) to confirm required run metadata and artifacts were captured.
-2. Use [`support_level_matrix.md`](support_level_matrix.md) to label every suite by category, status, support level, and acceptable public claim.
-3. Apply [`result_interpretation.md`](result_interpretation.md) before drafting claims, especially for compatibility-mapped, simulated, and diagnostic outputs.
-4. Draft the report from [`publication_report_template.md`](publication_report_template.md).
-5. Complete [`publication_checklist.md`](publication_checklist.md) before publishing or sharing results.
+1. Read the [runtime inhibition benchmark methodology](runtime_inhibition_benchmark_methodology.md), the source of truth for runtime trajectory benchmark claim boundaries, metric status, limitations, and roadmap.
+2. Follow [`reproducibility.md`](reproducibility.md) to confirm required run metadata and artifacts were captured.
+3. Use [`support_level_matrix.md`](support_level_matrix.md) to label every suite by category, status, support level, and acceptable public claim.
+4. Apply [`result_interpretation.md`](result_interpretation.md) before drafting claims, especially for compatibility-mapped, simulated, and diagnostic outputs.
+5. Draft the report from [`publication_report_template.md`](publication_report_template.md).
+6. Complete [`publication_checklist.md`](publication_checklist.md) before publishing or sharing results.
 
 ## Complete benchmark-run artifact inventory
 

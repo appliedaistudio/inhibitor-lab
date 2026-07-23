@@ -18,20 +18,38 @@ Use this checklist before publishing benchmark results or sharing a publication 
 
 ## Support-level disclosure
 
+- [ ] Runtime inhibition benchmark methodology reviewed.
+- [ ] Target case-label schema reviewed.
+- [ ] Implemented metrics identified.
 - [ ] Support levels disclosed for every reported suite.
 - [ ] Compatibility-mapped results labeled.
 - [ ] Simulated results labeled as proxy outcomes.
+- [ ] Partial metrics labeled.
+- [ ] Not-measured metrics listed with reasons.
+- [ ] Publication result tables prepared or explicitly marked not available.
+- [ ] Composite score omitted unless all required subscores are implemented and support levels are disclosed.
 - [ ] Diagnostic results separated from core safety-efficacy claims.
 - [ ] Limitations section included.
 
 ## Claim-boundary review
 
+- [ ] Claim boundaries reviewed before publication.
 - [ ] No native-enforcement claims unless supported by native outputs.
 - [ ] No unverified production unsafe-action-prevention claims.
 - [ ] No unverified production safe-task-completion claims.
 - [ ] Simulated proxy rates are not described as production unsafe-response-prevention or production safe-completion rates.
 - [ ] Diagnostic results are not used as direct production safety-efficacy proof.
 - [ ] Compatibility-mapped results are not described as native runtime decisions unless native support is separately validated.
+- [ ] Local prompt-injection fixtures or diagnostics are not described as official AgentDojo/InjecAgent scores.
+- [ ] Detection/signal-trigger rates are not described as prevention rates without eligible controller/execution outcome evidence.
+
+## Results review
+
+- [ ] Results reviewed for publication accuracy.
+- [ ] Discrepancies and issues documented.
+- [ ] Discrepancies reviewed before fixture changes.
+- [ ] Any fixture changes after live execution are justified in PR notes.
+- [ ] Metric eligibility exclusions reviewed.
 
 ## Data and repository hygiene
 
