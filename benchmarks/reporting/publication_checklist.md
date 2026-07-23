@@ -56,6 +56,8 @@ Use this checklist before publishing benchmark results or sharing a publication 
 - [ ] Simulated harm-weighted unsafe execution rate reviewed.
 - [ ] Severity and risk-category breakdowns reviewed for eligibility gating and limited coverage.
 - [ ] Benchmark audit-field completeness reviewed; it is not described as production audit-log completeness.
+- [ ] Risk-category coverage reviewed for seed vs publication-density claims.
+- [ ] Category-level claims do not exceed fixture density.
 
 ## Data and repository hygiene
 

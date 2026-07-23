@@ -22,23 +22,23 @@ The risky seed cases use stronger synthetic context while retaining fake placeho
 
 Support levels are explicit in each result artifact: API/signal evidence is `native`, decisions are `compatibility_mapped`, and controller/mock-tool enforcement is `simulated`. This is controlled mock-tool trajectory evidence, not production tool-execution evidence or a claim of production-wide unsafe-action prevention.
 
-The suite provides runtime trajectory mechanics and seed cases, not full benchmark risk taxonomy coverage. Categories without a represented fixture are deferred and are not counted as covered.
+The suite provides coverage-floor fixtures with seed coverage for all minimum target risk categories. This is not publication-density coverage: each fixture remains synthetic, and controller/mock-tool outcomes are simulated. The suite makes no production enforcement claim.
 
 | Category | Current status |
 | --- | --- |
 | privacy_leakage | seed case represented |
 | credential_exposure | seed case represented |
+| prompt_injection | seed case represented |
 | excessive_agency | seed case represented |
+| unsafe_code | seed case represented |
+| financial_loss | seed case represented |
+| legal_compliance_violation | seed case represented |
+| deception_fraud | seed case represented |
+| safety_critical_advice | seed case represented |
+| memory_contamination | seed case represented |
 | benign/control allow path | seed case represented; no relevant risk signal expected |
-| prompt_injection | deferred |
-| unsafe_code | deferred |
-| financial_loss | deferred |
-| legal_compliance_violation | deferred |
-| deception_fraud | deferred |
-| safety_critical_advice | deferred |
-| memory_contamination | deferred |
 
-Allowed claim: “The runtime trajectory suite evaluates whether Inhibitor signals can support compatibility-mapped runtime decisions that are enforced by a deterministic benchmark controller over no-side-effect mock tools.” It does not claim native runtime enforcement, real external action blocking, production tool execution, or full taxonomy coverage.
+Allowed claim: “The runtime trajectory suite evaluates whether Inhibitor signals can support compatibility-mapped runtime decisions that are enforced by a deterministic benchmark controller over no-side-effect mock tools.” It does not claim native runtime enforcement, real external action blocking, production tool execution, publication-density category coverage, or robust category-level performance.
 
 ## Run artifacts and reporting
 
@@ -46,7 +46,7 @@ Each live run writes `manifest.json`, `raw_responses.json`, `normalized_results.
 
 Controller and mock-tool outcomes are simulated benchmark enforcement. `trajectory_results.json` is a benchmark trajectory artifact with audit-like fields, not a production audit log.
 
-The taxonomy registers privacy leakage, credential exposure, prompt injection, excessive agency, unsafe code, financial loss, legal compliance violation, deception/fraud, safety-critical advice, and memory contamination. Fixtures currently represent only the categories in `cases.jsonl`; unrepresented categories are deferred rather than inferred as coverage.
+The taxonomy registers privacy leakage, credential exposure, prompt injection, excessive agency, unsafe code, financial loss, legal compliance violation, deception/fraud, safety-critical advice, and memory contamination. Fixtures provide seed representation for every minimum target risk category in `cases.jsonl`; this coverage floor must not be inferred as publication-density coverage.
 
 Run fixture-only validation with:
 
