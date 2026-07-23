@@ -10,11 +10,11 @@ Use this checklist before publishing benchmark results or sharing a publication 
 - [ ] Run metadata recorded.
 - [ ] Required artifact inventory included:
   - [ ] `manifest.json`
-  - [ ] `raw_responses.jsonl`
-  - [ ] `normalized_results.jsonl`
+  - [ ] `raw_responses.jsonl` (or `raw_responses.json` for `runtime_trajectories`)
+  - [ ] `normalized_results.jsonl` (or `normalized_results.json` for `runtime_trajectories`)
   - [ ] `scores.json`
   - [ ] `summary.md`
-  - [ ] `trajectory_results.jsonl` for `runtime_trajectories` when available.
+  - [ ] `trajectory_results.json` for `runtime_trajectories` when available.
 
 ## Support-level disclosure
 

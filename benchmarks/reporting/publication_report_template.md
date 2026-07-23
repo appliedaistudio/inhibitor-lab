@@ -78,8 +78,8 @@ Document run-specific limitations, omitted suites, support-level boundaries, com
 | Artifact | Present | Notes |
 | --- | --- | --- |
 | `manifest.json` | `[yes/no]` | `[notes]` |
-| `raw_responses.jsonl` | `[yes/no]` | `[notes]` |
-| `normalized_results.jsonl` | `[yes/no]` | `[notes]` |
+| `raw_responses.jsonl` or `raw_responses.json` for runtime trajectories | `[yes/no]` | `[notes]` |
+| `normalized_results.jsonl` or `normalized_results.json` for runtime trajectories | `[yes/no]` | `[notes]` |
 | `scores.json` | `[yes/no]` | `[notes]` |
 | `summary.md` | `[yes/no]` | `[notes]` |
-| `trajectory_results.jsonl` | `[yes/no/not applicable]` | Required for `runtime_trajectories` when available. |
+| `trajectory_results.json` | `[yes/no/not applicable]` | JSON array benchmark trajectory artifact required for `runtime_trajectories` when available; not a production audit log. |

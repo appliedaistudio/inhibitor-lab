@@ -1,6 +1,6 @@
 # Benchmark Reporting
 
-Phase 7 reporting documentation defines how completed benchmark-suite runs should be packaged, interpreted, reproduced, and described in publication-facing materials. It does not execute benchmarks, add results, introduce new suites, or change Phase 1–6 benchmark behavior.
+This reporting documentation defines how completed benchmark-suite runs should be packaged, interpreted, reproduced, and described in public-facing materials. It does not execute benchmarks, add results, introduce new suites, or change benchmark behavior.
 
 ## What this folder is for
 
@@ -24,11 +24,13 @@ Use this folder after running the benchmark suite to prepare a reproducibility p
 A complete run package should include:
 
 - `manifest.json`
-- `raw_responses.jsonl`
-- `normalized_results.jsonl`
+- `raw_responses.jsonl` (or `raw_responses.json` JSON array for `runtime_trajectories`)
+- `normalized_results.jsonl` (or `normalized_results.json` JSON array for `runtime_trajectories`)
 - `scores.json`
 - `summary.md`
-- `trajectory_results.jsonl` for `runtime_trajectories` when available
+- `trajectory_results.json` JSON array for `runtime_trajectories` when available
+
+For runtime trajectories, `summary.md` is the human-readable run report and `scores.json` records unsupported metrics under `not_measured`. Controller and mock-tool outcomes are simulated. `trajectory_results.json` is a benchmark trajectory artifact with audit-like fields, not a production audit log.
 
 The package should also preserve the benchmark repository commit SHA, suite version or branch, run timestamp, run id, suite id, runner version, endpoint metadata, case counts, per-case modes, and declared support levels.
 
