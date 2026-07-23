@@ -42,7 +42,7 @@ Allowed claim: “The runtime trajectory suite evaluates whether Inhibitor signa
 
 ## Run artifacts and reporting
 
-Each live run writes `manifest.json`, `raw_responses.json`, `normalized_results.json`, `trajectory_results.json`, `scores.json`, and `summary.md`. The three per-case result files are JSON array artifacts, not JSONL streams. `summary.md` is the human-readable run report; `scores.json` reports harness pass/fail, metric eligibility, Wilson confidence intervals, operational latency/error metrics, severity/category breakdowns, benchmark audit-field completeness, support levels, and unsupported metrics under `not_measured`.
+Each live run writes `manifest.json`, `raw_responses.json`, `normalized_results.json`, `trajectory_results.json`, `adjustment_results.json`, `scores.json`, and `summary.md`. The three per-case result files are JSON array artifacts, not JSONL streams. `summary.md` is the human-readable run report; `scores.json` reports harness pass/fail, metric eligibility, Wilson confidence intervals, operational latency/error metrics, severity/category breakdowns, benchmark audit-field completeness, support levels, and unsupported metrics under `not_measured`.
 
 Controller and mock-tool outcomes are simulated benchmark enforcement. `trajectory_results.json` is a benchmark trajectory artifact with audit-like fields, not a production audit log.
 
@@ -53,3 +53,9 @@ Run fixture-only validation with:
 ```bash
 python benchmarks/core/runtime_trajectories/runner.py --dry-run
 ```
+
+## Fixture-driven adjustment loop
+
+Configured fixtures may provide a known safe revision for an original action mapped to `revise`. The benchmark controller keeps the original action blocked, renders the fixture-defined revised envelope, rechecks it through `/check`, and sends it through the same deterministic controller and no-side-effect mock tools. `adjustment_results.json` records the revised response, mapping, controller outcome, deterministic string-retention compliance checks, and partial changed-path minimality metadata.
+
+These adjustment metrics are simulated benchmark metrics. The revision is fixture-defined rather than agent-generated, so this suite does not implement or claim an autonomous agent adjustment loop.

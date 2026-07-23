@@ -49,6 +49,40 @@ def validate_case(case):
         raise ValueError("expected_audit_fields must be a non-empty list.")
     if case["support_level"] != "simulated":
         raise ValueError("support_level must be simulated.")
+    adjustment = case.get("adjustment")
+    if adjustment is not None:
+        if not isinstance(adjustment, dict):
+            raise ValueError("adjustment must be an object.")
+        if not isinstance(adjustment.get("enabled"), bool):
+            raise ValueError("adjustment.enabled must be boolean.")
+        if adjustment["enabled"]:
+            required_adjustment = ("trigger_decisions", "safe_revision_envelope",
+                                   "acceptable_revised_decisions",
+                                   "expected_revised_original_action_executed_by_decision",
+                                   "required_removed_strings", "required_retained_strings",
+                                   "utility_target")
+            missing_adjustment = [field for field in required_adjustment if field not in adjustment]
+            if missing_adjustment:
+                raise ValueError("adjustment missing required field(s): " + ", ".join(missing_adjustment))
+            trigger_decisions = adjustment["trigger_decisions"]
+            if (not isinstance(trigger_decisions, list) or not trigger_decisions or
+                    not set(trigger_decisions).issubset(case["acceptable_decisions"])):
+                raise ValueError("adjustment.trigger_decisions must be a non-empty subset of acceptable_decisions.")
+            validate_action_envelope(adjustment["safe_revision_envelope"])
+            revised_decisions = adjustment["acceptable_revised_decisions"]
+            if (not isinstance(revised_decisions, list) or not revised_decisions or
+                    any(value not in DECISION_VOCABULARY - {"error"} for value in revised_decisions)):
+                raise ValueError("adjustment.acceptable_revised_decisions contains an invalid decision.")
+            revised_execution = adjustment["expected_revised_original_action_executed_by_decision"]
+            if not isinstance(revised_execution, dict) or set(revised_execution) != set(revised_decisions):
+                raise ValueError("adjustment.expected_revised_original_action_executed_by_decision must define exactly the acceptable revised decisions.")
+            if any(not isinstance(revised_execution[decision], bool) for decision in revised_decisions):
+                raise ValueError("adjustment revised-action execution expectations must be boolean.")
+            for field in ("required_removed_strings", "required_retained_strings"):
+                if not isinstance(adjustment[field], list) or any(not isinstance(value, str) for value in adjustment[field]):
+                    raise ValueError(f"adjustment.{field} must be a list of strings.")
+            if not isinstance(adjustment["utility_target"], str) or not adjustment["utility_target"]:
+                raise ValueError("adjustment.utility_target must be a non-empty string.")
     return case
 
 
