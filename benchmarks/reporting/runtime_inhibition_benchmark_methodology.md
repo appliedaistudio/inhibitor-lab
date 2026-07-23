@@ -119,6 +119,7 @@ This prevents API failures or malformed results from being counted as safety win
 | Audit field completeness percentage | Needs required audit-field schema | Yes | Audit schema |
 | Human-review agreement | Requires independent reviewers and adjudication | Process dependency | Human labeling |
 | Official external prompt-injection benchmark score | Requires dataset integration | Yes, later | External benchmark slices |
+| Composite benchmark score | Requires mature safety, utility, adjustment, operations, and audit subscores | Yes, later | Publication scoring |
 
 ## Current Limitations
 
@@ -198,6 +199,61 @@ Current seed coverage is:
 
 Unrepresented categories must not be inferred as covered.
 
+## Target Case Label Schema
+
+High-quality runtime inhibition benchmark cases should define ground truth before execution. The target label schema is:
+
+| Field | Target meaning | Current status |
+| --- | --- | --- |
+| `case_id` | Stable benchmark case identifier | Implemented |
+| `benchmark_risk_category` | Pre-registered risk category | Implemented |
+| `user_goal` | Legitimate user objective | Implemented |
+| `environment_state` | Context and constraints relevant to safe action | Implemented |
+| `proposed_action_envelope` | Candidate behavior before inhibition | Implemented |
+| `allowed_outcome` | What a safe successful outcome looks like | Planned |
+| `unsafe_outcome` | What failure would look like | Planned |
+| `acceptable_decisions` | Decisions considered safe for the fixture | Implemented |
+| `acceptable_revision` | Safe revised action when revision is possible | Planned |
+| `required_clarification` | Clarification needed for ambiguous cases | Planned |
+| `escalation_requirement` | When human/reviewer escalation is required | Planned |
+| `severity` | Pre-registered harm severity | Implemented |
+| `severity_weight` | Numeric weight for harm-weighted scoring | Planned |
+| `policy_ids` | Expected benchmark policy identifiers | Planned |
+| `utility_target` | Required safe-task outcome or user-goal preservation target | Planned |
+| `reversibility` | Whether the action can be undone | Implemented inside action envelope |
+| `data_sensitivity` | Sensitivity level of touched data | Implemented inside action envelope |
+| `expected_audit_fields` | Required trace fields for auditability checks | Partially implemented |
+| `human_labels` | Independent reviewer labels and adjudication | Not measured / process dependency |
+
+The current seed cases include enough labels for signal, decision, and simulated controller outcome validation. They do not yet include the full target label schema needed for final publication-style safety efficacy, utility, adjustment, and human-agreement claims.
+
+## Publication Result Tables
+
+Publication preparation should produce five result tables: safety results, utility results, adjustment results, operations results, and auditability results.
+
+| Table | Current status | Notes |
+| --- | --- | --- |
+| Safety | Partial | Simulated UAPR/UER over eligible mock trajectories; no production prevention claim |
+| Utility | Partial | Simulated safe task completion and over-inhibition over benign mock trajectories |
+| Adjustment | Not measured / partial | Current benchmark can record revise decisions, but does not yet execute revise-and-retry loops |
+| Operations | Partial | API success and latency min/max/mean implemented; percentiles, throughput, timeout/error-class rates planned |
+| Auditability | Partial | Trajectory artifact exists, but full audit completeness, policy IDs, trace IDs, incident reconstructability, and explanation usefulness are planned |
+
+Missing values must be reported explicitly as `not_measured`, `partial`, or `not_applicable`. Detection or signal-trigger rates must not be reported as prevention rates unless eligible controller/execution outcome evidence exists.
+
+## Composite Score Status
+
+The target evaluation framework may eventually support a weighted composite score across safety, utility, adjustment, operations, and auditability. The current benchmark must not compute or report a final composite score yet.
+
+Composite scoring remains `not_measured` until:
+
+- safety and utility metrics are computed over sufficient fixture coverage
+- adjustment-loop metrics are implemented
+- operations metrics include latency percentiles and error/timeout rates
+- audit completeness is scored
+- missing metrics are explicitly handled
+- support levels are clearly separated
+
 ## Baseline and Variant Roadmap
 
 Target variants are:
@@ -246,22 +302,27 @@ The current runtime trajectory suite is closest to V4/V5 mechanics, but only wit
 7. Agent-loop prototype.
 8. Prompt-injection slices:
    - local prompt-injection fixtures
+   - local diagnostic/semantic-context prompt-injection-style artifacts
    - official AgentDojo adapter
    - official InjecAgent adapter
 9. Human labeling workflow.
 10. Full implemented-suite execution and publication result package.
+
+Local prompt-injection runtime trajectory fixtures and local diagnostic/semantic-context prompt-injection-style artifacts must not be described as official AgentDojo or InjecAgent scores. Official external benchmark scores require adapter implementation, dataset/task mapping, and separate execution.
 
 ## Final Validation and Publication Plan
 
 After implementing new benchmarks:
 
 - execute the full implemented benchmark suite against Inhibitor
-- validate results against expected outcomes
+- review results against expected signal outcomes, acceptable decisions, controller outcomes, execution outcomes, metric eligibility, support levels, risk-category coverage, known limitations, and publication claim boundaries
 - review metrics for consistency and accuracy
 - document discrepancies and issues
 - mark unsupported metrics as `not_measured`
 - prepare publication-ready result tables
 - review claims before publication
+
+Discrepancies should be documented rather than silently hidden by fixture changes. Fixture changes after seeing live results should be justified in PR notes.
 
 “Full implemented suite” means the benchmark suite implemented in inhibitor-lab at that point, not necessarily the complete ideal target protocol.
 
