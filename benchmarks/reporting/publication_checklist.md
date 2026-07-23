@@ -16,6 +16,7 @@ Use this checklist before publishing benchmark results or sharing a publication 
   - [ ] `summary.md`
   - [ ] `trajectory_results.json` for `runtime_trajectories` when available.
   - [ ] `adjustment_results.json` for `runtime_trajectories` when adjustment is configured.
+  - [ ] `baseline_results.json` and `baseline_scores.json` for `runtime_trajectories` when baseline variants are run.
 
 ## Support-level disclosure
 
@@ -47,6 +48,13 @@ Use this checklist before publishing benchmark results or sharing a publication 
 - [ ] Agent-generated adjustment is not claimed unless an agent loop is implemented.
 - [ ] Minimality-of-intervention is not claimed beyond implemented metadata/rubric support.
 - [ ] User-goal preservation claims do not exceed fixture-defined utility proxies.
+- [ ] Baseline variants are labeled as controlled benchmark-side proxies unless backed by real agent runs.
+- [ ] V0 unprotected results are not described as production incident rates.
+- [ ] V2 final-output-only checks are not described as official moderation benchmark scores.
+- [ ] V4 tool-boundary checks are not described as production tool enforcement.
+- [ ] V5 full runtime inhibition results preserve support-level boundaries.
+- [ ] API failures in baseline variants are not counted as prevention wins.
+- [ ] Missing, duplicate, and ineligible baseline records reviewed before publication.
 
 ## Results review
 
