@@ -2,7 +2,9 @@ import unittest
 
 from benchmarks.core.runtime_trajectories.runner import (_error_type, _latency_summary,
                                                           _rate, _weighted_rate, build_scores,
-                                                          build_summary, check_adjustment_compliance)
+                                                          build_summary, check_adjustment_compliance,
+                                                          _api_succeeded_response, _adjustment_non_trigger_reason)
+from benchmarks.core.runtime_trajectories.controller import ACTION_BY_DECISION
 from benchmarks.core.runtime_trajectories.validate import validate_case
 
 
@@ -92,6 +94,13 @@ class RunnerMetricsTests(unittest.TestCase):
         malformed = {**case, "adjustment": {**case["adjustment"], "trigger_decisions": ["allow"]}}
         with self.assertRaises(ValueError):
             validate_case(malformed)
+        for field, value in (("revised_benchmark_risk_category", "unknown"),
+                             ("expected_revised_signal_family", "integrity"),
+                             ("expected_revised_signal_present", "yes"),
+                             ("minimality_focus_paths", [""])):
+            malformed = {**case, "adjustment": {**case["adjustment"], field: value}}
+            with self.assertRaises(ValueError, msg=field):
+                validate_case(malformed)
         self.assertFalse(check_adjustment_compliance(case["proposed_action_envelope"], ["SECRET"], ["utility"])["removed_strings_absent"])
         self.assertFalse(check_adjustment_compliance(case["adjustment"]["safe_revision_envelope"], ["SECRET"], ["missing"])["retained_strings_present"])
 
@@ -102,12 +111,36 @@ class RunnerMetricsTests(unittest.TestCase):
         raw = [{"case_id": "adjustment", "response": {"ok": True, "status": 200}}]
         base = build_scores(cases, trajectories, raw, [("adjustment", True, [])])
         self.assertIsNone(base["adjustment"]["revision_success_rate"]["value"])
+        self.assertEqual(base["adjustment"]["missing_result_cases"], ["adjustment"])
         scores = build_scores(cases, trajectories, raw, [("adjustment", True, [])], [{"case_id": "adjustment", "triggered": True, "original_action_executed": False, "adjustment_compliant": True, "revised_mapped_decision": "allow", "revised_action_executed": True, "revision_success": True}])
         self.assertEqual(scores["adjustment"]["revision_success_rate"]["value"], 1.0)
         self.assertEqual(scores["adjustment"]["adjustment_compliance_rate"]["value"], 1.0)
         self.assertEqual(scores["adjustment"]["revised_action_execution_rate"]["value"], 1.0)
         summary = build_summary({"suite_id": "runtime_trajectories", "run_id": "test", "endpoint": "https://example.invalid"}, scores, trajectories)
         self.assertIn("Adjustment Loop", summary)
+        self.assertIn("coverage-floor risk-category fixtures", summary)
+        self.assertNotIn("not full risk-category coverage", summary)
+
+    def test_adjustment_gating_and_controller_mapping(self):
+        adjustment = {"trigger_decisions": ["revise"]}
+        self.assertFalse(_api_succeeded_response({"ok": True, "status": "200"}))
+        self.assertTrue(_api_succeeded_response({"ok": True, "status": 204}))
+        self.assertEqual(_adjustment_non_trigger_reason(adjustment, {"mapped_decision": "revise"}, {"ok": False, "status": 500}, False), "original_api_not_successful")
+        self.assertEqual(_adjustment_non_trigger_reason(adjustment, {"mapped_decision": "error"}, {"ok": True, "status": 200}, False), "original_mapped_decision_error")
+        self.assertEqual(_adjustment_non_trigger_reason(adjustment, {"mapped_decision": "block"}, {"ok": True, "status": 200}, False), "mapped_decision_not_in_trigger_decisions")
+        self.assertEqual(_adjustment_non_trigger_reason(adjustment, {"mapped_decision": "revise"}, {"ok": True, "status": 200}, True), "original_action_executed")
+        self.assertIsNone(_adjustment_non_trigger_reason(adjustment, {"mapped_decision": "revise"}, {"ok": True, "status": 200}, False))
+        self.assertEqual({decision: ACTION_BY_DECISION[decision] for decision in ("pause", "escalate")}, {"pause": "pause_execution", "escalate": "require_escalation"})
+
+    def test_adjustment_score_records_non_triggered_and_failed_revision(self):
+        cases = [{"id": "triggered", "severity": "high", "benchmark_risk_category": "privacy_leakage", "acceptable_decisions": ["revise"], "expected_audit_fields": [], "adjustment": {"enabled": True}}, {"id": "not-triggered", "severity": "high", "benchmark_risk_category": "privacy_leakage", "acceptable_decisions": ["block"], "expected_audit_fields": [], "adjustment": {"enabled": True}}, {"id": "missing", "severity": "high", "benchmark_risk_category": "privacy_leakage", "acceptable_decisions": ["block"], "expected_audit_fields": [], "adjustment": {"enabled": True}}]
+        trajectories = [{"case_id": item["id"], "benchmark_risk_category": "privacy_leakage", "mapped_decision": item["acceptable_decisions"][0], "signal_expectation_met": True, "controller_action": "block_original", "mock_tool": {"executed": False}, "expected_vs_actual_controller_outcome": {"matches": True}} for item in cases]
+        raw = [{"case_id": item["id"], "response": {"ok": True, "status": 200}} for item in cases]
+        adjustments = [{"case_id": "triggered", "triggered": True, "original_action_executed": False, "adjustment_compliant": True, "revised_mapped_decision": "error", "revised_action_executed": False, "revision_success": False, "failure_reason": "revised_api_not_successful"}, {"case_id": "not-triggered", "triggered": False, "reason": "original_api_not_successful"}]
+        scores = build_scores(cases, trajectories, raw, [(item["id"], True, []) for item in cases], adjustments)
+        self.assertEqual((scores["adjustment"]["configured_cases"], scores["adjustment"]["triggered_cases"], scores["adjustment"]["not_triggered_cases"]), (3, 1, 1))
+        self.assertEqual(scores["adjustment"]["missing_result_cases"], ["missing"])
+        self.assertEqual(scores["adjustment"]["revision_success_rate"]["value"], 0.0)
 
 
 if __name__ == "__main__":

@@ -83,6 +83,20 @@ def validate_case(case):
                     raise ValueError(f"adjustment.{field} must be a list of strings.")
             if not isinstance(adjustment["utility_target"], str) or not adjustment["utility_target"]:
                 raise ValueError("adjustment.utility_target must be a non-empty string.")
+            revised_category = adjustment.get("revised_benchmark_risk_category", "benign_control")
+            if revised_category not in RISK_CATEGORY_SIGNAL_FAMILIES:
+                raise ValueError("adjustment.revised_benchmark_risk_category is unknown.")
+            revised_family = adjustment.get("expected_revised_signal_family")
+            if revised_family is not None and revised_family not in RISK_CATEGORY_SIGNAL_FAMILIES[revised_category]:
+                raise ValueError("adjustment.expected_revised_signal_family is not registered for revised benchmark risk category.")
+            if ("expected_revised_signal_present" in adjustment and
+                    not isinstance(adjustment["expected_revised_signal_present"], bool)):
+                raise ValueError("adjustment.expected_revised_signal_present must be boolean.")
+            if "minimality_focus_paths" in adjustment:
+                focus_paths = adjustment["minimality_focus_paths"]
+                if (not isinstance(focus_paths, list) or
+                        any(not isinstance(path, str) or not path for path in focus_paths)):
+                    raise ValueError("adjustment.minimality_focus_paths must be a list of non-empty strings.")
     return case
 
 

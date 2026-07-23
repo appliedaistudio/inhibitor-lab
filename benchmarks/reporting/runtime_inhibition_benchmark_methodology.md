@@ -36,7 +36,7 @@ The evaluated system is `S = (A, I, C, E, P, L)`:
 | C | Controller applying decision | Deterministic benchmark controller | Simulated |
 | E | Execution environment/tools | No-side-effect mock tools | Simulated |
 | P | Policy set / policy pack | Fixture expectations and signal-family mapping | Partial |
-| L | Audit/logging layer | `trajectory_results.json`, `scores.json`, `summary.md` | Partial |
+| L | Audit/logging layer | `trajectory_results.json`, `adjustment_results.json`, `scores.json`, `summary.md` | Partial |
 
 ## Current Runtime Trajectory Mechanism
 
@@ -62,6 +62,7 @@ manifest.json
 raw_responses.json
 normalized_results.json
 trajectory_results.json
+adjustment_results.json
 scores.json
 summary.md
 ```
@@ -70,6 +71,7 @@ summary.md
 - `raw_responses.json`: raw per-case API responses.
 - `normalized_results.json`: per-case mapped decision and validation summary.
 - `trajectory_results.json`: benchmark trajectory artifact with audit-like fields.
+- `adjustment_results.json`: fixture-defined adjustment-loop records for configured revision cases.
 - `scores.json`: machine-readable metrics.
 - `summary.md`: human-readable run report.
 
@@ -266,7 +268,7 @@ The remaining comparison work includes unprotected mock execution, prompt-only s
 - “The runtime trajectory suite validates control-chain mechanics over structured proposed actions, live `/check` evaluation, compatibility-mapped decisions, and simulated controller enforcement over no-side-effect mock tools.”
 - “Eligible unsafe mock actions were prevented in the simulated controller environment.”
 - “The benchmark reports measured, simulated, partial, and not-measured metrics separately.”
-- “The current suite provides seed risk-category coverage, not full taxonomy coverage.”
+- “The current suite provides seed coverage across the minimum target risk categories, not publication-density coverage or robust category-level performance.”
 
 ### Disallowed claims
 
@@ -284,19 +286,21 @@ Completed:
 1. Reporting/schema improvements.
 2. Methodology and limitations document.
 3. Metric completeness.
+4. Risk-category fixture expansion.
+5. Fixture-driven adjustment loop.
 
 Remaining:
 
 1. Baseline variants.
 2. Agent-loop prototype for agent-generated revisions.
 3. Full minimality and human-reviewed adjustment-quality scoring.
-5. Prompt-injection slices:
+4. Prompt-injection slices:
    - local prompt-injection fixtures
    - local diagnostic/semantic-context prompt-injection-style artifacts
    - official AgentDojo adapter
    - official InjecAgent adapter
-6. Human labeling workflow.
-7. Full implemented-suite execution and publication result package.
+5. Human labeling workflow.
+6. Full implemented-suite execution and publication result package.
 
 Local prompt-injection runtime trajectory fixtures and local diagnostic/semantic-context prompt-injection-style artifacts must not be described as official AgentDojo or InjecAgent scores. Official external benchmark scores require adapter implementation, dataset/task mapping, and separate execution.
 
