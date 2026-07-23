@@ -36,7 +36,7 @@ The evaluated system is `S = (A, I, C, E, P, L)`:
 | C | Controller applying decision | Deterministic benchmark controller | Simulated |
 | E | Execution environment/tools | No-side-effect mock tools | Simulated |
 | P | Policy set / policy pack | Fixture expectations and signal-family mapping | Partial |
-| L | Audit/logging layer | `trajectory_results.json`, `adjustment_results.json`, `scores.json`, `summary.md` | Partial |
+| L | Audit/logging layer | `trajectory_results.json`, `adjustment_results.json`, baseline artifacts, `scores.json`, `summary.md` | Partial |
 
 ## Current Runtime Trajectory Mechanism
 
@@ -63,6 +63,8 @@ raw_responses.json
 normalized_results.json
 trajectory_results.json
 adjustment_results.json
+baseline_results.json
+baseline_scores.json
 scores.json
 summary.md
 ```
@@ -72,6 +74,8 @@ summary.md
 - `normalized_results.json`: per-case mapped decision and validation summary.
 - `trajectory_results.json`: benchmark trajectory artifact with audit-like fields.
 - `adjustment_results.json`: fixture-defined adjustment-loop records for configured revision cases.
+- `baseline_results.json`: controlled benchmark-side baseline records, one per case and variant.
+- `baseline_scores.json`: eligibility-gated comparison metrics for controlled baseline variants.
 - `scores.json`: machine-readable metrics.
 - `summary.md`: human-readable run report.
 
@@ -95,6 +99,7 @@ summary.md
 | Severity and risk-category breakdowns | Implemented | Mixed / simulated outcomes | Outcome metrics remain eligibility-gated |
 | Audit field completeness | Implemented | Benchmark artifact | Scores expected benchmark audit fields; not production audit completeness |
 | Trace completeness | Partial | Benchmark artifact | Benchmark audit-like fields do not represent production audit logs |
+| Controlled baseline comparison | Implemented | Mixed / benchmark-side proxies | Compares V0, V2, V4, and V5 over the same fixtures; not autonomous-agent evidence |
 
 Outcome metrics must be gated by metric eligibility:
 
@@ -147,7 +152,7 @@ The current adjustment loop is fixture-defined: when an original action maps to 
 - native policy-pack coverage
 - human-review agreement
 - official AgentDojo / InjecAgent score
-- full baseline comparison
+- autonomous agent baselines
 - agent-generated revision success
 - full user-goal preservation beyond fixture string-retention and utility-target proxies
 - full minimality-of-intervention scoring
@@ -257,9 +262,16 @@ Composite scoring remains `not_measured` until:
 - missing metrics are explicitly handled
 - support levels are clearly separated
 
-## Baseline and Variant Roadmap
+## Baseline variants
 
-The remaining comparison work includes unprotected mock execution, prompt-only safety, final-output moderation, and tool-boundary inhibition variants. The current runtime trajectory suite uses simulated mock tools and does not implement these baselines. Prompt-only and full agent variants require agent-loop support.
+The runtime trajectory suite implements controlled benchmark-side comparison variants over the same synthetic fixtures. These are not production baselines or autonomous-agent baselines.
+
+- **V0 unprotected mock execution** directly executes the no-side-effect mock tool without `/check`; it is a deterministic simulated baseline, not a production incident-rate measurement.
+- **V2 final-output-only check** uses a reduced visible payload view with live `/check`; it is a benchmark-side proxy, not an official moderation benchmark score.
+- **V4 tool-boundary check** uses only tool name and compact input with live `/check`; it is a benchmark-side proxy, not production tool enforcement.
+- **V5 full runtime inhibition** reuses the main full-context trajectory result with native signal evidence, compatibility-mapped decision, and simulated controller/mock-tool outcome.
+
+API failures in live-check proxies are excluded from baseline outcome metrics and are not prevention wins. Prompt-only and full autonomous-agent variants remain future work because they require agent-loop support.
 
 ## Allowed and Disallowed Claims
 
@@ -288,19 +300,19 @@ Completed:
 3. Metric completeness.
 4. Risk-category fixture expansion.
 5. Fixture-driven adjustment loop.
+6. Controlled benchmark-side baseline variants.
 
 Remaining:
 
-1. Baseline variants.
-2. Agent-loop prototype for agent-generated revisions.
-3. Full minimality and human-reviewed adjustment-quality scoring.
-4. Prompt-injection slices:
+1. Agent-loop prototype for agent-generated revisions.
+2. Full minimality and human-reviewed adjustment-quality scoring.
+3. Prompt-injection slices:
    - local prompt-injection fixtures
    - local diagnostic/semantic-context prompt-injection-style artifacts
    - official AgentDojo adapter
    - official InjecAgent adapter
-5. Human labeling workflow.
-6. Full implemented-suite execution and publication result package.
+4. Human labeling workflow.
+5. Full implemented-suite execution and publication result package.
 
 Local prompt-injection runtime trajectory fixtures and local diagnostic/semantic-context prompt-injection-style artifacts must not be described as official AgentDojo or InjecAgent scores. Official external benchmark scores require adapter implementation, dataset/task mapping, and separate execution.
 
@@ -327,4 +339,5 @@ v0.1 — Initial methodology document. Documents current runtime trajectory seed
 v0.2 — Adds metric completeness for confidence intervals, latency percentiles, timeout/error rates, harm-weighted unsafe execution, severity/category breakdowns, and benchmark audit-field completeness.
 v0.3 — Adds seed fixture coverage for all minimum runtime trajectory risk categories while preserving simulated controller/mock-tool claim boundaries.
 v0.4 — Adds fixture-driven adjustment-loop support with safe revision envelopes, revised-action rechecks, simulated revision success, adjustment compliance, and revised-action execution metrics.
+v0.5 — Adds controlled benchmark-side baseline variants for unprotected mock execution, final-output-only checking, tool-boundary checking, and the current full runtime inhibition path.
 ```
