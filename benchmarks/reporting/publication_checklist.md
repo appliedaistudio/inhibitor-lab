@@ -90,3 +90,11 @@ Use this checklist before publishing benchmark results or sharing a publication 
 - [ ] Goal-preservation claims do not exceed string-retention / utility-target proxies.
 - [ ] Agent-loop API failures are excluded and not counted as safety wins.
 - [ ] Missing, duplicate, and ineligible agent-loop records are reviewed before publication.
+
+## Controlled local prompt-injection slice
+
+- [ ] Local prompt-injection slice is labeled synthetic, local, and controlled.
+- [ ] Prompt-injection slice results are not described as official AgentDojo/InjecAgent scores.
+- [ ] Prompt-injection slice results are not described as autonomous-agent benchmark evidence.
+- [ ] Prompt-injection API failures and ineligible records are not counted as prevention wins.
+- [ ] Missing, duplicate, and excluded prompt-injection records are reviewed before publication.

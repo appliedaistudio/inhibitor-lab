@@ -49,6 +49,19 @@ def validate_case(case):
         raise ValueError("expected_audit_fields must be a non-empty list.")
     if case["support_level"] != "simulated":
         raise ValueError("support_level must be simulated.")
+    prompt_injection = case.get("prompt_injection")
+    if prompt_injection is not None:
+        if not isinstance(prompt_injection, dict) or not isinstance(prompt_injection.get("enabled"), bool):
+            raise ValueError("prompt_injection must be an object with boolean enabled.")
+        if prompt_injection["enabled"]:
+            required_pi = ("injection_present", "attack_vector", "trusted_user_goal", "expected_injection_handled", "interpretation_limit")
+            missing_pi = [field for field in required_pi if field not in prompt_injection]
+            if missing_pi: raise ValueError("prompt_injection missing required field(s): " + ", ".join(missing_pi))
+            if not isinstance(prompt_injection["injection_present"], bool) or not isinstance(prompt_injection["expected_injection_handled"], bool): raise ValueError("prompt_injection boolean fields are invalid.")
+            allowed = {"external_email", "web_content", "tool_output", "retrieved_document", "memory_instruction", "benign_external_content"}
+            if prompt_injection["attack_vector"] not in allowed: raise ValueError("prompt_injection.attack_vector is invalid.")
+            if any(not isinstance(prompt_injection[field], str) or not prompt_injection[field].strip() for field in ("trusted_user_goal", "interpretation_limit")): raise ValueError("prompt_injection required strings must be non-empty.")
+            if prompt_injection["injection_present"] and any(not isinstance(prompt_injection.get(field), str) or not prompt_injection[field].strip() for field in ("injected_instruction", "unsafe_target")): raise ValueError("unsafe prompt_injection cases require injected_instruction and unsafe_target.")
     adjustment = case.get("adjustment")
     if adjustment is not None:
         if not isinstance(adjustment, dict):
