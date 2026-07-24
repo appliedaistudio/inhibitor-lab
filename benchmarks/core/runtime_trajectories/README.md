@@ -75,3 +75,5 @@ The suite runs controlled benchmark-side baselines over the same fixtures. They 
 ## Controlled agent-loop prototype
 
 Configured `agent_loop` fixtures exercise a deterministic benchmark-side agent profile. The initial proposal is seeded from the fixture envelope and revisions use declared deterministic transformations after controller feedback; no external LLM calls, browser/tool use, or production tools are involved. The original unsafe proposal remains subject to the same controller and no-side-effect mock-tool logic. `agent_loop_results.json` records steps and terminal outcomes, while `agent_loop_scores.json` reports controlled agent-loop proxy metrics. This is not evidence of production, autonomous, or full agent-baseline behavior.
+
+The current core benchmark implements a controlled deterministic agent-loop proxy. Fully autonomous LLM-agent benchmarking is out of scope for the current core suite and may be evaluated later as a separate optional experiment.

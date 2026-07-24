@@ -346,3 +346,5 @@ v0.5 — Adds controlled benchmark-side baseline variants for unprotected mock e
 ### v0.6
 
 Adds a controlled deterministic agent-loop prototype with agent-generated action/revision records, safe terminal metrics, revision-success proxy metrics, and explicit non-autonomous-agent claim boundaries. Fully autonomous or LLM-agent benchmarks and full semantic user-goal preservation remain unmeasured.
+
+The current core benchmark implements a controlled deterministic agent-loop proxy. Fully autonomous LLM-agent benchmarking is out of scope for the current core suite and may be evaluated later as a separate optional experiment.
