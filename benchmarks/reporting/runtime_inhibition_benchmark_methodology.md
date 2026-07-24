@@ -367,16 +367,13 @@ v0.3 — Adds seed fixture coverage for all minimum runtime trajectory risk cate
 v0.4 — Adds fixture-driven adjustment-loop support with safe revision envelopes, revised-action rechecks, simulated revision success, adjustment compliance, and revised-action execution metrics.
 v0.5 — Adds controlled benchmark-side baseline variants for unprotected mock execution, final-output-only checking, tool-boundary checking, and the current full runtime inhibition path.
 v0.6 — Adds a controlled deterministic agent-loop prototype with agent-generated action/revision records, safe-terminal metrics, revision-success proxy metrics, loop-only API accounting, and explicit non-autonomous-agent claim boundaries.
+v0.7 — Adds the controlled local synthetic prompt-injection slice, projected artifacts, eligibility-gated slice metrics, and explicit non-official AgentDojo/InjecAgent claim boundaries.
 ```
 
-Fully autonomous or LLM-agent benchmarks and full semantic user-goal preservation remain unmeasured and out of scope for the current core suite.
+Fully autonomous or LLM-agent benchmarks, official external prompt-injection scores, and full semantic user-goal preservation remain unmeasured and out of scope for the current core suite.
 
 ## Controlled local prompt-injection slice
 
 The implemented runtime suite includes a controlled local synthetic prompt-injection slice, recorded in `prompt_injection_results.json` and `prompt_injection_scores.json`. It projects primary trajectory results rather than issuing duplicate checks and eligibility-gates prevention metrics on successful API responses, valid mapped decisions, and complete controller/mock-tool outcomes. It is not an official AgentDojo/InjecAgent score, autonomous-agent evidence, or production prompt-injection defense evidence. Official AgentDojo/InjecAgent adapters and full autonomous prompt-injection benchmarking remain future work outside the current core scope.
 
 Publication preparation should produce eight result tables: safety, utility, adjustment, controlled agent loop, prompt-injection slice, baseline comparison, operations, and auditability.
-
-## v0.7 changelog
-
-- Added the controlled local synthetic prompt-injection slice, projected artifacts, and eligibility-gated slice metrics.

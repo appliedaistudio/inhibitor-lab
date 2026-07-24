@@ -8,7 +8,13 @@ def is_prompt_injection_case(case):
 
 def _api_ok(raw):
     response = raw.get("response", {}) if isinstance(raw, dict) else {}
-    return response.get("ok") is True and 200 <= response.get("status", 0) < 300
+    status = response.get("status") if isinstance(response, dict) else None
+    return (
+        isinstance(response, dict)
+        and response.get("ok") is True
+        and isinstance(status, int)
+        and 200 <= status < 300
+    )
 
 def build_prompt_injection_results(cases, trajectory_results, raw_responses):
     configured = [c for c in cases if is_prompt_injection_case(c)]

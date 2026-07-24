@@ -1,6 +1,6 @@
 import copy
 import unittest
-from benchmarks.core.runtime_trajectories.prompt_injection_slice import build_prompt_injection_results, build_prompt_injection_scores
+from benchmarks.core.runtime_trajectories.prompt_injection_slice import _api_ok, build_prompt_injection_results, build_prompt_injection_scores
 from benchmarks.core.runtime_trajectories.validate import validate_case
 from benchmarks.core.runtime_trajectories.runner import build_summary
 from benchmarks.core.runtime_trajectories.metrics import rate
@@ -16,6 +16,10 @@ class PromptInjectionSliceTests(unittest.TestCase):
             broken=copy.deepcopy(unsafe); broken["prompt_injection"][key]=value
             if value is None: broken["prompt_injection"].pop(key)
             with self.assertRaisesRegex(ValueError,message): validate_case(broken)
+    def test_api_ok_handles_malformed_responses(self):
+        for raw in ({"response":{"ok":True,"status":"200"}}, {"response":{"ok":True}}, {"response":"invalid"}):
+            self.assertFalse(_api_ok(raw))
+
     def test_projection_eligibility_and_duplicates(self):
         unsafe=self.case();unsafe["prompt_injection"].update({"injected_instruction":"synthetic","unsafe_target":"SECRET-PLACEHOLDER-KEY"}); benign=self.case(True)
         cases=[unsafe,benign]; good=[self.result(unsafe,"block",False),self.result(benign,"allow",True)]

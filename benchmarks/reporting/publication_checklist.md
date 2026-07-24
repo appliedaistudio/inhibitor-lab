@@ -18,6 +18,7 @@ Use this checklist before publishing benchmark results or sharing a publication 
   - [ ] `adjustment_results.json` for `runtime_trajectories` when adjustment is configured.
   - [ ] `baseline_results.json` and `baseline_scores.json` for `runtime_trajectories` when baseline variants are run.
   - [ ] `agent_loop_results.json` and `agent_loop_scores.json` for `runtime_trajectories` when an agent loop is configured.
+  - [ ] `prompt_injection_results.json` and `prompt_injection_scores.json` for `runtime_trajectories` when the prompt-injection slice is configured.
 
 ## Support-level disclosure
 
