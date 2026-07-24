@@ -31,7 +31,7 @@ The evaluated system is `S = (A, I, C, E, P, L)`:
 
 | Component | Target meaning | Current implementation | Status |
 | --- | --- | --- | --- |
-| A | Agent producing proposed behavior | Fixture-provided proposed action envelopes | Partial |
+| A | Agent producing proposed behavior | Fixture-provided proposed action envelopes plus controlled deterministic agent-loop proxy for configured cases | Partial |
 | I | Inhibitor evaluating proposed behavior | Live `/check` API call | Implemented |
 | C | Controller applying decision | Deterministic benchmark controller | Simulated |
 | E | Execution environment/tools | No-side-effect mock tools | Simulated |
@@ -251,7 +251,7 @@ The current seed cases include enough labels for signal, decision, and simulated
 
 ## Publication Result Tables
 
-Publication preparation should produce seven result tables: safety results, utility results, adjustment results, baseline comparison results, operations results, and auditability results.
+Publication preparation should produce seven result tables: safety results, utility results, adjustment results, controlled agent-loop results, baseline comparison results, operations results, and auditability results.
 
 | Table | Current status | Notes |
 | --- | --- | --- |
@@ -356,18 +356,7 @@ v0.2 — Adds metric completeness for confidence intervals, latency percentiles,
 v0.3 — Adds seed fixture coverage for all minimum runtime trajectory risk categories while preserving simulated controller/mock-tool claim boundaries.
 v0.4 — Adds fixture-driven adjustment-loop support with safe revision envelopes, revised-action rechecks, simulated revision success, adjustment compliance, and revised-action execution metrics.
 v0.5 — Adds controlled benchmark-side baseline variants for unprotected mock execution, final-output-only checking, tool-boundary checking, and the current full runtime inhibition path.
+v0.6 — Adds a controlled deterministic agent-loop prototype with agent-generated action/revision records, safe-terminal metrics, revision-success proxy metrics, loop-only API accounting, and explicit non-autonomous-agent claim boundaries.
 ```
 
-### v0.6
-
-Adds a controlled deterministic agent-loop prototype with agent-generated action/revision records, safe terminal metrics, revision-success proxy metrics, and explicit non-autonomous-agent claim boundaries. Fully autonomous or LLM-agent benchmarks and full semantic user-goal preservation remain unmeasured.
-
-The current core benchmark implements a controlled deterministic agent-loop proxy. Fully autonomous LLM-agent benchmarking is out of scope for the current core suite and may be evaluated later as a separate optional experiment.
-
-## Completion roadmap
-
-### Completed
-- Controlled deterministic agent-loop prototype with separate artifacts and proxy metrics.
-
-### Remaining
-- Prompt-injection slices, full minimality and human-reviewed adjustment quality, human labeling, and a final execution/publication package.
+Fully autonomous or LLM-agent benchmarks and full semantic user-goal preservation remain unmeasured and out of scope for the current core suite.
