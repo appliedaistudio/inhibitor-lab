@@ -453,6 +453,7 @@ def build_summary(manifest, scores, trajectory_results, baseline_scores=None, ag
             case_id=result["case_id"], risk=result["benchmark_risk_category"], decision=result["mapped_decision"],
             action=result["controller_action"], executed=str(result.get("mock_tool", {}).get("executed", False)).lower(),
             passed=str(result["case_id"] not in scores["harness"]["failed_cases"]).lower()))
+    trajectory_rows = "\n".join(rows)
     highlights = [
         ("Unsafe action prevention rate", controller["unsafe_action_prevention_rate"], "simulated", "Eligible unsafe mock actions where the original action was not executed."),
         ("Unsafe execution rate", controller["unsafe_execution_rate"], "simulated", "Eligible unsafe mock actions where the original action still executed."),
@@ -497,6 +498,23 @@ Baseline variants are controlled benchmark-side proxies over the same runtime tr
         pi_section = "## Prompt-Injection Slice\n\nThis section reports controlled local synthetic prompt-injection fixtures. It is not an official AgentDojo or InjecAgent score, not an autonomous-agent benchmark, and not production prompt-injection defense evidence.\n\nConfigured cases: `{}`; eligible: `{}`; ineligible: `{}`.\n\n| Metric | Result | Support | Notes |\n|---|---:|---|---|\n{}".format(prompt_injection_scores["configured_cases"], prompt_injection_scores["eligible_cases"], prompt_injection_scores["ineligible_cases"], pi_rows)
         if prompt_injection_scores["excluded_cases"] or prompt_injection_scores["missing_result_cases"] or prompt_injection_scores["duplicate_result_cases"] or prompt_injection_scores.get("missing_trajectory_result_cases") or prompt_injection_scores.get("duplicate_trajectory_result_cases"):
             pi_section += "\n\nPrompt-injection review note: one or more prompt-injection slice records were excluded, missing, or duplicated. Review `prompt_injection_scores.json` before publication."
+
+    agent_loop_note = "No configured agent-loop cases were present for this run."
+    if scores.get("agent_loop", {}).get("configured_cases"):
+        agent_loop_note = (
+            "Agent-loop denominators exclude records that were ineligible because of API failure, "
+            "mapped-decision errors, revision-generation errors, or missing controller/mock-tool outcome fields. "
+            "Missing, duplicate, and ineligible records are reported in `agent_loop_scores.json`."
+        )
+        if (
+            scores.get("agent_loop", {}).get("excluded_cases")
+            or scores.get("agent_loop", {}).get("missing_result_cases")
+            or scores.get("agent_loop", {}).get("duplicate_result_cases")
+        ):
+            agent_loop_note += (
+                "\n\nAgent-loop review note: one or more agent-loop records were excluded, "
+                "missing, or duplicated. Review `agent_loop_scores.json` before publication."
+            )
 
     return f'''# Runtime Trajectories
 
@@ -567,7 +585,7 @@ The agent loop is a deterministic benchmark-side prototype. It is not a producti
 | Agent revision success rate | {_metric_result(scores.get("agent_loop", {}).get("agent_revision_success_rate", {"numerator": 0, "denominator": 0}))} | controlled agent-loop proxy | Deterministic revisions that complied and executed safely. |
 | Goal preservation proxy rate | {_metric_result(scores.get("agent_loop", {}).get("goal_preservation_proxy_rate", {"numerator": 0, "denominator": 0}))} | controlled agent-loop proxy | String retention only; not full semantic goal preservation. |
 
-{("No configured agent-loop cases were present for this run." if not scores.get("agent_loop", {}).get("configured_cases") else "Agent-loop denominators exclude records that were ineligible because of API failure, mapped-decision errors, revision-generation errors, or missing controller/mock-tool outcome fields. Missing, duplicate, and ineligible records are reported in `agent_loop_scores.json`." + ("\n\nAgent-loop review note: one or more agent-loop records were excluded, missing, or duplicated. Review `agent_loop_scores.json` before publication." if (scores.get("agent_loop", {}).get("excluded_cases") or scores.get("agent_loop", {}).get("missing_result_cases") or scores.get("agent_loop", {}).get("duplicate_result_cases")) else ""))}
+{agent_loop_note}
 
 {pi_section}
 
@@ -575,7 +593,7 @@ The agent loop is a deterministic benchmark-side prototype. It is not a producti
 
 | Case | Risk category | Mapped decision | Controller action | Mock tool executed | Passed |
 |---|---|---|---|---:|---:|
-{chr(10).join(rows)}
+{trajectory_rows}
 
 ## Interpretation
 
