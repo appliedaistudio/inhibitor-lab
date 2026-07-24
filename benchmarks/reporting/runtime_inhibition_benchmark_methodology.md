@@ -36,7 +36,7 @@ The evaluated system is `S = (A, I, C, E, P, L)`:
 | C | Controller applying decision | Deterministic benchmark controller | Simulated |
 | E | Execution environment/tools | No-side-effect mock tools | Simulated |
 | P | Policy set / policy pack | Fixture expectations and signal-family mapping | Partial |
-| L | Audit/logging layer | `trajectory_results.json`, `adjustment_results.json`, `agent_loop_results.json`, `agent_loop_scores.json`, baseline artifacts, `scores.json`, `summary.md` | Partial |
+| L | Audit/logging layer | `trajectory_results.json`, `adjustment_results.json`, `agent_loop_results.json`, `agent_loop_scores.json`, `prompt_injection_results.json`, `prompt_injection_scores.json`, baseline artifacts, `scores.json`, `summary.md` | Partial |
 
 ## Current Runtime Trajectory Mechanism
 
@@ -65,6 +65,8 @@ trajectory_results.json
 adjustment_results.json
 agent_loop_results.json
 agent_loop_scores.json
+prompt_injection_results.json
+prompt_injection_scores.json
 baseline_results.json
 baseline_scores.json
 scores.json
@@ -78,6 +80,8 @@ summary.md
 - `adjustment_results.json`: fixture-defined adjustment-loop records for configured revision cases.
 - `agent_loop_results.json`: deterministic benchmark-side agent proposal/revision step records.
 - `agent_loop_scores.json`: eligibility-gated controlled-proxy metrics and loop-only API accounting.
+- `prompt_injection_results.json`: projected controlled local synthetic prompt-injection records.
+- `prompt_injection_scores.json`: eligibility-gated prompt-injection slice metrics and source-record review fields.
 - `baseline_results.json`: controlled benchmark-side baseline records, one per case and variant.
 - `baseline_scores.json`: eligibility-gated comparison metrics for controlled baseline variants.
 - `scores.json`: machine-readable metrics.
@@ -109,6 +113,10 @@ summary.md
 | Agent revision success proxy | Partial | Controlled deterministic proxy | Compliant deterministic revisions with matched controller outcome |
 | Goal preservation proxy rate | Partial | String-retention / utility-target proxy | Not semantic preservation review |
 | Agent-loop API success rate | Implemented | Live API call within controlled loop | Scoped only to loop checks |
+| Prompt-injection signal expectation met rate | Implemented | Native signal evidence + fixture expectation | Controlled local synthetic slice only |
+| Prompt-injection acceptable decision rate | Implemented | Compatibility-mapped | Controlled local synthetic slice only |
+| Prompt-injection prevention / unsafe execution rates | Implemented | Simulated controller/mock-tool outcome | Eligible unsafe injected mock actions only |
+| Benign external-content completion / over-inhibition rates | Implemented | Simulated controller/mock-tool outcome | Eligible benign controls only |
 
 Outcome metrics must be gated by metric eligibility:
 
@@ -251,7 +259,7 @@ The current seed cases include enough labels for signal, decision, and simulated
 
 ## Publication Result Tables
 
-Publication preparation should produce seven result tables: safety results, utility results, adjustment results, controlled agent-loop results, baseline comparison results, operations results, and auditability results.
+Publication preparation should produce eight result tables: safety results, utility results, adjustment results, controlled agent-loop results, prompt-injection slice results, baseline comparison results, operations results, and auditability results.
 
 | Table | Current status | Notes |
 | --- | --- | --- |
@@ -259,6 +267,7 @@ Publication preparation should produce seven result tables: safety results, util
 | Utility | Partial | Simulated safe task completion and over-inhibition over benign mock trajectories |
 | Adjustment | Partial | Fixture-defined revisions remain separate from controlled deterministic agent-loop proxy metrics |
 | Controlled agent loop | Partial | Deterministic benchmark-side proposal/revision records, safe-terminal, success, and string-retention proxy metrics; not autonomous or LLM-agent evidence |
+| Prompt-injection slice | Implemented | Controlled local synthetic fixtures; not official AgentDojo/InjecAgent scores or autonomous-agent evidence |
 | Baseline comparison | Partial | Controlled benchmark-side V0/V2/V4/V5 comparisons over the same fixtures; not autonomous-agent or production baseline evidence |
 | Operations | Partial | API success, latency percentiles, and timeout/error-class rates implemented; throughput/stress aggregation planned |
 | Auditability | Partial | Benchmark audit-field completeness is implemented; production audit logs, native policy IDs, trace IDs, incident reconstructability, and explanation usefulness remain not measured or planned for separate implementation |
@@ -318,15 +327,16 @@ Completed:
 5. Fixture-driven adjustment loop.
 6. Controlled benchmark-side baseline variants.
 7. Controlled deterministic agent-loop prototype.
+8. Controlled local synthetic prompt-injection slice (v0.7).
 
 Remaining:
 
 1. Full minimality and human-reviewed adjustment-quality scoring.
-2. Prompt-injection slices:
-   - local prompt-injection fixtures
+2. External and expanded prompt-injection evaluation:
    - local diagnostic/semantic-context prompt-injection-style artifacts
    - official AgentDojo adapter
    - official InjecAgent adapter
+   - full autonomous prompt-injection benchmark
 3. Human labeling workflow.
 4. Full implemented-suite execution and publication result package.
 
@@ -357,6 +367,13 @@ v0.3 — Adds seed fixture coverage for all minimum runtime trajectory risk cate
 v0.4 — Adds fixture-driven adjustment-loop support with safe revision envelopes, revised-action rechecks, simulated revision success, adjustment compliance, and revised-action execution metrics.
 v0.5 — Adds controlled benchmark-side baseline variants for unprotected mock execution, final-output-only checking, tool-boundary checking, and the current full runtime inhibition path.
 v0.6 — Adds a controlled deterministic agent-loop prototype with agent-generated action/revision records, safe-terminal metrics, revision-success proxy metrics, loop-only API accounting, and explicit non-autonomous-agent claim boundaries.
+v0.7 — Adds the controlled local synthetic prompt-injection slice, projected artifacts, eligibility-gated slice metrics, and explicit non-official AgentDojo/InjecAgent claim boundaries.
 ```
 
-Fully autonomous or LLM-agent benchmarks and full semantic user-goal preservation remain unmeasured and out of scope for the current core suite.
+Fully autonomous or LLM-agent benchmarks, official external prompt-injection scores, and full semantic user-goal preservation remain unmeasured and out of scope for the current core suite.
+
+## Controlled local prompt-injection slice
+
+The implemented runtime suite includes a controlled local synthetic prompt-injection slice, recorded in `prompt_injection_results.json` and `prompt_injection_scores.json`. It projects primary trajectory results rather than issuing duplicate checks and eligibility-gates prevention metrics on successful API responses, valid mapped decisions, and complete controller/mock-tool outcomes. It is not an official AgentDojo/InjecAgent score, autonomous-agent evidence, or production prompt-injection defense evidence. Official AgentDojo/InjecAgent adapters and full autonomous prompt-injection benchmarking remain future work outside the current core scope.
+
+Publication preparation should produce eight result tables: safety, utility, adjustment, controlled agent loop, prompt-injection slice, baseline comparison, operations, and auditability.
