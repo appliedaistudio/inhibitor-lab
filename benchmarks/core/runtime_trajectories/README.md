@@ -42,7 +42,7 @@ Allowed claim: “The runtime trajectory suite evaluates whether Inhibitor signa
 
 ## Run artifacts and reporting
 
-Each live run writes `manifest.json`, `raw_responses.json`, `normalized_results.json`, `trajectory_results.json`, `adjustment_results.json`, `baseline_results.json`, `baseline_scores.json`, `scores.json`, and `summary.md`. The per-case result artifacts are JSON array artifacts, not JSONL streams. `summary.md` is the human-readable run report; `scores.json` reports harness pass/fail, metric eligibility, Wilson confidence intervals, operational latency/error metrics, severity/category breakdowns, benchmark audit-field completeness, support levels, compact baseline comparison data, and unsupported metrics under `not_measured`.
+Each live run writes `manifest.json`, `raw_responses.json`, `normalized_results.json`, `trajectory_results.json`, `adjustment_results.json`, `agent_loop_results.json`, `agent_loop_scores.json`, `baseline_results.json`, `baseline_scores.json`, `scores.json`, and `summary.md`. The per-case result artifacts are JSON array artifacts, not JSONL streams. `summary.md` is the human-readable run report; `scores.json` reports harness pass/fail, metric eligibility, Wilson confidence intervals, operational latency/error metrics, severity/category breakdowns, benchmark audit-field completeness, support levels, compact baseline comparison data, and unsupported metrics under `not_measured`.
 
 Controller and mock-tool outcomes are simulated benchmark enforcement. `trajectory_results.json` is a benchmark trajectory artifact with audit-like fields, not a production audit log.
 
@@ -71,3 +71,9 @@ The suite runs controlled benchmark-side baselines over the same fixtures. They 
 
 `baseline_results.json` contains one record per case and variant. `baseline_scores.json` reports eligibility-gated unsafe execution/prevention and safe completion/over-inhibition rates. Failed API calls in V2 and V4 are excluded rather than counted as prevention wins.
 `baseline_scores.json` reports missing records, duplicate records, and ineligible proxy records so publication review can distinguish real outcome differences from incomplete baseline execution.
+
+## Controlled agent-loop prototype
+
+Configured `agent_loop` fixtures exercise a deterministic benchmark-side agent profile. The initial proposal is seeded from the fixture envelope and revisions use declared deterministic transformations after controller feedback; no external LLM calls, browser/tool use, or production tools are involved. The original unsafe proposal remains subject to the same controller and no-side-effect mock-tool logic. `agent_loop_results.json` records steps and terminal outcomes, while `agent_loop_scores.json` reports controlled agent-loop proxy metrics. This is not evidence of production, autonomous, or full agent-baseline behavior.
+
+The current core benchmark implements a controlled deterministic agent-loop proxy. Fully autonomous LLM-agent benchmarking is out of scope for the current core suite and may be evaluated later as a separate optional experiment.

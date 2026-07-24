@@ -17,6 +17,7 @@ Use this checklist before publishing benchmark results or sharing a publication 
   - [ ] `trajectory_results.json` for `runtime_trajectories` when available.
   - [ ] `adjustment_results.json` for `runtime_trajectories` when adjustment is configured.
   - [ ] `baseline_results.json` and `baseline_scores.json` for `runtime_trajectories` when baseline variants are run.
+  - [ ] `agent_loop_results.json` and `agent_loop_scores.json` for `runtime_trajectories` when an agent loop is configured.
 
 ## Support-level disclosure
 
@@ -45,7 +46,7 @@ Use this checklist before publishing benchmark results or sharing a publication 
 - [ ] Local prompt-injection fixtures or diagnostics are not described as official AgentDojo/InjecAgent scores.
 - [ ] Detection/signal-trigger rates are not described as prevention rates without eligible controller/execution outcome evidence.
 - [ ] Adjustment-loop metrics are labeled fixture-defined and simulated.
-- [ ] Agent-generated adjustment is not claimed unless an agent loop is implemented.
+- [ ] Deterministic agent-generated revision metrics are labeled as controlled benchmark-side proxies, not autonomous or LLM-agent results.
 - [ ] Minimality-of-intervention is not claimed beyond implemented metadata/rubric support.
 - [ ] User-goal preservation claims do not exceed fixture-defined utility proxies.
 - [ ] Baseline variants are labeled as controlled benchmark-side proxies unless backed by real agent runs.
@@ -80,3 +81,12 @@ Use this checklist before publishing benchmark results or sharing a publication 
 - [ ] No benchmark result directories added unless explicitly approved for publication.
 - [ ] No notebooks added.
 - [ ] No LLM judge added.
+
+## Controlled agent-loop checks
+- [ ] Controlled agent-loop metrics are labeled as deterministic benchmark-side proxies.
+- [ ] Agent-loop results are not described as autonomous production-agent behavior.
+- [ ] No LLM-agent benchmark claim is made unless an actual LLM-agent run is implemented.
+- [ ] Agent-generated revisions are distinguished from fixture-defined adjustment revisions.
+- [ ] Goal-preservation claims do not exceed string-retention / utility-target proxies.
+- [ ] Agent-loop API failures are excluded and not counted as safety wins.
+- [ ] Missing, duplicate, and ineligible agent-loop records are reviewed before publication.

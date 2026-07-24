@@ -4,13 +4,16 @@ from benchmarks.core.runtime_trajectories.runner import (_error_type, _latency_s
                                                           _rate, _weighted_rate, build_scores,
                                                           build_summary, check_adjustment_compliance,
                                                           _api_succeeded_response, _adjustment_non_trigger_reason,
-                                                          build_baseline_scores)
+                                                          build_baseline_scores, build_agent_loop_scores, load_cases,
+                                                          _mapping_case, enrich_mapping)
 from benchmarks.core.runtime_trajectories.baseline_variants import (
     full_runtime_projection, render_final_output_only_baseline,
     render_tool_boundary_baseline, unprotected_record,
 )
 from benchmarks.core.runtime_trajectories.controller import ACTION_BY_DECISION
 from benchmarks.core.runtime_trajectories.validate import validate_case
+from benchmarks.core.runtime_trajectories.agent_loop import (apply_revision_transformations,
+    check_agent_revision_compliance, run_agent_loop_case)
 
 
 class RunnerMetricsTests(unittest.TestCase):
@@ -128,6 +131,45 @@ class RunnerMetricsTests(unittest.TestCase):
         self.assertIn("Latency percentiles", summary)
         audit = scores["auditability"]["per_case_audit_completeness"]
         self.assertEqual(audit[1]["missing_fields"], ["support_levels"])
+
+    def test_agent_loop_transformations_and_scores(self):
+        original = {"tool_input": {"body": "SECRET retain"}, "items": ["old"], "sensitivity": "high"}
+        revised = apply_revision_transformations(original, [
+            {"path": "tool_input.body", "replace": "SECRET", "with": "MASKED"},
+            {"path": "items", "replace_list_item": "old", "with": "new"},
+            {"path": "sensitivity", "set": "medium"},
+        ])
+        self.assertEqual(original["tool_input"]["body"], "SECRET retain")
+        self.assertEqual(revised["items"], ["new"])
+        self.assertTrue(check_agent_revision_compliance(revised, ["SECRET"], ["retain"])["agent_revision_compliant"])
+        for transformation in ({"path": "missing", "set": "x"}, {"path": "items", "replace": "x", "with": "y"}, {"path": "sensitivity", "replace_list_item": "x", "with": "y"}):
+            with self.assertRaises(ValueError):
+                apply_revision_transformations(original, [transformation])
+        empty = build_agent_loop_scores([], [])
+        self.assertIsNone(empty["goal_preservation_proxy_rate"]["value"])
+        self.assertEqual(empty["agent_loop_api_success_rate"]["support_level"], "live_api_call")
+        configured = [{"id": "one", "agent_loop": {"enabled": True}}]
+        score = build_agent_loop_scores(configured, [{"case_id": "one", "eligible_for_agent_loop_metrics": False, "eligibility_reason": "revision_generation_error", "steps": [{"raw_response": {"ok": False}}]}])
+        self.assertEqual(score["excluded_cases_by_reason"]["revision_generation_error"], 1)
+        self.assertEqual(score["agent_loop_api_failures"], 1)
+
+    def test_agent_loop_run_records_success_and_failures(self):
+        case = load_cases()[0]
+        class Client:
+            def __init__(self, responses): self.responses = iter(responses)
+            def check(self, *_args, **_kwargs): return next(self.responses)
+        revise = {"ok": True, "status": 200, "data": {"rules_inhibition": {"passed": False, "violations": ["privacy"]}}}
+        allow = {"ok": True, "status": 200, "data": {}}
+        result = run_agent_loop_case(case, Client([revise, allow]), _mapping_case, enrich_mapping, _api_succeeded_response)
+        self.assertTrue(result["loop_success"])
+        self.assertIn("expected_vs_actual_controller_outcome", result["steps"][1])
+        self.assertEqual(result["steps"][1]["expected_vs_actual_controller_outcome"]["matches"], True)
+        self.assertEqual(result["required_removed_strings"], ["ACCT-SAMPLE-123456"])
+        failed = run_agent_loop_case(case, Client([{ "ok": False, "status": 500 }]), _mapping_case, enrich_mapping, _api_succeeded_response)
+        self.assertEqual(failed["eligibility_reason"], "initial_api_not_successful")
+        bad = {**case, "agent_loop": {**case["agent_loop"], "revision_transformations": [{"path": "missing.path", "set": "x"}]}}
+        generated = run_agent_loop_case(bad, Client([revise]), _mapping_case, enrich_mapping, _api_succeeded_response)
+        self.assertEqual(generated["eligibility_reason"], "revision_generation_error")
 
     def test_adjustment_validation_and_compliance(self):
         case = {

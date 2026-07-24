@@ -97,6 +97,38 @@ def validate_case(case):
                 if (not isinstance(focus_paths, list) or
                         any(not isinstance(path, str) or not path for path in focus_paths)):
                     raise ValueError("adjustment.minimality_focus_paths must be a list of non-empty strings.")
+    agent_loop = case.get("agent_loop")
+    if agent_loop is not None:
+        if not isinstance(agent_loop, dict) or not isinstance(agent_loop.get("enabled"), bool):
+            raise ValueError("agent_loop must be an object with boolean enabled.")
+        if agent_loop["enabled"]:
+            required_loop = ("agent_profile", "max_steps", "revision_trigger_decisions", "stop_decisions", "initial_action_source", "revision_transformations", "acceptable_revised_decisions", "expected_revised_original_action_executed_by_decision", "required_removed_strings", "required_retained_strings", "utility_target")
+            missing_loop = [field for field in required_loop if field not in agent_loop]
+            if missing_loop: raise ValueError("agent_loop missing required field(s): " + ", ".join(missing_loop))
+            if agent_loop["agent_profile"] != "deterministic_redaction_agent_v0": raise ValueError("agent_loop.agent_profile is unsupported.")
+            if isinstance(agent_loop["max_steps"], bool) or not isinstance(agent_loop["max_steps"], int) or not 1 <= agent_loop["max_steps"] <= 3: raise ValueError("agent_loop.max_steps must be an integer from 1 to 3.")
+            triggers = agent_loop["revision_trigger_decisions"]
+            if not isinstance(triggers, list) or not triggers or not set(triggers).issubset(case["acceptable_decisions"]): raise ValueError("agent_loop.revision_trigger_decisions must be a non-empty subset of acceptable_decisions.")
+            stops = agent_loop["stop_decisions"]
+            if not isinstance(stops, list) or any(value not in DECISION_VOCABULARY - {"error"} for value in stops): raise ValueError("agent_loop.stop_decisions contains an invalid decision.")
+            if agent_loop["initial_action_source"] != "proposed_action_envelope": raise ValueError("agent_loop.initial_action_source is unsupported.")
+            transformations = agent_loop["revision_transformations"]
+            if not isinstance(transformations, list) or not transformations: raise ValueError("agent_loop.revision_transformations must be non-empty.")
+            for item in transformations:
+                if not isinstance(item, dict) or not isinstance(item.get("path"), str) or not item["path"] or (set(item) - {"path", "replace", "with", "set", "replace_list_item"}) or not ((set(item) == {"path", "replace", "with"}) or (set(item) == {"path", "set"}) or (set(item) == {"path", "replace_list_item", "with"})):
+                    raise ValueError("agent_loop revision transformation is malformed.")
+            revised = agent_loop["acceptable_revised_decisions"]
+            if not isinstance(revised, list) or not revised or any(value not in DECISION_VOCABULARY - {"error"} for value in revised): raise ValueError("agent_loop.acceptable_revised_decisions contains an invalid decision.")
+            execution = agent_loop["expected_revised_original_action_executed_by_decision"]
+            if not isinstance(execution, dict) or set(execution) != set(revised) or any(not isinstance(execution[key], bool) for key in revised): raise ValueError("agent_loop expected revised execution must define acceptable decisions.")
+            category = agent_loop.get("revised_benchmark_risk_category", "benign_control")
+            if category not in RISK_CATEGORY_SIGNAL_FAMILIES: raise ValueError("agent_loop.revised_benchmark_risk_category is unknown.")
+            family = agent_loop.get("expected_revised_signal_family")
+            if family is not None and family not in RISK_CATEGORY_SIGNAL_FAMILIES[category]: raise ValueError("agent_loop.expected_revised_signal_family is not registered for revised benchmark risk category.")
+            if "expected_revised_signal_present" in agent_loop and not isinstance(agent_loop["expected_revised_signal_present"], bool): raise ValueError("agent_loop.expected_revised_signal_present must be boolean.")
+            for field in ("required_removed_strings", "required_retained_strings"):
+                if not isinstance(agent_loop[field], list) or any(not isinstance(value, str) for value in agent_loop[field]): raise ValueError(f"agent_loop.{field} must be a list of strings.")
+            if not isinstance(agent_loop["utility_target"], str) or not agent_loop["utility_target"]: raise ValueError("agent_loop.utility_target must be a non-empty string.")
     return case
 
 

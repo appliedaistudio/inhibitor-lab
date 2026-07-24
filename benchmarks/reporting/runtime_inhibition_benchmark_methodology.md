@@ -31,12 +31,12 @@ The evaluated system is `S = (A, I, C, E, P, L)`:
 
 | Component | Target meaning | Current implementation | Status |
 | --- | --- | --- | --- |
-| A | Agent producing proposed behavior | Fixture-provided proposed action envelopes | Partial |
+| A | Agent producing proposed behavior | Fixture-provided proposed action envelopes plus controlled deterministic agent-loop proxy for configured cases | Partial |
 | I | Inhibitor evaluating proposed behavior | Live `/check` API call | Implemented |
 | C | Controller applying decision | Deterministic benchmark controller | Simulated |
 | E | Execution environment/tools | No-side-effect mock tools | Simulated |
 | P | Policy set / policy pack | Fixture expectations and signal-family mapping | Partial |
-| L | Audit/logging layer | `trajectory_results.json`, `adjustment_results.json`, baseline artifacts, `scores.json`, `summary.md` | Partial |
+| L | Audit/logging layer | `trajectory_results.json`, `adjustment_results.json`, `agent_loop_results.json`, `agent_loop_scores.json`, baseline artifacts, `scores.json`, `summary.md` | Partial |
 
 ## Current Runtime Trajectory Mechanism
 
@@ -63,6 +63,8 @@ raw_responses.json
 normalized_results.json
 trajectory_results.json
 adjustment_results.json
+agent_loop_results.json
+agent_loop_scores.json
 baseline_results.json
 baseline_scores.json
 scores.json
@@ -74,6 +76,8 @@ summary.md
 - `normalized_results.json`: per-case mapped decision and validation summary.
 - `trajectory_results.json`: benchmark trajectory artifact with audit-like fields.
 - `adjustment_results.json`: fixture-defined adjustment-loop records for configured revision cases.
+- `agent_loop_results.json`: deterministic benchmark-side agent proposal/revision step records.
+- `agent_loop_scores.json`: eligibility-gated controlled-proxy metrics and loop-only API accounting.
 - `baseline_results.json`: controlled benchmark-side baseline records, one per case and variant.
 - `baseline_scores.json`: eligibility-gated comparison metrics for controlled baseline variants.
 - `scores.json`: machine-readable metrics.
@@ -100,6 +104,11 @@ summary.md
 | Audit field completeness | Implemented | Benchmark artifact | Scores expected benchmark audit fields; not production audit completeness |
 | Trace completeness | Partial | Benchmark artifact | Benchmark audit-like fields do not represent production audit logs |
 | Controlled baseline comparison | Implemented | Mixed / benchmark-side proxies | Compares V0, V2, V4, and V5 over the same fixtures; not autonomous-agent evidence |
+| Controlled agent-loop safe terminal rate | Partial | Controlled deterministic proxy | Eligible deterministic loops ending safely |
+| Controlled agent-loop success rate | Partial | Controlled deterministic proxy | Original action remains unexecuted and terminal outcome meets loop criteria |
+| Agent revision success proxy | Partial | Controlled deterministic proxy | Compliant deterministic revisions with matched controller outcome |
+| Goal preservation proxy rate | Partial | String-retention / utility-target proxy | Not semantic preservation review |
+| Agent-loop API success rate | Implemented | Live API call within controlled loop | Scoped only to loop checks |
 
 Outcome metrics must be gated by metric eligibility:
 
@@ -126,7 +135,12 @@ This prevents API failures or malformed results from being counted as safety win
 
 ## Fixture-defined adjustment support
 
-The current adjustment loop is fixture-defined: when an original action maps to a configured `revise` decision, the benchmark applies a known safe revision, rechecks it, and evaluates it through simulated controller and mock-tool outcomes. It is not an agent-generated revision or autonomous agent loop. The agent-loop prototype remains roadmap work.
+The current adjustment loop is fixture-defined: when an original action maps to a configured `revise` decision, the benchmark applies a known safe revision, rechecks it, and evaluates it through simulated controller and mock-tool outcomes. It is not an agent-generated revision or autonomous agent loop.
+
+
+## Controlled agent-loop prototype
+
+The controlled agent loop is distinct from fixture-defined adjustment: the fixture-defined path supplies a known safe revision, while this deterministic benchmark-side profile generates its revised envelope by applying configured transformations after controller feedback. It records a separate proposal → check → controller → optional revision → re-check trajectory. Fully autonomous or LLM-agent benchmarking is out of scope for the current core suite and may be evaluated later as a separate optional experiment.
 
 ## Current Limitations
 
@@ -153,7 +167,7 @@ The current adjustment loop is fixture-defined: when an original action maps to 
 - human-review agreement
 - official AgentDojo / InjecAgent score
 - autonomous agent baselines
-- agent-generated revision success
+- fully autonomous or LLM-agent revision success (controlled deterministic agent revision success proxy is measured)
 - full user-goal preservation beyond fixture string-retention and utility-target proxies
 - full minimality-of-intervention scoring
 - incident reconstructability
@@ -237,13 +251,14 @@ The current seed cases include enough labels for signal, decision, and simulated
 
 ## Publication Result Tables
 
-Publication preparation should produce six result tables: safety results, utility results, adjustment results, baseline comparison results, operations results, and auditability results.
+Publication preparation should produce seven result tables: safety results, utility results, adjustment results, controlled agent-loop results, baseline comparison results, operations results, and auditability results.
 
 | Table | Current status | Notes |
 | --- | --- | --- |
 | Safety | Partial | Simulated UAPR/UER over eligible mock trajectories; no production prevention claim |
 | Utility | Partial | Simulated safe task completion and over-inhibition over benign mock trajectories |
-| Adjustment | Partial | Fixture-defined safe revisions are rechecked and scored with simulated revision success, compliance, and revised-action execution metrics; no agent-generated loop |
+| Adjustment | Partial | Fixture-defined revisions remain separate from controlled deterministic agent-loop proxy metrics |
+| Controlled agent loop | Partial | Deterministic benchmark-side proposal/revision records, safe-terminal, success, and string-retention proxy metrics; not autonomous or LLM-agent evidence |
 | Baseline comparison | Partial | Controlled benchmark-side V0/V2/V4/V5 comparisons over the same fixtures; not autonomous-agent or production baseline evidence |
 | Operations | Partial | API success, latency percentiles, and timeout/error-class rates implemented; throughput/stress aggregation planned |
 | Auditability | Partial | Benchmark audit-field completeness is implemented; production audit logs, native policy IDs, trace IDs, incident reconstructability, and explanation usefulness remain not measured or planned for separate implementation |
@@ -272,7 +287,7 @@ The runtime trajectory suite implements controlled benchmark-side comparison var
 - **V4 tool-boundary check** uses only tool name and compact input with live `/check`; it is a benchmark-side proxy, not production tool enforcement.
 - **V5 full runtime inhibition** reuses the main full-context trajectory result with native signal evidence, compatibility-mapped decision, and simulated controller/mock-tool outcome.
 
-API failures in live-check proxies are excluded from baseline outcome metrics and are not prevention wins. Prompt-only and full autonomous-agent variants remain future work because they require agent-loop support.
+API failures in live-check proxies are excluded from baseline outcome metrics and are not prevention wins. Prompt-only and fully autonomous-agent variants are outside this controlled core benchmark scope; any future evaluation would be a separate optional experiment, not a prerequisite for this suite.
 
 ## Allowed and Disallowed Claims
 
@@ -302,18 +317,18 @@ Completed:
 4. Risk-category fixture expansion.
 5. Fixture-driven adjustment loop.
 6. Controlled benchmark-side baseline variants.
+7. Controlled deterministic agent-loop prototype.
 
 Remaining:
 
-1. Agent-loop prototype for agent-generated revisions.
-2. Full minimality and human-reviewed adjustment-quality scoring.
-3. Prompt-injection slices:
+1. Full minimality and human-reviewed adjustment-quality scoring.
+2. Prompt-injection slices:
    - local prompt-injection fixtures
    - local diagnostic/semantic-context prompt-injection-style artifacts
    - official AgentDojo adapter
    - official InjecAgent adapter
-4. Human labeling workflow.
-5. Full implemented-suite execution and publication result package.
+3. Human labeling workflow.
+4. Full implemented-suite execution and publication result package.
 
 Local prompt-injection runtime trajectory fixtures and local diagnostic/semantic-context prompt-injection-style artifacts must not be described as official AgentDojo or InjecAgent scores. Official external benchmark scores require adapter implementation, dataset/task mapping, and separate execution.
 
@@ -341,4 +356,7 @@ v0.2 — Adds metric completeness for confidence intervals, latency percentiles,
 v0.3 — Adds seed fixture coverage for all minimum runtime trajectory risk categories while preserving simulated controller/mock-tool claim boundaries.
 v0.4 — Adds fixture-driven adjustment-loop support with safe revision envelopes, revised-action rechecks, simulated revision success, adjustment compliance, and revised-action execution metrics.
 v0.5 — Adds controlled benchmark-side baseline variants for unprotected mock execution, final-output-only checking, tool-boundary checking, and the current full runtime inhibition path.
+v0.6 — Adds a controlled deterministic agent-loop prototype with agent-generated action/revision records, safe-terminal metrics, revision-success proxy metrics, loop-only API accounting, and explicit non-autonomous-agent claim boundaries.
 ```
+
+Fully autonomous or LLM-agent benchmarks and full semantic user-goal preservation remain unmeasured and out of scope for the current core suite.
