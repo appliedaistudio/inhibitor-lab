@@ -342,3 +342,7 @@ v0.3 — Adds seed fixture coverage for all minimum runtime trajectory risk cate
 v0.4 — Adds fixture-driven adjustment-loop support with safe revision envelopes, revised-action rechecks, simulated revision success, adjustment compliance, and revised-action execution metrics.
 v0.5 — Adds controlled benchmark-side baseline variants for unprotected mock execution, final-output-only checking, tool-boundary checking, and the current full runtime inhibition path.
 ```
+
+### v0.6
+
+Adds a controlled deterministic agent-loop prototype with agent-generated action/revision records, safe terminal metrics, revision-success proxy metrics, and explicit non-autonomous-agent claim boundaries. Fully autonomous or LLM-agent benchmarks and full semantic user-goal preservation remain unmeasured.

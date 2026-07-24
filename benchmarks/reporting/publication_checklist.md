@@ -80,3 +80,12 @@ Use this checklist before publishing benchmark results or sharing a publication 
 - [ ] No benchmark result directories added unless explicitly approved for publication.
 - [ ] No notebooks added.
 - [ ] No LLM judge added.
+
+## Controlled agent-loop checks
+- [ ] Controlled agent-loop metrics are labeled as deterministic benchmark-side proxies.
+- [ ] Agent-loop results are not described as autonomous production-agent behavior.
+- [ ] No LLM-agent benchmark claim is made unless an actual LLM-agent run is implemented.
+- [ ] Agent-generated revisions are distinguished from fixture-defined adjustment revisions.
+- [ ] Goal-preservation claims do not exceed string-retention / utility-target proxies.
+- [ ] Agent-loop API failures are excluded and not counted as safety wins.
+- [ ] Missing, duplicate, and ineligible agent-loop records are reviewed before publication.
