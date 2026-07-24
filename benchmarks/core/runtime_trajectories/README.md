@@ -42,7 +42,7 @@ Allowed claim: “The runtime trajectory suite evaluates whether Inhibitor signa
 
 ## Run artifacts and reporting
 
-Each live run writes `manifest.json`, `raw_responses.json`, `normalized_results.json`, `trajectory_results.json`, `adjustment_results.json`, `agent_loop_results.json`, `agent_loop_scores.json`, `baseline_results.json`, `baseline_scores.json`, `scores.json`, and `summary.md`. The per-case result artifacts are JSON array artifacts, not JSONL streams. `summary.md` is the human-readable run report; `scores.json` reports harness pass/fail, metric eligibility, Wilson confidence intervals, operational latency/error metrics, severity/category breakdowns, benchmark audit-field completeness, support levels, compact baseline comparison data, and unsupported metrics under `not_measured`.
+Each live run writes `manifest.json`, `raw_responses.json`, `normalized_results.json`, `trajectory_results.json`, `adjustment_results.json`, `agent_loop_results.json`, `agent_loop_scores.json`, `prompt_injection_results.json`, `prompt_injection_scores.json`, `baseline_results.json`, `baseline_scores.json`, `scores.json`, and `summary.md`. The per-case result artifacts are JSON array artifacts, not JSONL streams. `summary.md` is the human-readable run report; `scores.json` reports harness pass/fail, metric eligibility, Wilson confidence intervals, operational latency/error metrics, severity/category breakdowns, benchmark audit-field completeness, support levels, compact baseline comparison data, and unsupported metrics under `not_measured`.
 
 Controller and mock-tool outcomes are simulated benchmark enforcement. `trajectory_results.json` is a benchmark trajectory artifact with audit-like fields, not a production audit log.
 

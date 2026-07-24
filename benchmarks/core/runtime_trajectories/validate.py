@@ -10,6 +10,11 @@ except ImportError:  # Supports validation when benchmarks/ is the script root.
     from core.runtime_trajectories.controller import ACTION_BY_DECISION
 
 
+PROMPT_INJECTION_ATTACK_VECTORS = {
+    "external_email", "web_content", "tool_output", "retrieved_document",
+    "memory_instruction", "benign_external_content",
+}
+
 def validate_case(case):
     required = ("id", "benchmark_risk_category", "metric_families", "severity", "user_goal",
                 "environment_state", "proposed_action_envelope", "expected_signal_family",
@@ -52,16 +57,24 @@ def validate_case(case):
     prompt_injection = case.get("prompt_injection")
     if prompt_injection is not None:
         if not isinstance(prompt_injection, dict) or not isinstance(prompt_injection.get("enabled"), bool):
-            raise ValueError("prompt_injection must be an object with boolean enabled.")
+            raise ValueError("prompt_injection must be an object with boolean enabled")
         if prompt_injection["enabled"]:
-            required_pi = ("injection_present", "attack_vector", "trusted_user_goal", "expected_injection_handled", "interpretation_limit")
-            missing_pi = [field for field in required_pi if field not in prompt_injection]
-            if missing_pi: raise ValueError("prompt_injection missing required field(s): " + ", ".join(missing_pi))
-            if not isinstance(prompt_injection["injection_present"], bool) or not isinstance(prompt_injection["expected_injection_handled"], bool): raise ValueError("prompt_injection boolean fields are invalid.")
-            allowed = {"external_email", "web_content", "tool_output", "retrieved_document", "memory_instruction", "benign_external_content"}
-            if prompt_injection["attack_vector"] not in allowed: raise ValueError("prompt_injection.attack_vector is invalid.")
-            if any(not isinstance(prompt_injection[field], str) or not prompt_injection[field].strip() for field in ("trusted_user_goal", "interpretation_limit")): raise ValueError("prompt_injection required strings must be non-empty.")
-            if prompt_injection["injection_present"] and any(not isinstance(prompt_injection.get(field), str) or not prompt_injection[field].strip() for field in ("injected_instruction", "unsafe_target")): raise ValueError("unsafe prompt_injection cases require injected_instruction and unsafe_target.")
+            required = ("injection_present", "attack_vector", "trusted_user_goal", "expected_injection_handled", "interpretation_limit")
+            missing = [field for field in required if field not in prompt_injection]
+            if missing: raise ValueError("prompt_injection missing required field(s): " + ", ".join(missing))
+            for field in ("injection_present", "expected_injection_handled"):
+                if not isinstance(prompt_injection[field], bool): raise ValueError(f"prompt_injection.{field} must be boolean")
+            if not isinstance(prompt_injection["attack_vector"], str) or prompt_injection["attack_vector"] not in PROMPT_INJECTION_ATTACK_VECTORS:
+                raise ValueError("prompt_injection.attack_vector is unsupported")
+            for field in ("trusted_user_goal", "interpretation_limit"):
+                if not isinstance(prompt_injection[field], str) or not prompt_injection[field].strip(): raise ValueError(f"prompt_injection.{field} must be a non-empty string")
+            if prompt_injection["injection_present"]:
+                for field in ("injected_instruction", "unsafe_target"):
+                    if not isinstance(prompt_injection.get(field), str) or not prompt_injection[field].strip():
+                        raise ValueError(f"prompt_injection.{field} is required when injection_present is true")
+            serialized = " ".join(str(v) for v in prompt_injection.values()).lower()
+            if any(token in serialized for token in ("@gmail.com", "@yahoo.com", ".com", ".org", "api.openai.com")):
+                raise ValueError("prompt_injection metadata must use synthetic placeholder domains/endpoints")
     adjustment = case.get("adjustment")
     if adjustment is not None:
         if not isinstance(adjustment, dict):

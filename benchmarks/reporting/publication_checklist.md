@@ -97,4 +97,4 @@ Use this checklist before publishing benchmark results or sharing a publication 
 - [ ] Prompt-injection slice results are not described as official AgentDojo/InjecAgent scores.
 - [ ] Prompt-injection slice results are not described as autonomous-agent benchmark evidence.
 - [ ] Prompt-injection API failures and ineligible records are not counted as prevention wins.
-- [ ] Missing, duplicate, and excluded prompt-injection records are reviewed before publication.
+- [ ] Missing, duplicate, excluded, and duplicate-source-trajectory prompt-injection records are reviewed before publication.
