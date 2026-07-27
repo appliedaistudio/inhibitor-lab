@@ -28,21 +28,6 @@ def main():
             print(f"Unknown suite requested: {args.suite}")
             return 1
         suite = suites[0]
-        if suite["id"] == "capability_validation":
-            from core.capability_validation import runner
-
-            runner_args = ["--dry-run"] if args.dry_run else []
-            return runner.main(runner_args)
-        if suite["id"] == "observation_normalization":
-            from core.observation_normalization import runner
-
-            runner_args = ["--dry-run"] if args.dry_run else []
-            return runner.main(runner_args)
-        if suite["id"] == "decision_compatibility":
-            from core.decision_compatibility import runner
-
-            runner_args = ["--dry-run"] if args.dry_run else []
-            return runner.main(runner_args)
         if suite["id"] == "runtime_trajectories":
             from core.runtime_trajectories import runner
 

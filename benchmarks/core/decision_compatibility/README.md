@@ -100,3 +100,7 @@ benchmarks/results/decision_compatibility/<run_id>/
 ## Scope statement
 
 This suite maps current Inhibitor signals into the runtime-decision vocabulary for benchmark reporting. It does not prove that Inhibitor natively emits or enforces those decisions. It does not implement runtime trajectory simulation. It does not measure full unsafe-action prevention or safe-task-completion rates. It does not use an LLM judge.
+
+## Fixture format
+
+This helper retains its own `cases.jsonl` adapter-contract fixtures because they are independent mapping test vectors, not runtime-trajectory cases. The active runtime suite has exactly one canonical source, `../runtime_trajectories/cases.json`; the two files serve different schemas and cannot become unsynchronized copies of the same cases.

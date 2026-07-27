@@ -144,38 +144,6 @@ def _validate_jsonl_cases(path, case_validator):
     return errors
 
 
-def validate_capability_cases(path=BENCHMARKS_DIR / "core" / "capability_validation" / "cases.jsonl"):
-    """Validate capability-validation JSONL cases with generic case schema checks."""
-
-    return _validate_jsonl_cases(path, validate_case_base)
-
-
-def _validate_observation_normalization_case(case):
-    validate_case_base(case)
-    if case.get("endpoint") != "/check":
-        raise ValueError("Field 'endpoint' must be '/check'.")
-    if not isinstance(case.get("expected"), dict):
-        raise ValueError("Field 'expected' must be a dictionary.")
-    if not case["expected"].get("validator"):
-        raise ValueError("Field 'expected.validator' is required.")
-    if not isinstance(case.get("thought_chain"), list):
-        raise ValueError("Field 'thought_chain' must exist and be a list.")
-    if not isinstance(case.get("paper_tags"), list) or not case["paper_tags"]:
-        raise ValueError("Field 'paper_tags' must exist and be a non-empty list.")
-    if not isinstance(case.get("risk_category"), str) or not case["risk_category"]:
-        raise ValueError("Field 'risk_category' must exist and be a string.")
-    if not isinstance(case.get("expected_signal_family"), str) or not case["expected_signal_family"]:
-        raise ValueError("Field 'expected_signal_family' must exist and be a string.")
-
-
-def validate_observation_normalization_cases(
-    path=BENCHMARKS_DIR / "core" / "observation_normalization" / "cases.jsonl",
-):
-    """Validate observation-normalization JSONL cases with generic and suite-specific checks."""
-
-    return _validate_jsonl_cases(path, _validate_observation_normalization_case)
-
-
 def _validate_decision_compatibility_case(case):
     validate_case_base(case)
     if case.get("endpoint") != "/check":
@@ -217,18 +185,30 @@ def _validate_runtime_trajectory_case(case):
 
 
 def validate_runtime_trajectory_cases(
-    path=BENCHMARKS_DIR / "core" / "runtime_trajectories" / "cases.jsonl",
+    path=BENCHMARKS_DIR / "core" / "runtime_trajectories" / "cases.json",
 ):
-    """Validate runtime-trajectory JSONL cases with lightweight suite-specific checks."""
+    """Validate runtime-trajectory cases from the canonical JSON array."""
 
-    return _validate_jsonl_cases(path, _validate_runtime_trajectory_case)
+    relative_path = Path(path).relative_to(REPO_ROOT)
+    try:
+        cases = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"{relative_path}: invalid JSON: {exc}"]
+    if not isinstance(cases, list):
+        return [f"{relative_path}: fixture root must be a JSON array"]
+    errors = []
+    for index, case in enumerate(cases):
+        try:
+            _validate_runtime_trajectory_case(case)
+        except ValueError as exc:
+            case_id = case.get("id", "<unknown>") if isinstance(case, dict) else "<unknown>"
+            errors.append(f"{relative_path} item {index} ({case_id}): {exc}")
+    return errors
 
 def main():
     try:
         manifest = load_suite_manifest()
         errors = validate_manifest(manifest)
-        errors.extend(validate_capability_cases())
-        errors.extend(validate_observation_normalization_cases())
         errors.extend(validate_decision_compatibility_cases())
         errors.extend(validate_runtime_trajectory_cases())
     except ValueError as exc:

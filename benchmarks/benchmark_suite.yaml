@@ -1,51 +1,20 @@
 suites:
-  - id: capability_validation
-    name: Capability Validation
-    path: benchmarks/core/capability_validation
-    category: core
-    support_level: native
-    required: true
-    status: implemented
-    description: "Preflight validation for the current Inhibitor API contract and response shape."
-  - id: observation_normalization
-    name: Observation Normalization
-    path: benchmarks/core/observation_normalization
-    category: core
-    support_level: native
-    required: true
-    status: implemented
-    description: "Native benchmark area for temporal validation, subsumption, inference normalization, and prediction consistency."
-  - id: decision_compatibility
-    name: Decision Compatibility
-    path: benchmarks/core/decision_compatibility
-    category: core
-    support_level: compatibility_mapped
-    required: true
-    status: implemented
-    description: "Compatibility layer for mapping current Inhibitor signals to benchmark runtime decisions."
   - id: runtime_trajectories
     name: Runtime Trajectories
     path: benchmarks/core/runtime_trajectories
     category: core
-    support_level: simulated
+    support_level:
+      - native
+      - compatibility_mapped
+      - simulated
     required: true
     status: implemented
-    description: "Structured runtime trajectories using decision compatibility and a deterministic mock-tool controller."
+    description: "Active benchmark suite combining live signal evidence with deterministic mapping and simulated no-side-effect execution."
   - id: operational_stress
     name: Operational Stress
-    path: benchmarks/diagnostics/operational_stress
+    path: benchmarks/diagnostics
     category: diagnostic
     support_level: native
     required: false
     status: planned
-    description: "Diagnostic area for load, latency, throughput, errors, timeouts, and degradation behavior."
-  - id: semantic_context_robustness
-    name: Semantic Context Robustness
-    path: benchmarks/diagnostics/semantic_context_robustness
-    category: diagnostic
-    support_level:
-      - native
-      - compatibility_mapped
-    required: false
-    status: planned
-    description: "Diagnostic area for long-context and semantically rich prompt robustness, including risky, indirect, or hidden instructions embedded inside larger contextual inputs."
+    description: "Diagnostics-only area; not publication evidence or active runtime-trajectory results."
