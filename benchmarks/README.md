@@ -15,7 +15,11 @@ The implemented harness combines:
 - deterministic benchmark controller semantics; and
 - simulated, no-side-effect mock-tool execution outcomes.
 
-This adaptation is necessary because there is not yet a controlled production environment in which these cases can safely execute or block real tools, nor production controller-enforcement traces for them. It tests whether live evidence can support safe decisions without risking real side effects. See the [authoritative methodology](reporting/runtime_inhibition_benchmark_methodology.md), [validation summary](reporting/runtime_trajectory_validation_summary.md), and [known discrepancies](reporting/discrepancy_summary.md).
+This adaptation is necessary because there is not yet a controlled production environment in which these cases can safely execute or block real tools, nor production controller-enforcement traces for them. It tests whether live evidence can support safe decisions without risking real side effects.
+
+## Reviewer path
+
+First-time reviewers can continue to the [runtime trajectory suite guide](core/runtime_trajectories/README.md), inspect the canonical [16-case fixture](core/runtime_trajectories/cases.json), read the [authoritative methodology](reporting/runtime_inhibition_benchmark_methodology.md), review the [latest validation summary](reporting/runtime_trajectory_validation_summary.md), and then examine the [known discrepancies](reporting/discrepancy_summary.md).
 
 ## Preflight
 

@@ -1,4 +1,4 @@
-"""Run manifest helpers for future benchmark executions."""
+"""Run-manifest helpers shared by benchmark executions."""
 
 from datetime import datetime, timezone
 

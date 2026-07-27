@@ -1,12 +1,13 @@
-# Benchmark library scaffolding
+# Shared Benchmark Library
 
-`benchmarks/lib/` contains shared lightweight utilities for future benchmark runners.
+`benchmarks/lib/` contains lightweight utilities shared by the current benchmark harness.
 
-Current scaffolding covers:
+Current utilities cover:
 
-- support level validation for the planned suite and fixture metadata;
+- support-level validation for suite and fixture metadata;
 - generic schema checks for simple manifest and fixture-like objects;
-- run manifest creation for future benchmark executions; and
-- standard result artifact writing helpers for future runs.
+- live API client behavior used by benchmark runners;
+- run-manifest creation; and
+- standard result-artifact writing helpers.
 
-API calling and scoring utilities are intentionally not included in this phase. Those utilities will be added in later phases when executable benchmark suites are implemented.
+These modules support the active `runtime_trajectories` suite and its `decision_compatibility` adapter infrastructure. They are helpers, not independently runnable benchmark suites or result evidence.

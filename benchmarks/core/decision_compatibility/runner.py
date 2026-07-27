@@ -78,7 +78,7 @@ def run_live(args, cases, endpoint):
     manifest = build_run_manifest(
         suite_id=SUITE_ID,
         run_id=args.run_id or None,
-        runner_version="phase_5",
+        runner_version="decision_compatibility_v1",
         endpoint=endpoint,
         total_cases=len(cases),
         notes="Validates deterministic compatibility mapping from current Inhibitor signals to paper-compatible runtime decision categories using a curated catalog-derived signal map.",

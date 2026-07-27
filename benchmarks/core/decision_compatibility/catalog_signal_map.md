@@ -4,12 +4,12 @@
 
 - Source: Inhibitor `/catalog`
 - Catalog version: `2.23.2`
-- Suite: `decision_compatibility`
+- Component: `decision_compatibility` shared adapter infrastructure
 - Support level: `compatibility_mapped`
 - Scope: decision compatibility adapter infrastructure
 - Last reviewed: `2026-07`
 
-This document is a curated benchmark mapping, not a full `/catalog` snapshot. The full live `/catalog` response is not committed as the benchmark source of truth because it may change over time and includes signals outside this suite's scope. This file records only the signal families needed to deterministically map current Inhibitor `/check` response signals into benchmark runtime decision categories for this suite.
+This document is a curated benchmark mapping, not a full `/catalog` snapshot. The full live `/catalog` response is not committed as the benchmark source of truth because it may change over time and includes signals outside the adapter's scope. This file records only the signal families needed to deterministically map current Inhibitor `/check` response signals into benchmark runtime decision categories for the active runtime trajectory suite.
 
 ## Runtime trajectory category bridge
 

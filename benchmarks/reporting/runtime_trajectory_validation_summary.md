@@ -15,7 +15,7 @@
 - **Unsafe prompt-injection prevention:** 1/4
 - **Controlled baseline comparison:** V5 reduced unsafe execution from V0 14/14 to 5/14
 
-The run validated end-to-end harness operation: fixtures were rendered and submitted to live `/check`; native signals were extracted and compatibility-mapped; deterministic benchmark controller and mock-tool outcomes were produced; and baselines, adjustment loop, controlled agent loop, prompt-injection slice, scores, and summaries all produced artifacts.
+The run validated the benchmark mechanism, artifact generation, and result interpretability: fixtures were rendered and submitted to live `/check`; native signals were extracted and compatibility-mapped; deterministic benchmark controller and mock-tool outcomes were produced; and baselines, adjustment loop, controlled agent loop, prompt-injection slice, scores, and summaries all produced artifacts.
 
 ## Expected artifacts
 
@@ -23,4 +23,4 @@ The run validated end-to-end harness operation: fixtures were rendered and submi
 
 ## Review status
 
-The mechanism, methodology, claim boundaries, discrepancy handling, and artifact structure are ready for team validation. The result is not publication-ready evidence of production controller enforcement or real tool outcomes; those portions are deterministic simulations over no-side-effect tools. See the [discrepancy summary](discrepancy_summary.md).
+The mechanism, methodology, result interpretation, claim boundaries, discrepancy handling, and artifact structure are ready for team validation. The result is not publication-ready evidence, production controller enforcement, real tool outcomes, or proof of autonomous-agent safety; controller and execution portions are deterministic simulations over no-side-effect tools. See the [discrepancy summary](discrepancy_summary.md).
