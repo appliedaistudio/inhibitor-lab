@@ -42,7 +42,7 @@ def _parse_scalar(raw_value):
 def load_suite_manifest(path=MANIFEST_PATH):
     """Load the simple benchmark suite YAML manifest without third-party dependencies."""
 
-    # This is intentionally a minimal parser for the simple Phase 2 manifest
+    # This is intentionally a minimal parser for the simple benchmark suite manifest
     # shape, not a general YAML parser. If the manifest grows more complex,
     # replace this with a documented YAML loader/dependency.
     lines = Path(path).read_text(encoding="utf-8").splitlines()

@@ -33,13 +33,13 @@ def main():
 
             runner_args = ["--dry-run"] if args.dry_run else []
             return runner.main(runner_args)
-        print(f"Runner for suite '{suite['id']}' is planned for later phases; no benchmarks were executed.")
+        print(f"Runner for suite '{suite['id']}' is planned separately and is not active in this orchestrator; no benchmarks were executed.")
         return 0
 
     print("Benchmark suites:")
     for suite in suites:
         print(f"- {suite['id']} ({suite['category']}, {suite['status']}): {suite['path']}")
-    print("Full orchestration for all suites will be added in later phases; no benchmarks were executed.")
+    print("No additional benchmark suites were executed; their orchestration is planned separately.")
     return 0
 
 

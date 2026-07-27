@@ -187,7 +187,7 @@ def build_mapping_reason(decision, flags, matched_signal_names, matched_keywords
         parts.append("Fallback keywords from response text matched: " + ", ".join(matched_keywords[:12]) + ".")
     elif flags.get("used_fixture_risk_fallback"):
         parts.append(
-            "No response-derived catalog signal or keyword was found; limited fixture risk fallback was used only for the ambiguity/benign Phase 5 families."
+            "No response-derived catalog signal or keyword was found; limited fixture risk fallback was used only for the ambiguity/benign mapping families."
         )
     else:
         parts.append(
