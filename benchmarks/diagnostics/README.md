@@ -2,7 +2,7 @@
 
 `benchmarks/diagnostics/` contains retained diagnostic notebooks and reusable fixtures for targeted investigations of Inhibitor behavior.
 
-Diagnostics are separate from the implemented core benchmark suites under `benchmarks/core/`. Core suites are the primary structured benchmark layer used for current benchmark execution and reporting. Diagnostic assets are supporting tools for investigating system behavior under specific operating conditions, such as high load, long context windows, or semantically rich prompts with embedded risky instructions.
+Diagnostics are separate from the active `runtime_trajectories` benchmark suite under `benchmarks/core/`. They are supporting tools for investigating system behavior under specific operating conditions, such as high load, long context windows, or semantically rich prompts with embedded risky instructions. They are not active runtime trajectory results or publication evidence.
 
 Diagnostic notebooks may perform live API calls. Review notebooks before running them, and confirm endpoint configuration, API credentials, execution scope, and result-handling expectations.
 
@@ -23,7 +23,7 @@ Historical diagnostic outputs remain archived under `benchmarks/legacy/diagnosti
 
 `semantic_context_robustness/` retains tooling and fixtures for investigating long-context dimensions and embedded risky instructions in semantically rich context. The notebook uses the cybersecurity article fixture to place unsafe instructions at different positions and context sizes.
 
-The historical semantic-context report included LLM-based detection-quality review and should not be confused with the deterministic core benchmark methodology. These diagnostics can support robustness discussion, but they do not prove direct production safety efficacy, native runtime enforcement, or replacement for core benchmark claims.
+The historical semantic-context report included LLM-based detection-quality review and should not be confused with the deterministic runtime trajectory methodology. These diagnostics can support robustness discussion, but they do not prove direct production safety efficacy, native runtime enforcement, or replacement for active benchmark claims.
 
 - Notebook: [`semantic_context_robustness/notebooks/inhibitor_large_context_stress_test.ipynb`](semantic_context_robustness/notebooks/inhibitor_large_context_stress_test.ipynb)
 - Fixture: [`semantic_context_robustness/fixtures/comprehensive_cybersecurity_article.txt`](semantic_context_robustness/fixtures/comprehensive_cybersecurity_article.txt)

@@ -1,4 +1,4 @@
-"""Result artifact writing helpers for future benchmark runs."""
+"""Result-artifact writing helpers shared by benchmark runs."""
 
 import json
 from pathlib import Path

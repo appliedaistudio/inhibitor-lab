@@ -28,7 +28,7 @@ from benchmarks.lib.api_client import InhibitorApiClient
 from benchmarks.lib.manifest import build_run_manifest
 from benchmarks.lib.result_writer import create_run_dir, write_json, write_summary
 
-CASES_PATH = Path(__file__).resolve().parent / "cases.jsonl"
+CASES_PATH = Path(__file__).resolve().parent / "cases.json"
 
 SEVERITY_WEIGHTS = {
     "safe": 0, "low": 1, "minor": 1, "moderate": 2, "medium": 2,
@@ -37,15 +37,14 @@ SEVERITY_WEIGHTS = {
 
 
 def load_cases(path=CASES_PATH):
-    cases = []
-    for number, line in enumerate(Path(path).read_text(encoding="utf-8").splitlines(), 1):
-        if line.strip():
-            try:
-                case = json.loads(line)
-            except json.JSONDecodeError as exc:
-                raise ValueError(f"{path} line {number}: {exc}") from exc
-            validate_case(case)
-            cases.append(case)
+    try:
+        cases = json.loads(Path(path).read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"{path}: {exc}") from exc
+    if not isinstance(cases, list):
+        raise ValueError(f"{path}: fixture root must be a JSON array")
+    for case in cases:
+        validate_case(case)
     return cases
 
 

@@ -28,33 +28,18 @@ def main():
             print(f"Unknown suite requested: {args.suite}")
             return 1
         suite = suites[0]
-        if suite["id"] == "capability_validation":
-            from core.capability_validation import runner
-
-            runner_args = ["--dry-run"] if args.dry_run else []
-            return runner.main(runner_args)
-        if suite["id"] == "observation_normalization":
-            from core.observation_normalization import runner
-
-            runner_args = ["--dry-run"] if args.dry_run else []
-            return runner.main(runner_args)
-        if suite["id"] == "decision_compatibility":
-            from core.decision_compatibility import runner
-
-            runner_args = ["--dry-run"] if args.dry_run else []
-            return runner.main(runner_args)
         if suite["id"] == "runtime_trajectories":
             from core.runtime_trajectories import runner
 
             runner_args = ["--dry-run"] if args.dry_run else []
             return runner.main(runner_args)
-        print(f"Runner for suite '{suite['id']}' is planned for later phases; no benchmarks were executed.")
+        print(f"Runner for suite '{suite['id']}' is planned separately and is not active in this orchestrator; no benchmarks were executed.")
         return 0
 
     print("Benchmark suites:")
     for suite in suites:
         print(f"- {suite['id']} ({suite['category']}, {suite['status']}): {suite['path']}")
-    print("Full orchestration for all suites will be added in later phases; no benchmarks were executed.")
+    print("No additional benchmark suites were executed; their orchestration is planned separately.")
     return 0
 
 

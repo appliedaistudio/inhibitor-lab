@@ -1,12 +1,12 @@
 # Decision Compatibility
 
-This Phase 5 core suite maps current Inhibitor `/check` response signals into a runtime-decision vocabulary for benchmark reporting.
+`decision_compatibility` is shared adapter infrastructure used by the active `runtime_trajectories` benchmark suite. It maps current Inhibitor `/check` response signals into the benchmark runtime-decision vocabulary and is not a separately claimed active benchmark suite in the current methodology package.
 
 ## Support level
 
 `compatibility_mapped`
 
-Current Inhibitor responses do not natively expose the full runtime-decision vocabulary described below. This suite therefore applies a deterministic compatibility adapter and does not claim native decision emission or enforcement.
+Current Inhibitor responses do not natively expose the full runtime-decision vocabulary described below. This infrastructure therefore applies a deterministic compatibility adapter and does not claim native decision emission, production enforcement, or runtime trajectory outcomes.
 
 ## Decision vocabulary
 
@@ -21,7 +21,7 @@ Current Inhibitor responses do not natively expose the full runtime-decision voc
 
 ## Background: runtime-decision vocabulary
 
-This benchmark suite uses a runtime-decision vocabulary to describe how a safety layer could respond to a proposed agent action or response.
+The runtime trajectory benchmark uses a runtime-decision vocabulary to describe how a safety layer could respond to a proposed agent action or response.
 
 The vocabulary is:
 
@@ -34,7 +34,7 @@ The vocabulary is:
 - `block`: do not continue because a serious risk signal was detected.
 - `error`: the response was unavailable, malformed, or could not be mapped.
 
-Current Inhibitor `/check` responses do not natively emit this decision vocabulary. They expose signals such as observations, predictions, diagnostics, and `rules_inhibition` results. This suite provides a deterministic compatibility adapter that maps those exposed signals into the runtime-decision vocabulary for benchmark reporting.
+Current Inhibitor `/check` responses do not natively emit this decision vocabulary. They expose signals such as observations, predictions, diagnostics, and `rules_inhibition` results. This infrastructure provides a deterministic compatibility adapter that maps those exposed signals into the runtime-decision vocabulary for benchmark reporting.
 
 ## Methodology
 
@@ -42,17 +42,17 @@ The adapter reads exposed `/check` response fields such as `llm_inhibition`, `ru
 
 ## Catalog-derived mapping
 
-[`catalog_signal_map.md`](catalog_signal_map.md) is the curated and versioned benchmark mapping for this suite. It records the relevant catalog-derived signal families, representative catalog signal names, fallback keywords, default mapped decisions, and rationale.
+[`catalog_signal_map.md`](catalog_signal_map.md) is the curated and versioned mapping used by the adapter. It records the relevant catalog-derived signal families, representative catalog signal names, fallback keywords, default mapped decisions, and rationale.
 
-The full live `/catalog` response is not committed or used as the benchmark source of truth because it may change over time and includes many signals outside this suite's Phase 5 scope.
+The full live `/catalog` response is not committed or used as the benchmark source of truth because it may change over time and includes signals outside the adapter's curated mapping scope.
 
 ## Interpretation limits
 
-This suite is a compatibility bridge between current Inhibitor `/check` outputs and the runtime-decision vocabulary above.
+This infrastructure is a compatibility bridge between current Inhibitor `/check` outputs and the runtime-decision vocabulary above.
 
 A passing result means that the `/check` response exposed signals that the deterministic adapter could map to the expected decision category for that benchmark case.
 
-A passing result does not prove that Inhibitor natively enforces that decision. This suite does not prove that Inhibitor blocks tool execution, rewrites an agent response, pauses a live workflow, escalates to a human operator, or completes an end-to-end runtime trajectory.
+A passing result does not prove that Inhibitor natively emits or enforces that decision. The adapter does not prove that Inhibitor blocks tool execution, rewrites an agent response, pauses a live workflow, escalates to a human operator, or completes an end-to-end runtime trajectory.
 
 End-to-end outcomes such as unsafe-action prevention, safe-task completion, adjustment success, and runtime enforcement require separate runtime-trajectory or execution-boundary benchmarks.
 
@@ -99,4 +99,8 @@ benchmarks/results/decision_compatibility/<run_id>/
 
 ## Scope statement
 
-This suite maps current Inhibitor signals into the runtime-decision vocabulary for benchmark reporting. It does not prove that Inhibitor natively emits or enforces those decisions. It does not implement runtime trajectory simulation. It does not measure full unsafe-action prevention or safe-task-completion rates. It does not use an LLM judge.
+This shared adapter maps current Inhibitor signals into the runtime-decision vocabulary for benchmark reporting. It is not a separately claimed active benchmark suite and does not prove that Inhibitor natively emits or enforces those decisions. It does not implement runtime trajectory simulation, measure full unsafe-action prevention or safe-task-completion rates, or use an LLM judge.
+
+## Fixture format
+
+This helper retains its own `cases.jsonl` adapter-contract fixtures because they are independent mapping test vectors, not runtime-trajectory cases. The active runtime suite has exactly one canonical source, `../runtime_trajectories/cases.json`; the two files serve different schemas and cannot become unsynchronized copies of the same cases.

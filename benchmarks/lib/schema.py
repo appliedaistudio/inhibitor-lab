@@ -32,7 +32,7 @@ def validate_support_level_value(value):
 
 
 def validate_case_base(case):
-    """Validate the generic base shape expected for future benchmark cases."""
+    """Validate the generic base shape expected for benchmark cases."""
 
     require_fields(case, ("id", "description", "support_level"))
     validate_support_level_value(case["support_level"])
