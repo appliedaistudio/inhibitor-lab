@@ -2,14 +2,23 @@
 
 ## Catalog alignment metadata
 
-- Source: Inhibitor `/catalog`
-- Catalog version: `2.23.2`
+- Source: reviewed Inhibitor catalog export
+- Catalog version reviewed: `2.24.1`
+- Observations reviewed: 53
+- Predictions reviewed: 63 total
+  - Outcome predictions: 19
+  - Norm predictions: 12
+  - Regulation predictions: 32
 - Component: `decision_compatibility` shared adapter infrastructure
 - Support level: `compatibility_mapped`
 - Scope: decision compatibility adapter infrastructure
 - Last reviewed: `2026-07`
 
-This document is a curated benchmark mapping, not a full `/catalog` snapshot. The full live `/catalog` response is not committed as the benchmark source of truth because it may change over time and includes signals outside the adapter's scope. This file records only the signal families needed to deterministically map current Inhibitor `/check` response signals into benchmark runtime decision categories for the active runtime trajectory suite.
+This document is a curated benchmark mapping, not a raw catalog snapshot. Raw catalog output is not committed. The reviewed catalog export is an adapter-review source, not a dynamic benchmark dependency, and benchmark runs do not fetch it. Runtime benchmark scoring uses checked-in adapter rules for reproducibility.
+
+Observations describe detected behavior or action evidence. Predictions describe possible outcomes, norm issues, or regulatory risks. The current rules preserve existing adapter behavior; a later adapter behavior PR should make predictions first-class mapping inputs.
+
+This file records only the signal families needed to deterministically map current Inhibitor `/check` response signals into benchmark runtime decision categories for the active runtime trajectory suite.
 
 ## Runtime trajectory category bridge
 
