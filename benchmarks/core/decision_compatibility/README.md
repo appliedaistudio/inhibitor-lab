@@ -1,6 +1,6 @@
 # Decision Compatibility
 
-`decision_compatibility` is shared adapter infrastructure used by the active `runtime_trajectories` benchmark suite. It maps current Inhibitor `/check` response signals into the benchmark runtime-decision vocabulary and is not a separately claimed active benchmark suite in the current methodology package.
+`decision_compatibility` is adapter-only shared infrastructure, not an executable benchmark suite. The active `runtime_trajectories` suite consumes only [`adapter.py`](adapter.py) from this directory. There is no standalone decision-compatibility runner and there are no separate decision-compatibility fixture cases.
 
 ## Support level
 
@@ -38,7 +38,7 @@ Current Inhibitor `/check` responses do not natively emit this decision vocabula
 
 ## Methodology
 
-The adapter reads exposed `/check` response fields such as `llm_inhibition`, `rules_inhibition`, nested signal names, diagnostics, and text. It then applies a deterministic priority order to produce one mapped runtime decision per case. Exact catalog signal names are considered before fallback keywords, and every mapping includes a reason, matched signals, matched keywords, and signal flags.
+The adapter maps evidence from Inhibitor `/check` responses into the benchmark decision vocabulary. It reads exposed fields such as `llm_inhibition`, `rules_inhibition`, nested signal names, diagnostics, and text, then applies a deterministic priority order to produce one mapped runtime decision per case. Exact catalog signal names are considered before fallback keywords, and every mapping includes a reason, matched signals, matched keywords, and signal flags.
 
 ## Catalog-derived mapping
 
@@ -56,12 +56,13 @@ A passing result does not prove that Inhibitor natively emits or enforces that d
 
 End-to-end outcomes such as unsafe-action prevention, safe-task completion, adjustment success, and runtime enforcement require separate runtime-trajectory or execution-boundary benchmarks.
 
-## What this validates
+## Fixtures and execution
 
-- Deterministic compatibility mapping from current Inhibitor `/check` signals to the runtime-decision vocabulary.
-- Traceability from each fixture through `paper_tags`, `risk_category`, `expected_decision`, and `acceptable_decisions`.
-- Utility-preserving distinction between unsafe AI compliance and safe refusal.
-- Public-safe examples for privacy leakage, ambiguity, human review, and benign interactions.
+This directory has no runner or fixtures of its own. Runtime trajectory fixtures live only at [`../runtime_trajectories/cases.json`](../runtime_trajectories/cases.json), and they are executed and scored by the runtime trajectory suite.
+
+The adapter supports deterministic compatibility mapping and the runtime suite's distinction between unsafe AI compliance and safe refusal. Those properties are validated in the context of runtime trajectories rather than by a standalone decision-compatibility suite.
+
+This adapter-scope cleanup does not change the adapter's decision logic. Future adapter behavior changes should be made separately.
 
 ## What this does not validate
 
@@ -72,35 +73,6 @@ End-to-end outcomes such as unsafe-action prevention, safe-task completion, adju
 - Full safety-efficacy scoring.
 - Full unsafe-action prevention rates or safe-task-completion rates.
 
-## Environment variables
-
-- `INHIBITOR_BASE_URL`: fallback Inhibitor base URL.
-- `INHIBITOR_API_URL`: preferred environment base URL when `--endpoint` is not supplied.
-- `INHIBITOR_API_KEY`: API key sent as `X-API-Key` by the shared API client.
-
-## Example commands
-
-```bash
-python benchmarks/core/decision_compatibility/runner.py --dry-run
-INHIBITOR_BASE_URL=https://iaas.appliedai.studio INHIBITOR_API_KEY=<key> python benchmarks/core/decision_compatibility/runner.py --require-live
-```
-
-## Result artifact layout
-
-Live runs write artifacts under:
-
-```text
-benchmarks/results/decision_compatibility/<run_id>/
-├── manifest.json
-├── raw_responses.jsonl
-├── normalized_results.jsonl
-└── summary.md
-```
-
 ## Scope statement
 
-This shared adapter maps current Inhibitor signals into the runtime-decision vocabulary for benchmark reporting. It is not a separately claimed active benchmark suite and does not prove that Inhibitor natively emits or enforces those decisions. It does not implement runtime trajectory simulation, measure full unsafe-action prevention or safe-task-completion rates, or use an LLM judge.
-
-## Fixture format
-
-This helper retains its own `cases.jsonl` adapter-contract fixtures because they are independent mapping test vectors, not runtime-trajectory cases. The active runtime suite has exactly one canonical source, `../runtime_trajectories/cases.json`; the two files serve different schemas and cannot become unsynchronized copies of the same cases.
+This shared adapter maps current Inhibitor signals into the runtime-decision vocabulary for benchmark reporting. The adapter does not prove native product enforcement: it does not prove that Inhibitor natively emits or enforces those decisions. It also does not implement runtime trajectory simulation, measure full unsafe-action prevention or safe-task-completion rates, or use an LLM judge.

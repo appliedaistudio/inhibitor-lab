@@ -2,14 +2,25 @@
 
 ## Catalog alignment metadata
 
-- Source: Inhibitor `/catalog`
-- Catalog version: `2.23.2`
+- Source: reviewed Inhibitor catalog export
+- Catalog version reviewed: `2.24.1`
+- Observations reviewed: 53
+- Predictions reviewed: 63 total
+  - Outcome predictions: 19
+  - Norm predictions: 12
+  - Regulation predictions: 32
 - Component: `decision_compatibility` shared adapter infrastructure
 - Support level: `compatibility_mapped`
 - Scope: decision compatibility adapter infrastructure
 - Last reviewed: `2026-07`
 
-This document is a curated benchmark mapping, not a full `/catalog` snapshot. The full live `/catalog` response is not committed as the benchmark source of truth because it may change over time and includes signals outside the adapter's scope. This file records only the signal families needed to deterministically map current Inhibitor `/check` response signals into benchmark runtime decision categories for the active runtime trajectory suite.
+This document is a curated benchmark mapping, not a raw catalog snapshot. Raw catalog output is not committed. These metadata record the catalog basis used to review the adapter. The reviewed catalog export is an adapter-review source, not a dynamic benchmark dependency, and benchmark runs do not fetch it. Runtime benchmark scoring uses checked-in adapter rules for reproducibility.
+
+Observations describe detected behavior or action evidence. Predictions describe possible outcomes, norm issues, or regulatory risks. Catalog counts are provenance for the reviewed export, not a claim that every catalog label is mapped by the current adapter. This document does not add a full label-by-label catalog coverage matrix or claim that all 53 observations or all 63 predictions are individually mapped. The current adapter remains a curated benchmark-facing mapping, and this cleanup does not change its behavior.
+
+Label-level coverage and prediction-first mapping are follow-up work. A future adapter behavior change should make prediction labels first-class mapping inputs and add label-level tests.
+
+This file records only the signal families needed to deterministically map current Inhibitor `/check` response signals into benchmark runtime decision categories for the active runtime trajectory suite.
 
 ## Runtime trajectory category bridge
 
