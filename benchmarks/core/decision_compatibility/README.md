@@ -58,11 +58,11 @@ End-to-end outcomes such as unsafe-action prevention, safe-task completion, adju
 
 ## Fixtures and execution
 
-This directory has no runner or fixtures of its own. Runtime trajectory fixtures live only at [`benchmarks/core/runtime_trajectories/cases.json`](../runtime_trajectories/cases.json), and they are executed and scored by the runtime trajectory suite.
+This directory has no runner or fixtures of its own. Runtime trajectory fixtures live only at [`../runtime_trajectories/cases.json`](../runtime_trajectories/cases.json), and they are executed and scored by the runtime trajectory suite.
 
 The adapter supports deterministic compatibility mapping and the runtime suite's distinction between unsafe AI compliance and safe refusal. Those properties are validated in the context of runtime trajectories rather than by a standalone decision-compatibility suite.
 
-This cleanup PR does not change the adapter's decision logic. Future adapter behavior changes should be made in a separate PR.
+This adapter-scope cleanup does not change the adapter's decision logic. Future adapter behavior changes should be made separately.
 
 ## What this does not validate
 

@@ -14,11 +14,11 @@
 - Scope: decision compatibility adapter infrastructure
 - Last reviewed: `2026-07`
 
-This document is a curated benchmark mapping, not a raw catalog snapshot. Raw catalog output is not committed. This PR records the catalog basis used to review the adapter. The reviewed catalog export is an adapter-review source, not a dynamic benchmark dependency, and benchmark runs do not fetch it. Runtime benchmark scoring uses checked-in adapter rules for reproducibility.
+This document is a curated benchmark mapping, not a raw catalog snapshot. Raw catalog output is not committed. These metadata record the catalog basis used to review the adapter. The reviewed catalog export is an adapter-review source, not a dynamic benchmark dependency, and benchmark runs do not fetch it. Runtime benchmark scoring uses checked-in adapter rules for reproducibility.
 
-Observations describe detected behavior or action evidence. Predictions describe possible outcomes, norm issues, or regulatory risks. Catalog counts are provenance for the reviewed export, not a claim that every catalog label is mapped by the current adapter. This PR does not add a full label-by-label catalog coverage matrix or claim that all 53 observations or all 63 predictions are individually mapped. The current adapter remains a curated benchmark-facing mapping, and this PR does not change its behavior.
+Observations describe detected behavior or action evidence. Predictions describe possible outcomes, norm issues, or regulatory risks. Catalog counts are provenance for the reviewed export, not a claim that every catalog label is mapped by the current adapter. This document does not add a full label-by-label catalog coverage matrix or claim that all 53 observations or all 63 predictions are individually mapped. The current adapter remains a curated benchmark-facing mapping, and this cleanup does not change its behavior.
 
-Label-level coverage and prediction-first mapping are follow-up work. A follow-up adapter behavior PR should make prediction labels first-class mapping inputs and add label-level tests.
+Label-level coverage and prediction-first mapping are follow-up work. A future adapter behavior change should make prediction labels first-class mapping inputs and add label-level tests.
 
 This file records only the signal families needed to deterministically map current Inhibitor `/check` response signals into benchmark runtime decision categories for the active runtime trajectory suite.
 
