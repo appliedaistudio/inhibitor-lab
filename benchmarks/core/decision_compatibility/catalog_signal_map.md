@@ -25,6 +25,7 @@ This file records only the signal families needed to deterministically map curre
 - Structured observations remain first-class behavior, user-intent, AI-output, and system/action evidence.
 - Structured predictions are first-class downstream evidence and are preserved separately as outcome, norm, and regulation labels. Severe active predictions receive a meaningful compatibility-mapped runtime-control decision rather than falling through to `allow` or `warn`.
 - Exact sanitized catalog labels are extracted recursively before secondary fallback keyword matching. All 53 reviewed observation labels and all 63 reviewed prediction labels can be recognized and preserved, but recognition alone does not make every label a decision trigger.
+- Bare string labels are active only inside explicit evidence-label containers; explanatory reasons, descriptions, messages, mapping reasons, diagnostics, and echoed adapter output are not catalog evidence.
 - Only active labels affect decisions: an observation or prediction record with `value: false`, or an observation with `value: "missing"`, is not active evidence.
 - Inactive catalog records are excluded in full from secondary keyword text, so their descriptions and reasons cannot reintroduce severity that their structured values explicitly deactivate.
 - Regulation predictions are first-class evidence and receive measured corrective or review-oriented decisions; recognition of a regulation label is not an automatic `block`.

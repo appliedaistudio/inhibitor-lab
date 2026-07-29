@@ -84,6 +84,66 @@ class AdapterPredictionEvidenceTests(unittest.TestCase):
         mapped = map_decision({}, raw)
         self.assertIn(mapped["mapped_decision"], DECISION_VOCABULARY)
 
+    def test_explanatory_bare_labels_are_not_active_evidence(self):
+        cases = (
+            {"reason": "system_exploitation_risk"},
+            {"mapping_reason": "ai_executes_unsafe_instruction"},
+            {"name": "ai_outputs_harmful_instruction", "value": False,
+             "description": "ai_outputs_harmful_instruction"},
+            {"matched_signal_names": ["ai_executes_unsafe_instruction"]},
+        )
+        for metadata in cases:
+            with self.subTest(metadata=metadata):
+                raw = response()
+                raw["data"]["result"]["metadata"] = metadata
+                mapped = map_decision({"risk_category": "benign_request"}, raw)
+                self.assertEqual(mapped["mapped_decision"], "allow")
+                self.assertEqual(mapped["matched_signal_names"], [])
+
+    def test_bare_labels_activate_only_in_explicit_evidence_lists(self):
+        raw = response()
+        raw["data"]["result"]["llm_inhibition"]["predictions"] = ["system_exploitation_risk"]
+        mapped = map_decision({}, raw)
+        self.assertEqual(mapped["matched_outcome_prediction_names"], ["system_exploitation_risk"])
+        self.assertEqual(mapped["mapped_decision"], "revise")
+
+    def test_native_flat_product_shape_extracts_prediction_groups(self):
+        raw = {
+            "ok": True,
+            "data": {
+                "result": {
+                    "llm_inhibition": {
+                        "observations": {"ai_refuses_harmful_request": {"value": True}},
+                        "predictions": {
+                            "system_exploitation_risk": {"value": True, "confidence": 0.9, "reason": "active risk"},
+                            "audit_log_missing": {"value": True, "reason": "review needed"},
+                        },
+                    },
+                    "rules_inhibition": {"passed": True, "violations": []},
+                },
+                "version": "test",
+            },
+        }
+        mapped = map_decision({}, raw)
+        self.assertEqual(mapped["matched_observation_names"], ["ai_refuses_harmful_request"])
+        self.assertEqual(mapped["matched_outcome_prediction_names"], ["system_exploitation_risk"])
+        self.assertEqual(mapped["matched_regulation_prediction_names"], ["audit_log_missing"])
+        self.assertEqual(mapped["matched_signal_names"], [
+            "ai_refuses_harmful_request", "audit_log_missing", "system_exploitation_risk"
+        ])
+        self.assertIn(mapped["mapped_decision"], {"revise", "pause", "escalate", "block"})
+
+    def test_native_flat_inactive_predictions_do_not_activate_or_leak(self):
+        raw = response()
+        raw["data"]["result"]["llm_inhibition"]["predictions"] = {
+            "system_exploitation_risk": {"value": False, "reason": "exploit risk not found"},
+            "audit_log_missing": {"value": False, "reason": "audit log missing not found"},
+        }
+        mapped = map_decision({"risk_category": "benign_request"}, raw)
+        self.assertEqual(mapped["mapped_decision"], "allow")
+        self.assertEqual(mapped["matched_prediction_names"], [])
+        self.assertEqual(mapped["matched_keywords"], [])
+
     def test_priority_regulations_receive_measured_intervention(self):
         expected = {"revise", "pause", "escalate"}
         for label in ("gdpr_violation", "hipaa_violation", "pci_dss_violation", "audit_log_missing", "eu_ai_act_noncompliance"):
