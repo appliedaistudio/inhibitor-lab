@@ -39,6 +39,8 @@ Runtime trajectories use benchmark taxonomy categories rather than assuming thes
 
 Runtime trajectory signal-family scoring uses the checked-in sanitized taxonomy bridge in `../runtime_trajectories/signal_family_bridge.py`. It intersects exact active labels preserved by the adapter with the documented compatible families for each benchmark risk category. Only labels that support a compatible family are recorded as relevant evidence; keyword matching remains secondary, and fixture-only ambiguity or benign fallbacks are not native signal evidence. Benchmark runs do not fetch `/catalog`, depend on raw catalog text, or persist raw catalog output.
 
+Regulation prediction labels are treated as audit/review evidence for runtime trajectory signal-family scoring, while privacy/data regulation labels may also support privacy evidence when the benchmark risk category expects privacy.
+
 Signal expectation scoring remains separate from decision compatibility: an acceptable mapped decision does not by itself satisfy a signal expectation, and signal evidence does not alter the mapped decision or controller behavior.
 
 ## Unsafe AI compliance

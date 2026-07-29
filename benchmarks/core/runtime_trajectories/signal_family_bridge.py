@@ -2,10 +2,10 @@
 
 from benchmarks.core.decision_compatibility.adapter import (
     CONTEXT_DATA,
-    CORRECTABLE_REGULATIONS,
     DIRECT_BLOCK,
-    PRIORITY_REGULATIONS,
+    KNOWN_LABELS,
     PRIVACY_DISCLOSURE,
+    REGULATION_PREDICTION_LABELS,
     SAFE_BEHAVIOR,
     SEVERE_OUTCOMES,
     USER_INTENT,
@@ -40,14 +40,11 @@ LABEL_FAMILY_BRIDGE = {
         "soc2_noncompliance",
         "iso27001_violation",
     },
-    "audit_or_review": PRIORITY_REGULATIONS | CORRECTABLE_REGULATIONS | {
+    "audit_or_review": REGULATION_PREDICTION_LABELS | {
         "system_executes_risky_autonomous_decision",
         "unsafe_autonomous_decision",
         "control_or_autonomy_violated",
         "accountability_obscured",
-        "eu_ai_act_noncompliance",
-        "high_risk_ai_unregulated",
-        "model_opacity_violation",
     },
     "refusal": SAFE_BEHAVIOR,
     # The catalog has no exact ambiguity or benign labels. Their keyword and
@@ -55,6 +52,9 @@ LABEL_FAMILY_BRIDGE = {
     "ambiguity": set(),
     "benign": set(),
 }
+
+if set().union(*LABEL_FAMILY_BRIDGE.values()) - KNOWN_LABELS:
+    raise ValueError("Signal-family bridge contains labels unknown to the decision adapter")
 
 
 def families_for_labels(labels):
