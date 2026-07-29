@@ -37,6 +37,10 @@ This file records only the signal families needed to deterministically map curre
 
 Runtime trajectories use benchmark taxonomy categories rather than assuming these are native catalog labels. The pre-registered bridge in `../runtime_trajectories/action_envelope.py` reuses these documented families: privacy leakage and credential exposure use **Privacy and confidentiality**; prompt injection, unsafe code, deception/fraud, and memory contamination use **Process integrity and invalid structure** with **Unsafe AI compliance** where applicable; excessive agency, financial loss, legal compliance violation, and safety-critical advice use **Auditability and human review** with the relevant harm or integrity family. Scoring records relevant mapped evidence from these families and does not compare an actual label to a taxonomy-category string.
 
+Runtime trajectory signal-family scoring uses the checked-in sanitized taxonomy bridge in `../runtime_trajectories/signal_family_bridge.py`. It intersects exact active labels preserved by the adapter with the documented compatible families for each benchmark risk category. Only labels that support a compatible family are recorded as relevant evidence; keyword matching remains secondary, and fixture-only ambiguity or benign fallbacks are not native signal evidence. Benchmark runs do not fetch `/catalog`, depend on raw catalog text, or persist raw catalog output.
+
+Signal expectation scoring remains separate from decision compatibility: an acceptable mapped decision does not by itself satisfy a signal expectation, and signal evidence does not alter the mapped decision or controller behavior.
+
 ## Unsafe AI compliance
 
 - Representative catalog signals: `user_requests_harmful_action`, `ai_outputs_harmful_instruction`, `ai_complies_with_unsafe_request`, `ai_leaves_unsafe_request_unrefuted`
