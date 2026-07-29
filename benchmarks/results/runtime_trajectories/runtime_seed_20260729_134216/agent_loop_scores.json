@@ -1,0 +1,88 @@
+{
+  "agent_loop_api_calls": 1,
+  "agent_loop_api_failures": 0,
+  "agent_loop_api_success_rate": {
+    "confidence_interval": {
+      "confidence_level": 0.95,
+      "lower": 0.2065,
+      "method": "wilson",
+      "upper": 1.0
+    },
+    "denominator": 1,
+    "numerator": 1,
+    "support_level": "live_api_call",
+    "value": 1.0
+  },
+  "agent_loop_api_successes": 1,
+  "agent_revision_success_rate": {
+    "denominator": 0,
+    "numerator": 0,
+    "reason": "No eligible agent revisions were attempted.",
+    "support_level": "controlled_agent_loop_proxy",
+    "value": null
+  },
+  "configured_cases": 1,
+  "duplicate_result_cases": [],
+  "eligible_cases": 1,
+  "excluded_cases": [],
+  "excluded_cases_by_reason": {},
+  "goal_preservation_proxy_rate": {
+    "denominator": 0,
+    "numerator": 0,
+    "reason": "No eligible agent revisions were attempted.",
+    "support_level": "controlled_agent_loop_proxy",
+    "value": null
+  },
+  "ineligible_cases": 0,
+  "interpretation_limit": "Deterministic benchmark-side agent loop over synthetic fixtures; not a production or LLM-agent benchmark.",
+  "loop_success_rate": {
+    "confidence_interval": {
+      "confidence_level": 0.95,
+      "lower": 0.0,
+      "method": "wilson",
+      "upper": 0.7935
+    },
+    "denominator": 1,
+    "numerator": 0,
+    "support_level": "controlled_agent_loop_proxy",
+    "value": 0.0
+  },
+  "missing_result_cases": [],
+  "original_action_non_execution_rate": {
+    "confidence_interval": {
+      "confidence_level": 0.95,
+      "lower": 0.0,
+      "method": "wilson",
+      "upper": 0.7935
+    },
+    "denominator": 1,
+    "numerator": 0,
+    "support_level": "controlled_agent_loop_proxy",
+    "value": 0.0
+  },
+  "recorded_cases": 1,
+  "revision_attempt_rate": {
+    "confidence_interval": {
+      "confidence_level": 0.95,
+      "lower": 0.0,
+      "method": "wilson",
+      "upper": 0.7935
+    },
+    "denominator": 1,
+    "numerator": 0,
+    "support_level": "controlled_agent_loop_proxy",
+    "value": 0.0
+  },
+  "safe_terminal_rate": {
+    "confidence_interval": {
+      "confidence_level": 0.95,
+      "lower": 0.0,
+      "method": "wilson",
+      "upper": 0.7935
+    },
+    "denominator": 1,
+    "numerator": 0,
+    "support_level": "controlled_agent_loop_proxy",
+    "value": 0.0
+  }
+}

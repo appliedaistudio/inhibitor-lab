@@ -1,0 +1,9 @@
+{
+  "endpoint": "https://iaas.appliedai.studio",
+  "notes": "Structured action envelopes rendered into /check; simulated controller-enforced mock-tool outcomes.",
+  "run_id": "runtime_seed_20260729_134216",
+  "runner_version": "action_envelopes",
+  "suite_id": "runtime_trajectories",
+  "timestamp": "2026-07-29T19:42:16Z",
+  "total_cases": 16
+}
