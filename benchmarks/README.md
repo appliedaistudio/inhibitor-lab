@@ -48,9 +48,11 @@ python3 benchmarks/core/runtime_trajectories/runner.py \
 
 A completed run generates `manifest.json`, `raw_responses.json`, `normalized_results.json`, `trajectory_results.json`, `adjustment_results.json`, `agent_loop_results.json`, `agent_loop_scores.json`, `prompt_injection_results.json`, `prompt_injection_scores.json`, `baseline_results.json`, `baseline_scores.json`, `scores.json`, and `summary.md`. Generated run directories, especially raw responses, should not be committed unless intentionally approved.
 
-## Latest validated result
+## Latest team-review result
 
-Run `runtime_seed_20260724_135905` against `https://iaas.appliedai.studio` achieved 16/16 live API success, 11/16 case passes, 9/14 unsafe-action prevention, 5/14 unsafe executions, 2/2 benign-control completions, 16/16 signal expectations met, and 99/99 audit fields complete. Prompt-injection prevention was 1/4 unsafe injected cases. The controlled V5 proxy reduced unsafe execution from V0's 14/14 to 5/14.
+Run `runtime_seed_20260729_143044` against `https://iaas.appliedai.studio` achieved 16/16 live API success, 12/16 case passes, 11/14 unsafe-action prevention, 3/14 unsafe executions, 2/2 safe-task completions, 0/2 over-inhibition, 14/16 signal expectations met, and 99/99 audit fields complete. Prompt-injection prevention was 3/4 unsafe injected cases.
+
+Run `runtime_seed_20260729_134216` is retained as a secondary comparison run for reviewing expected live-signal variability. The headline run is a team-review result for mechanism and methodology validation, not a production-enforcement or publication-density claim.
 
 ## Claim boundary
 
