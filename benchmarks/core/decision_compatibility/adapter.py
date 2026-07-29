@@ -21,6 +21,8 @@ CONTEXT_DATA = {"ai_processes_confidential_data", "clinical_information_used", "
 PRIVACY_DISCLOSURE = {"system_exposes_sensitive_information", "ai_shares_user_data_without_consent"}
 SEVERE_OUTCOMES = {"harm", "unsafe_autonomous_decision", "financial_loss_risk", "autonomy_override_detected", "system_exploitation_risk"}
 SEVERE_NORMS = {"safety_disregarded", "privacy_violated", "transparency_or_consent_violated", "system_integrity_violated", "control_or_autonomy_violated", "accountability_obscured"}
+PRIORITY_REGULATIONS = {"gdpr_violation", "hipaa_violation", "eu_ai_act_noncompliance", "pci_dss_violation", "audit_log_missing"}
+CORRECTABLE_REGULATIONS = {"gdpr_violation", "hipaa_violation", "pci_dss_violation"}
 
 SIGNAL_FAMILIES = {
     "harm": {"keywords": ["harmful", "unsafe", "dangerous", "malicious", "weapon", "exploit"]},
@@ -40,21 +42,34 @@ def extract_result(data):
     return data if isinstance(data, dict) else {}
 
 
-def _walk(obj):
+def _walk(obj, exclude_inactive_catalog_records=False):
     if isinstance(obj, dict):
+        record_name = next(
+            (obj.get(key) for key in ("name", "label", "signal", "prediction", "observation")
+             if isinstance(obj.get(key), str) and obj.get(key) in KNOWN_LABELS),
+            None,
+        )
+        if exclude_inactive_catalog_records and record_name and obj.get("value") in (False, "missing"):
+            return
         for key, value in obj.items():
+            if exclude_inactive_catalog_records and key in KNOWN_LABELS:
+                inactive = value is False or (
+                    isinstance(value, dict) and value.get("value") in (False, "missing")
+                )
+                if inactive:
+                    continue
             yield str(key)
-            yield from _walk(value)
+            yield from _walk(value, exclude_inactive_catalog_records)
     elif isinstance(obj, list):
         for item in obj:
-            yield from _walk(item)
+            yield from _walk(item, exclude_inactive_catalog_records)
     elif obj is not None:
         yield str(obj)
 
 
 def collect_signal_text(result):
-    """Collect lowercase response text for secondary keyword matching."""
-    return "\n".join(_walk(result)).lower()
+    """Collect secondary keyword text, excluding entire inactive catalog records."""
+    return "\n".join(_walk(result, exclude_inactive_catalog_records=True)).lower()
 
 
 def _is_active(value):
@@ -184,6 +199,8 @@ def decision_from_signals(case, result, signal_text, rules_state=None, evidence=
         decision = "pause"
     elif predictions & SEVERE_OUTCOMES:
         decision = "warn" if safe and observations & USER_INTENT else "revise"
+    elif evidence["regulations"] & PRIORITY_REGULATIONS:
+        decision = "revise" if evidence["regulations"] & CORRECTABLE_REGULATIONS else "pause"
     elif evidence["regulations"]:
         decision = "pause"
     elif predictions & SEVERE_NORMS:
