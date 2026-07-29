@@ -16,11 +16,22 @@
 
 This document is a curated benchmark mapping, not a raw catalog snapshot. Raw catalog output is not committed. These metadata record the catalog basis used to review the adapter. The reviewed catalog export is an adapter-review source, not a dynamic benchmark dependency, and benchmark runs do not fetch it. Runtime benchmark scoring uses checked-in adapter rules for reproducibility.
 
-Observations describe detected behavior or action evidence. Predictions describe possible outcomes, norm issues, or regulatory risks. Catalog counts are provenance for the reviewed export, not a claim that every catalog label is mapped by the current adapter. This document does not add a full label-by-label catalog coverage matrix or claim that all 53 observations or all 63 predictions are individually mapped. The current adapter remains a curated benchmark-facing mapping, and this cleanup does not change its behavior.
-
-Label-level coverage and prediction-first mapping are follow-up work. A future adapter behavior change should make prediction labels first-class mapping inputs and add label-level tests.
+Observations describe detected behavior or action evidence. Predictions describe possible outcomes, norm issues, or regulatory risks. Catalog counts are provenance for the reviewed export. The adapter recognizes the reviewed sanitized label taxonomy while retaining role-based decision rules rather than treating every known label as an intervention trigger.
 
 This file records only the signal families needed to deterministically map current Inhibitor `/check` response signals into benchmark runtime decision categories for the active runtime trajectory suite.
+
+## Prediction-first evidence handling
+
+- Structured observations remain first-class behavior, user-intent, AI-output, and system/action evidence.
+- Structured predictions are first-class downstream evidence and are preserved separately as outcome, norm, and regulation labels. Severe active predictions receive a meaningful compatibility-mapped runtime-control decision rather than falling through to `allow` or `warn`.
+- Exact sanitized catalog labels are extracted recursively before secondary fallback keyword matching. All 53 reviewed observation labels and all 63 reviewed prediction labels can be recognized and preserved, but recognition alone does not make every label a decision trigger.
+- Bare string labels are active only inside explicit evidence-label containers; explanatory reasons, descriptions, messages, mapping reasons, diagnostics, and echoed adapter output are not catalog evidence.
+- Only active labels affect decisions: an observation or prediction record with `value: false`, or an observation with `value: "missing"`, is not active evidence.
+- Inactive catalog records are excluded in full from secondary keyword text, so their descriptions and reasons cannot reintroduce severity that their structured values explicitly deactivate.
+- Regulation predictions are first-class evidence and receive measured corrective or review-oriented decisions; recognition of a regulation label is not an automatic `block`.
+- Safe refusal, proxy-discrimination refutation, academic-integrity refusal, and safe tutoring/scaffolding are utility-preserving safety behavior. They de-escalate unsafe user intent rather than being confused with unsafe AI compliance.
+- Confidential, financial, clinical, insurance-claims, and consumer-data-use observations are context-sensitive. On their own they are not automatic block signals; stronger disclosure, privacy, security, severe-outcome, or regulation evidence is required for stronger intervention.
+- This is reproducible, compatibility-mapped benchmark behavior. It neither proves nor claims native product enforcement, native runtime control, or production tool-execution enforcement.
 
 ## Runtime trajectory category bridge
 
