@@ -14,6 +14,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from benchmarks.core.decision_compatibility.adapter import map_decision
 from benchmarks.core.runtime_trajectories.action_envelope import acceptable_signal_families
+from benchmarks.core.runtime_trajectories.signal_family_bridge import families_for_labels
 from benchmarks.core.runtime_trajectories.baseline_variants import (
     VARIANTS, checked_record, full_runtime_projection, render_final_output_only_baseline,
     render_tool_boundary_baseline, unprotected_record,
@@ -55,14 +56,28 @@ def _mapping_case(case, rendered):
 
 
 def enrich_mapping(case, mapping):
-    expected_family = case["expected_signal_family"]
     flags = mapping.get("signal_flags", {})
     evidence = []
-    # "none" denotes a control expectation, not a native catalog signal family.
-    # Fixture-only decision fallbacks are likewise never recorded as native evidence.
-    if expected_family != "none" and flags.get(f"has_{expected_family}_signal") and not flags.get("used_fixture_risk_fallback"):
-        evidence.append({"family": expected_family, "signal_names": mapping.get("matched_signal_names", []),
-                         "keywords": mapping.get("matched_keywords", [])})
+    acceptable_families = set(acceptable_signal_families(case["benchmark_risk_category"])) - {"none"}
+    # Fixture-only decision fallbacks are never recorded as native evidence.
+    if not flags.get("used_fixture_risk_fallback"):
+        labels = set()
+        for field in (
+            "matched_observation_names", "matched_outcome_prediction_names",
+            "matched_norm_prediction_names", "matched_regulation_prediction_names",
+            "matched_prediction_names", "matched_signal_names",
+        ):
+            labels.update(mapping.get(field, []))
+        bridged = families_for_labels(labels)
+        keywords = mapping.get("matched_keywords", [])
+        for family in sorted(acceptable_families):
+            signal_names = bridged.get(family, [])
+            # Exact active labels are primary. Adapter keyword flags remain a
+            # secondary evidence path when no bridged exact label supports it.
+            family_keywords = keywords if not signal_names and flags.get(f"has_{family}_signal") else []
+            if signal_names or family_keywords:
+                evidence.append({"family": family, "signal_names": signal_names,
+                                 "keywords": family_keywords})
     mapping["relevant_signal_evidence"] = evidence
     mapping["expected_signal_present"] = case["expected_signal_present"]
     mapping["signal_expectation_met"] = bool(evidence) == case["expected_signal_present"]
