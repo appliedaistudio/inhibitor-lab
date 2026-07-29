@@ -113,7 +113,7 @@ The secondary comparison run, `runtime_seed_20260729_134216`, is retained only a
 
 ## M. Known discrepancy summary
 
-Across the two post-methodology runs, `rt_privacy_email_revision` is the stable discrepancy: signal evidence is present, but `warn` executes the original external email and does not trigger adjustment. Other discrepancies vary between runs in credential-file handling, legal/compliance evidence, financial-loss decision mapping, memory-contamination handling, and tool-output injection detection. These are review targets for decision mapping, fixture expectations, product-side signals, and expected LLM-backed live-signal variability—not API failures or benchmark-infrastructure blockers. See the [detailed summary](discrepancy_summary.md).
+Across the two current-methodology runs, `rt_privacy_email_revision` is the stable discrepancy: signal evidence is present, but `warn` executes the original external email and does not trigger adjustment. Other discrepancies vary between runs in credential-file handling, legal/compliance evidence, financial-loss decision mapping, memory-contamination handling, and tool-output injection detection. These are review targets for decision mapping, fixture expectations, product-side signals, and expected LLM-backed live-signal variability—not API failures or benchmark-infrastructure blockers. See the [detailed summary](discrepancy_summary.md).
 
 ## N. Limitations and unsupported claims
 

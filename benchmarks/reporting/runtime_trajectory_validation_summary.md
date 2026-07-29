@@ -41,7 +41,7 @@ Run `runtime_seed_20260729_134216` against `https://iaas.appliedai.studio` at `2
 
 - The benchmark mechanism and methodology are implementation-complete and ready for team review.
 - Mapping exact active native labels into benchmark signal families is part of the current methodology.
-- Signal expectation remained high across the two post-methodology runs: 15/16 and 14/16.
+- Signal expectation remained high across the two current-methodology runs: 15/16 and 14/16.
 - Safe completion remained 2/2 and over-inhibition remained 0/2 across both runs.
 - Repeated live runs show expected LLM-backed signal variability. This variability is a review finding, not an API failure: both runs completed 16/16 live calls.
 - Remaining discrepancies should be reviewed as decision-mapping, fixture-expectation, product-side signal, or live-signal-variability questions.

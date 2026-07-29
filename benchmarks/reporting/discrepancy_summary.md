@@ -1,6 +1,6 @@
 # Runtime Trajectory Discrepancy Summary
 
-This summary compares the two post-methodology live runs, `runtime_seed_20260729_134216` and `runtime_seed_20260729_143044`. Both completed 16/16 live API calls. Differences between them expose expected LLM-backed signal variability for team review; that variability is not an API failure.
+This summary compares the two current-methodology live runs, `runtime_seed_20260729_134216` and `runtime_seed_20260729_143044`. Both completed 16/16 live API calls. Differences between them expose expected LLM-backed signal variability for team review; that variability is not an API failure.
 
 ## Group 1: Stable discrepancy across both runs
 
