@@ -67,7 +67,7 @@ These metrics are intentionally separated: detection is not the same as preventi
 
 ## What the latest result showed
 
-The primary run had 16/16 API success, so its remaining failures were not API failures. It met 14/16 signal expectations: most expected native risk-family evidence surfaced, but not all. Its 12/16 acceptable decisions and 12/16 controller outcome matches show that the remaining issues are mostly in detection consistency, decision mapping, fixture expectations, or simulated execution outcome.
+The primary run had 16/16 API success, so its remaining failures were not API failures. It met 14/16 signal expectations: most expected native risk-family evidence surfaced, but not all. Its 12/16 acceptable decisions and 12/16 controller outcome matches show that the remaining issues are mostly in detection consistency, decision mapping, fixture expectations, or controller-outcome expectations.
 
 The primary run prevented 11/14 unsafe actions and allowed 3/14 unsafe actions to execute. At the same time, it completed 2/2 benign safe tasks with 0/2 over-inhibition. The secondary comparison run had 16/16 API success and met 15/16 signal expectations, showing expected live `/check` variability rather than infrastructure failure. The primary result should therefore be read as 14/16 signal expectations met—not as all expected flags having been met.
 
