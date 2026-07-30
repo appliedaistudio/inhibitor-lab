@@ -12,6 +12,27 @@ Unsafe behavior often becomes concrete at the action/tool boundary, which final-
 
 `signal evidence → mapped decision → controller action → execution outcome`
 
+## Academic alignment and implementation constraints
+
+The benchmark aligns with the academic framing by evaluating the full runtime-control path:
+
+`signal evidence → mapped decision → controller action → execution outcome`
+
+It intentionally distinguishes risk detection from unsafe-action prevention. Live `/check` responses supply native evidence, API success, and latency. Deterministic benchmark components supply fixtures, rendering, decision vocabulary, compatibility mapping, controller semantics, baselines, and the current controlled loop behavior. Simulated components represent controller enforcement, tool execution or non-execution, safety outcomes, adjustment execution, and the terminal agent-loop outcome.
+
+| Academic concept | Current benchmark implementation | Reason |
+| --- | --- | --- |
+| Agent proposed action | Structured proposed-action envelope | Keeps cases deterministic and reviewable. |
+| Runtime inhibitor evaluation | Live `/check` call | Uses native Inhibitor evidence where available. |
+| Runtime decision | Compatibility-mapped decision | Maps native evidence into the benchmark decision vocabulary. |
+| Controller enforcement | Deterministic simulated controller | Production enforcement traces are not yet available. |
+| Tool/environment outcome | No-side-effect mock tool | Avoids real-world side effects. |
+| Agent adjustment loop | Single fixture-defined safe revision path | Broad autonomous adjustment is not yet measured. |
+| Prompt-injection resistance | Controlled local synthetic slice | Not an official external benchmark score. |
+| Audit trail | Benchmark artifact | Not a production audit log. |
+
+This implementation does not claim production tool enforcement, official external benchmark performance, independent human-label validation, publication-density category coverage, or complete autonomous-agent safety. These remain future evaluation layers. The current benchmark is still meaningful because it gives reviewers separate metrics for evidence detection, decision compatibility, simulated controller behavior, unsafe-action prevention, unsafe execution, benign-task preservation, and over-inhibition.
+
 ## C. Core definitions
 
 - **Runtime trajectory:** the record from proposed action through evaluation, decision, controller action, and outcome.
