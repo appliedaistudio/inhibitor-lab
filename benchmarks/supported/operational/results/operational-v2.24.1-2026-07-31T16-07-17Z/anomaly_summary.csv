@@ -1,0 +1,11 @@
+trial_number,concurrency_level,mode,successful_responses,anomalous_responses,anomaly_rate
+1,1,insight,1,0,0.0
+1,1,performance,1,0,0.0
+1,20,insight,20,0,0.0
+1,20,performance,20,0,0.0
+1,50,insight,50,0,0.0
+1,50,performance,50,0,0.0
+1,100,insight,100,0,0.0
+1,100,performance,100,0,0.0
+1,200,insight,200,0,0.0
+1,200,performance,200,0,0.0

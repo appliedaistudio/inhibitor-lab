@@ -1,0 +1,43 @@
+{
+  "benchmark_run_id": "operational-v2.24.1-2026-07-31T16-07-17Z",
+  "benchmark_status": "completed",
+  "target_inhibitor_version": "2.24.1",
+  "target_version_source": "api_connectivity_diagnostic",
+  "benchmark_started_at": "2026-07-31T16:07:44.048795+00:00",
+  "benchmark_completed_at": "2026-07-31T16:12:00.212622+00:00",
+  "benchmark_type": "progressive_burst_concurrency",
+  "configured_trials": 1,
+  "completed_trials": 1,
+  "configured_concurrency_levels": [
+    1,
+    20,
+    50,
+    100,
+    200
+  ],
+  "scored_stages_per_trial": 5,
+  "completed_scored_stages": 5,
+  "stage_cooldown_seconds": 15,
+  "trial_cooldown_seconds": 120,
+  "recovery_probe_at_seconds": 60,
+  "mode_pair_repeats_per_user": 1,
+  "modes": [
+    "insight",
+    "performance"
+  ],
+  "scenario_input_path": "operations/benchmark_testing/inhibitor_operational_scenarios.json",
+  "scenario_file_hash": "e5352bb71ec66a1076d5d40987448972e1d559275a477147d589cc63b2d8553b",
+  "results_output_dir": "operations/benchmark_testing/operational_results/operational-v2.24.1-2026-07-31T16-07-17Z",
+  "inhibitor_base_url": "https://iaas.appliedai.studio/check",
+  "request_timeout_seconds": 15.0,
+  "benchmark_notebook_path": "operations/benchmark_testing/inhibitor_operational_benchmark.ipynb",
+  "artifact_schema_version": "1.0",
+  "total_planned_scored_requests": 742,
+  "total_planned_recovery_requests": 2,
+  "request_records_checkpointed": 744,
+  "last_checkpoint_at": "2026-07-31T16:18:00.376310+00:00",
+  "last_completed_trial": 1,
+  "last_completed_stage_id": "operational-v2.24.1-2026-07-31T16-07-17Z-trial-01-recovery-probe",
+  "request_failure_count": 0,
+  "benchmark_duration_seconds": 256.163827
+}
