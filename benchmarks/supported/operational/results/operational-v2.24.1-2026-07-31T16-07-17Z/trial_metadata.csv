@@ -1,0 +1,2 @@
+trial_id,trial_number,trial_started_at,final_scored_stage_completed_at,recovery_probe_started_at,recovery_probe_completed_at,trial_completed_at,scored_stage_count,completed_scored_stage_count,trial_completed_successfully,trial_error
+operational-v2.24.1-2026-07-31T16-07-17Z-trial-01,1,2026-07-31T16:08:05.504092+00:00,2026-07-31T16:10:00.096141+00:00,2026-07-31T16:11:00.149729+00:00,2026-07-31T16:11:04.903212+00:00,2026-07-31T16:12:00.149900+00:00,5,5,True,

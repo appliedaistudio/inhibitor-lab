@@ -1,0 +1,2 @@
+trial_number,performance_success,insight_success,performance_anomaly_detected,insight_anomaly_detected,performance_latency_ms,insight_latency_ms,performance_baseline_p50_ms,insight_baseline_p50_ms,performance_latency_limit_ms,insight_latency_limit_ms,recovery_probe_status,recovery_probe_reason
+1,True,True,False,False,4324.0511659532785,4739.8236250155605,1943.0162079515867,10118.699292012025,3886.0324159031734,20237.39858402405,failed,performance latency exceeded twice its same-trial baseline

@@ -69,16 +69,18 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 - `notebooks/` – interactive scenarios showing oversight and moderation patterns.
 - `examples/` – lightweight code snippets for quick integration.
 - `docs/` – API reference, deployment guidance, and governance resources.
-- `benchmarks/` – latency and performance tracking.
-- `stress_benchmarks/` – stress benchmark notebooks plus progressive load and semantic-context result sets.
+- [`benchmarks/`](benchmarks/) – entry point for supported workflows and historical benchmark assets.
+  - [`benchmarks/supported/`](benchmarks/supported/) – actively maintained benchmark workflows.
+  - [`benchmarks/supported/operational/`](benchmarks/supported/operational/) – supported operational load and recovery benchmark.
+  - [`benchmarks/legacy/`](benchmarks/legacy/) – historical benchmark implementations and result artifacts.
 - `codefest/` – Philly Codefest OpenBuild challenge kits, starter notebooks, shared logs, and team operations docs.
 
-### Stress benchmark results
+### Benchmarks
 
-The stress benchmarks complement the latency benchmarks by exercising the Inhibitor under heavier load and longer-context prompts.
+Start with the [benchmark lifecycle guide](benchmarks/README.md). [Supported benchmarks](benchmarks/supported/README.md) are the authoritative entry points for new execution, while historical benchmark implementations and outputs remain available under [`benchmarks/legacy/`](benchmarks/legacy/) for provenance and comparison.
 
-- **Progressive load results** – multi-scenario, high-concurrency runs that stress throughput and latency as user counts scale. See the latest report in [`stress_benchmarks/progressive_load_results/v1.21.0/README.md`](stress_benchmarks/progressive_load_results/v1.21.0/README.md).
-- **Semantic context results** – low-concurrency runs that validate detection quality across long, semantically rich prompts and large context windows. See the latest report in [`stress_benchmarks/semantic_context_results/v1.21.0/README.md`](stress_benchmarks/semantic_context_results/v1.21.0/README.md).
+- **Supported operational benchmark** – review the [operational guide](benchmarks/supported/operational/README.md), run the [benchmark notebook](benchmarks/supported/operational/inhibitor_operational_benchmark.ipynb), and use [`benchmark_reporting.py`](benchmarks/supported/operational/benchmark_reporting.py) for its deterministic reporting workflow.
+- **Operational reference report** – see the published Inhibitor 2.24.1 reference run in [`benchmark_report.md`](benchmarks/supported/operational/results/operational-v2.24.1-2026-07-31T16-07-17Z/benchmark_report.md).
 
 ### Documentation trails
 
@@ -87,7 +89,7 @@ The stress benchmarks complement the latency benchmarks by exercising the Inhibi
 - **Case studies** – See how the inhibitor performs in production with the [healthcare case impact report](docs/case-studies/healthcare-case-impact.md).
 - **Policy to runtime** – Trace how written policies become DILL rules in the [policy-to-rule examples](docs/policy-rule-examples/README.md), then compare enforcement outcomes in the [API reference](docs/inhibitor-api.md) and [supported regulations](docs/supported-regulations.md).
 - **Governance and compliance** – Pair [GDPR guidance](docs/gdpr-compliance.md) with [global edge deployment](docs/global-edge-deployment.md) and zoom out to the [ethical inference theory](docs/ethical-inference-theory.md) that underpins the system.
-- **Change history** – Review [release notes 1.3](docs/release-notes/1.3.md) for Codefest event enablement updates, [release notes 1.2](docs/release-notes/1.2.md) for documentation and benchmark updates, or [release notes 1.1](docs/release-notes/1.1.md) for earlier onboarding improvements.
+- **Change history** – Start with [release notes 1.11](docs/release-notes/1.11.md) for the benchmark lifecycle restructuring, then review [release notes 1.10](docs/release-notes/1.10.md) for API integration documentation, [release notes 1.9](docs/release-notes/1.9.md) for policy validation workflows, or [release notes 1.8](docs/release-notes/1.8.md) for the preceding release.
 
 ---
 
