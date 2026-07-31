@@ -10,13 +10,48 @@ The protocol sends paired Insight and Performance traffic at configured concurre
 
 The configured recovery rule compares each probe with its mode's same-trial concurrency-1 p50 latency and requires a value no greater than 2× that baseline, in addition to success and structural checks. This 2× threshold is a benchmark protocol rule, not a universal service-level objective.
 
+## Scenario definitions
+
+The operational benchmark uses [`inhibitor_operational_scenarios.json`](inhibitor_operational_scenarios.json) as its version-controlled scenario source.
+
+Each scenario defines:
+
+- a human or agent `thought_chain`;
+- an expected classification;
+- the minimum expected observation count; and
+- the minimum expected prediction count.
+
+The maintained scenario set covers:
+
+- unsafe medical guidance;
+- hazardous cleaning advice;
+- benign-content precision;
+- unsafe medication-discontinuation advice;
+- deceptive contract assistance; and
+- fraudulent financial-document assistance.
+
+The notebook should load operational scenarios from this file rather than
+maintaining a separate inline copy.
+
+The committed scenario file and the generated result-package scenario manifest
+serve different purposes:
+
+- `inhibitor_operational_scenarios.json` is the maintained benchmark input.
+- `scenario_manifest.json` is the immutable run-specific record of the
+  scenarios and expectations used for a particular execution.
+
+Changes to the maintained scenario file may affect comparability with earlier
+runs. Scenario changes should therefore be reviewed and documented before a new
+reference result is published.
+
 ## Running a new live benchmark
 
-1. Review the notebook's dependency, endpoint, scenario, trial, timing, and output configuration.
-2. Set `INHIBITOR_API_KEY` in the process environment; optionally configure the endpoint as described in the notebook. The credential is held in process memory and is not written to evidence or reports.
-3. Configure `RESULTS_OUTPUT_DIR` as this package's `results/` directory so the run is written to `results/<benchmark_run_id>/`.
-4. Run the notebook from top to bottom. Its formal execution cell clearly identifies when live API traffic begins.
-5. Read the generated result package's `benchmark_report.md` before making run-specific claims.
+1. Review [`inhibitor_operational_scenarios.json`](inhibitor_operational_scenarios.json) and confirm that the     scenario expectations match the intended benchmark protocol.
+2. Review the notebook's dependency, endpoint, scenario, trial, timing, and output configuration.
+3. Set `INHIBITOR_API_KEY` in the process environment; optionally configure the endpoint as described in the notebook. The credential is held in process memory and is not written to evidence or reports.
+4. Configure `RESULTS_OUTPUT_DIR` as this package's `results/` directory so the run is written to `results/<benchmark_run_id>/`.
+5. Run the notebook from top to bottom. Its formal execution cell clearly identifies when live API traffic begins.
+6. Read the generated result package's `benchmark_report.md` before making run-specific claims.
 
 New maintained result packages belong under [`results/`](results/) as `results/<benchmark_run_id>/`. Reports produced during either live execution or saved-run regeneration are written into the selected run directory as `benchmark_report.md`, with supporting derived artifacts alongside it.
 
@@ -27,6 +62,12 @@ The canonical regeneration inputs in each run package are:
 - `request_records.jsonl` — request-level evidence, including scored and recovery records;
 - `run_manifest.json` — execution and protocol provenance; and
 - `scenario_manifest.json` — workload provenance.
+
+The source file
+[`inhibitor_operational_scenarios.json`](inhibitor_operational_scenarios.json)
+is the maintained scenario definition used to initiate new runs. It is not a
+replacement for `scenario_manifest.json`, which records the exact scenario
+state captured for an individual run.
 
 Where present, the following are convenience or derived artifacts and can be rebuilt from canonical evidence:
 

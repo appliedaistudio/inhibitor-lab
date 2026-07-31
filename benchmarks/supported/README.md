@@ -6,6 +6,8 @@ A supported benchmark package should provide:
 
 - a benchmark-specific `README.md`;
 - an executable notebook or another clear execution entry point;
+- version-controlled scenario or fixture inputs where the benchmark uses a
+  maintained evaluation set;
 - shared reporting code where applicable;
 - reproducible result packages;
 - clearly identified canonical evidence inputs;
