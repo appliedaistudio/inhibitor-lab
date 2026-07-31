@@ -80,7 +80,7 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 Start with the [benchmark lifecycle guide](benchmarks/README.md). [Supported benchmarks](benchmarks/supported/README.md) are the authoritative entry points for new execution, while historical benchmark implementations and outputs remain available under [`benchmarks/legacy/`](benchmarks/legacy/) for provenance and comparison.
 
 - **Supported operational benchmark** – review the [operational guide](benchmarks/supported/operational/README.md), run the [benchmark notebook](benchmarks/supported/operational/inhibitor_operational_benchmark.ipynb), and use [`benchmark_reporting.py`](benchmarks/supported/operational/benchmark_reporting.py) for its deterministic reporting workflow.
-- **Completed reference result** – read the included [operational benchmark report](benchmarks/supported/operational/results/operational-v2.24.1-2026-07-31T16-07-17Z/benchmark_report.md) for run-specific evidence and interpretation.
+- **Operational reference report** – see the published Inhibitor 2.24.1 reference run in [`benchmark_report.md`](benchmarks/supported/operational/results/operational-v2.24.1-2026-07-31T16-07-17Z/benchmark_report.md).
 
 ### Documentation trails
 
