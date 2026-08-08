@@ -17,7 +17,7 @@ A supported benchmark package should provide:
 The currently supported benchmark packages are:
 
 - [`operational/`](operational/) — operational load and recovery benchmark;
-- [`runtime_trajectories/`](runtime_trajectories/) — runtime trajectory safety benchmark.
+- [`runtime_trajectories/`](runtime_trajectories/) — controlled runtime trajectory benchmark.
 
 Future supported categories may include semantic, regression, or other safety evaluation workflows, but those categories are not represented here as maintained implementations today.
 

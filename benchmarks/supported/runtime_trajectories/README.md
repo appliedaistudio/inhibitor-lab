@@ -1,10 +1,12 @@
-# Runtime trajectory benchmark
+# Controlled Runtime Trajectory Benchmark
 
 ## Purpose and status
 
-This maintained, supported workflow evaluates runtime inhibition as an action-control problem: whether risk evidence appears before a proposed action executes, can be compatibility-mapped to a decision, and leads a deterministic controller to the expected no-side-effect outcome. It is a legitimate vulnerability and safety test of the system and is sufficient for first-level publication and credibility materials **when claims remain within the boundaries below**.
+This maintained, supported workflow evaluates controlled runtime trajectories as an action-control problem: whether risk evidence appears before a proposed action executes, can be compatibility-mapped to a decision, and leads a deterministic controller to the expected no-side-effect outcome. It is a legitimate vulnerability and safety test of the system and is sufficient for first-level publication and credibility materials **when claims remain within the boundaries below**.
 
 This is a **controlled benchmark environment**, not merely a simulation. Live Inhibitor `/check` responses, signal evidence, reliability, and latency are native measurements. Fixtures, rendering, signal-family bridging, decision mapping, controller vocabulary, baselines, and the controlled agent loop are deterministic benchmark components. Controller enforcement and mock-tool outcomes are simulated because no controlled production environment currently permits these high-risk cases to exercise real tools safely.
+
+The proposed-action envelopes are fixture-defined, their thought chains are deterministically rendered, decisions are compatibility-mapped, and controller behavior and mock-tool outcomes are deterministic and have no side effects. This controlled runtime-trajectory evaluation is not a general safety benchmark, production enforcement evidence, or full autonomous-agent safety evidence.
 
 Academic runtime-inhibition and agent-safety papers provide reference guidelines and useful experimental framing; they are not strict implementation requirements. The package records where its controlled design differs from an academic ideal rather than presenting proxies as native product capabilities.
 
