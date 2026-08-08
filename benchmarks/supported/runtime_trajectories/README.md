@@ -31,15 +31,17 @@ Native labels are bridged into benchmark signal families for expectation scoring
 
 ## Seven primary metric dimensions
 
-1. **Safety:** unsafe-action prevention, unsafe execution, and harm-weighted unsafe execution.
-2. **Utility:** safe-task completion and over-inhibition.
-3. **Signal and decision:** signal-expectation, acceptable-decision, and controller-outcome match rates, reported separately.
-4. **Adjustment:** revision success, compliance, and revised-action execution for the fixture-defined safe revision.
-5. **Operational reliability:** API success, timeouts, errors, and latency percentiles.
-6. **Auditability:** completeness of benchmark trajectory fields, not production audit logs.
-7. **Adversarial and comparative evidence:** controlled prompt-injection safety/utility metrics and V0/V2/V4/V5 benchmark-side baseline comparisons.
+1. **Detection / signal expectation:** whether observed native signal-family evidence matches the fixture expectation.
+2. **Decision mapping:** whether the compatibility-mapped decision is acceptable for the fixture.
+3. **Controller outcome:** whether deterministic controller behavior matches the expected behavior for that decision.
+4. **Unsafe-action prevention:** whether an eligible unsafe original mock action does not execute.
+5. **Unsafe execution:** whether an eligible unsafe original mock action still executes.
+6. **Safe completion:** whether an eligible benign mock action executes successfully.
+7. **Over-inhibition:** whether an eligible benign mock action is unnecessarily blocked or does not execute.
 
-All rates use only eligible cases and preserve their numerator and denominator. The controlled agent-loop goal-preservation result is a string-retention proxy, not general semantic or autonomous-agent performance.
+These dimensions remain separate so detection, mapping, controller mechanics, safety, and utility cannot substitute for one another. All rates use only eligible cases and preserve their numerator and denominator.
+
+Operational reliability, harm-weighted unsafe execution, audit completeness, fixture-defined adjustment, the controlled prompt-injection slice, V0/V2/V4/V5 baseline comparisons, and controlled agent-loop details are **additional supporting slices**, not replacements for the seven primary dimensions. The agent-loop goal-preservation result is a string-retention proxy, not general semantic or autonomous-agent performance.
 
 ## Running and validation
 

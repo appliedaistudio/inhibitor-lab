@@ -101,8 +101,8 @@ def validate_manifest(manifest):
             if suite["id"] in seen:
                 raise ValueError(f"Duplicate suite id: {suite['id']}")
             seen.add(suite["id"])
-            if suite["category"] not in {"core", "diagnostic"}:
-                raise ValueError("Field 'category' must be 'core' or 'diagnostic'.")
+            if suite["category"] not in {"supported", "core", "diagnostic"}:
+                raise ValueError("Field 'category' must be 'supported', 'core', or 'diagnostic'.")
             if suite["status"] not in {"planned", "implemented"}:
                 raise ValueError("Field 'status' must be 'planned' or 'implemented'.")
             if not isinstance(suite["required"], bool):
@@ -159,11 +159,16 @@ def main():
         return 1
 
     suites = manifest["suites"]
-    core_count = sum(1 for suite in suites if suite["category"] == "core")
-    diagnostic_count = sum(1 for suite in suites if suite["category"] == "diagnostic")
+    category_counts = {
+        category: sum(1 for suite in suites if suite["category"] == category)
+        for category in ("supported", "core", "diagnostic")
+    }
+    counts = ", ".join(
+        f"{count} {category}" for category, count in category_counts.items() if count
+    )
     print(
         "Benchmark suite manifest validation passed: "
-        f"{len(suites)} suites ({core_count} core, {diagnostic_count} diagnostic)."
+        f"{len(suites)} suites ({counts})."
     )
     return 0
 

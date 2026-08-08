@@ -2,7 +2,7 @@ suites:
   - id: runtime_trajectories
     name: Runtime Trajectories
     path: benchmarks/supported/runtime_trajectories
-    category: core
+    category: supported
     support_level:
       - native
       - compatibility_mapped
