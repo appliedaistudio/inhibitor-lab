@@ -1,18 +1,18 @@
 import unittest
 
-from benchmarks.core.runtime_trajectories.runner import (_error_type, _latency_summary,
+from benchmarks.supported.runtime_trajectories.src.runner import (_error_type, _latency_summary,
                                                           _rate, _weighted_rate, build_scores,
                                                           build_summary, check_adjustment_compliance,
                                                           _api_succeeded_response, _adjustment_non_trigger_reason,
                                                           build_baseline_scores, build_agent_loop_scores, load_cases,
                                                           _mapping_case, enrich_mapping)
-from benchmarks.core.runtime_trajectories.baseline_variants import (
+from benchmarks.supported.runtime_trajectories.src.baseline_variants import (
     full_runtime_projection, render_final_output_only_baseline,
     render_tool_boundary_baseline, unprotected_record,
 )
-from benchmarks.core.runtime_trajectories.controller import ACTION_BY_DECISION
-from benchmarks.core.runtime_trajectories.validate import validate_case
-from benchmarks.core.runtime_trajectories.agent_loop import (apply_revision_transformations,
+from benchmarks.supported.runtime_trajectories.src.controller import ACTION_BY_DECISION
+from benchmarks.supported.runtime_trajectories.src.validate import validate_case
+from benchmarks.supported.runtime_trajectories.src.agent_loop import (apply_revision_transformations,
     check_agent_revision_compliance, run_agent_loop_case)
 
 

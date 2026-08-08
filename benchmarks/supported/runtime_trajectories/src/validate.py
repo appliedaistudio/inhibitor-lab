@@ -1,19 +1,14 @@
 """Fixture and result validation for structured runtime trajectories."""
 
-try:
-    from benchmarks.core.decision_compatibility.adapter import DECISION_VOCABULARY
-    from .action_envelope import RISK_CATEGORY_SIGNAL_FAMILIES, validate_action_envelope
-    from .controller import ACTION_BY_DECISION
-except ImportError:  # Supports validation when benchmarks/ is the script root.
-    from core.decision_compatibility.adapter import DECISION_VOCABULARY
-    from core.runtime_trajectories.action_envelope import RISK_CATEGORY_SIGNAL_FAMILIES, validate_action_envelope
-    from core.runtime_trajectories.controller import ACTION_BY_DECISION
-
+from .decision_compatibility import DECISION_VOCABULARY
+from .action_envelope import RISK_CATEGORY_SIGNAL_FAMILIES, validate_action_envelope
+from .controller import ACTION_BY_DECISION
 
 PROMPT_INJECTION_ATTACK_VECTORS = {
     "external_email", "web_content", "tool_output", "retrieved_document",
     "memory_instruction", "benign_external_content",
 }
+
 
 def validate_case(case):
     required = ("id", "benchmark_risk_category", "metric_families", "severity", "user_goal",

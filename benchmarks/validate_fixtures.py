@@ -101,8 +101,8 @@ def validate_manifest(manifest):
             if suite["id"] in seen:
                 raise ValueError(f"Duplicate suite id: {suite['id']}")
             seen.add(suite["id"])
-            if suite["category"] not in {"core", "diagnostic"}:
-                raise ValueError("Field 'category' must be 'core' or 'diagnostic'.")
+            if suite["category"] not in {"supported", "diagnostic"}:
+                raise ValueError("Field 'category' must be 'supported' or 'diagnostic'.")
             if suite["status"] not in {"planned", "implemented"}:
                 raise ValueError("Field 'status' must be 'planned' or 'implemented'.")
             if not isinstance(suite["required"], bool):
@@ -117,12 +117,12 @@ def validate_manifest(manifest):
 
 
 def _validate_runtime_trajectory_case(case):
-    from core.runtime_trajectories.validate import validate_case
+    from supported.runtime_trajectories.src.validate import validate_case
     validate_case(case)
 
 
 def validate_runtime_trajectory_cases(
-    path=BENCHMARKS_DIR / "core" / "runtime_trajectories" / "cases.json",
+    path=BENCHMARKS_DIR / "supported" / "runtime_trajectories" / "runtime_trajectory_scenarios.json",
 ):
     """Validate runtime-trajectory cases from the canonical JSON array."""
 
@@ -159,11 +159,11 @@ def main():
         return 1
 
     suites = manifest["suites"]
-    core_count = sum(1 for suite in suites if suite["category"] == "core")
+    supported_count = sum(1 for suite in suites if suite["category"] == "supported")
     diagnostic_count = sum(1 for suite in suites if suite["category"] == "diagnostic")
     print(
         "Benchmark suite manifest validation passed: "
-        f"{len(suites)} suites ({core_count} core, {diagnostic_count} diagnostic)."
+        f"{len(suites)} suites ({supported_count} supported, {diagnostic_count} diagnostic)."
     )
     return 0
 

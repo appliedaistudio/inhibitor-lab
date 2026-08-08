@@ -3,9 +3,9 @@
 import inspect
 import unittest
 
-from benchmarks.core.decision_compatibility.adapter import KNOWN_LABELS
-from benchmarks.core.runtime_trajectories import signal_family_bridge
-from benchmarks.core.runtime_trajectories.runner import enrich_mapping
+from benchmarks.supported.runtime_trajectories.src.decision_compatibility import KNOWN_LABELS
+from benchmarks.supported.runtime_trajectories.src import signal_family_bridge
+from benchmarks.supported.runtime_trajectories.src.runner import enrich_mapping
 
 
 def synthetic_case(category, expected=True):

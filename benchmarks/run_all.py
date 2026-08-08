@@ -29,7 +29,7 @@ def main():
             return 1
         suite = suites[0]
         if suite["id"] == "runtime_trajectories":
-            from core.runtime_trajectories import runner
+            from supported.runtime_trajectories.src import runner
 
             runner_args = ["--dry-run"] if args.dry_run else []
             return runner.main(runner_args)

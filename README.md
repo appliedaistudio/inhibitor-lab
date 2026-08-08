@@ -69,7 +69,7 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 - `notebooks/` – interactive scenarios showing oversight and moderation patterns.
 - `examples/` – lightweight code snippets for quick integration.
 - `docs/` – API reference, deployment guidance, and governance resources.
-- `benchmarks/` – core benchmark suites, retained diagnostic notebooks and fixtures, archived legacy diagnostic outputs, reporting guidance, and shared benchmark utilities. See `benchmarks/diagnostics/` for retained diagnostic notebooks and fixtures, and `benchmarks/legacy/diagnostics/` for archived diagnostic result outputs.
+- `benchmarks/` – maintained benchmark packages, diagnostics, historical/provenance material, and shared utilities. Start with [`benchmarks/supported/`](benchmarks/supported/) and the supported [`runtime_trajectories`](benchmarks/supported/runtime_trajectories/) package; historical material remains under `benchmarks/legacy/`.
 - `codefest/` – Philly Codefest OpenBuild challenge kits, starter notebooks, shared logs, and team operations docs.
 
 ### Archived diagnostic result sets
