@@ -13,6 +13,7 @@ Supported status means that a workflow is maintained and reproducible. It does n
 
 - [`supported/`](supported/) — maintained benchmark workflows.
   - [`supported/operational/`](supported/operational/) — operational load and recovery benchmark.
+  - [`supported/runtime_trajectories/`](supported/runtime_trajectories/) — runtime trajectory safety benchmark.
 - [`legacy/`](legacy/) — historical implementations and result artifacts.
   - [`legacy/diagnostics/`](legacy/diagnostics/) — archived operational-stress, semantic-context, and drift-audit material.
   - [`legacy/ieb/`](legacy/ieb/) — archived IEB benchmark versions.

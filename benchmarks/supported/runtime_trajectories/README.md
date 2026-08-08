@@ -13,6 +13,7 @@ Academic runtime-inhibition and agent-safety papers provide reference guidelines
 - [`runtime_trajectory_scenarios.json`](runtime_trajectory_scenarios.json) is the sole canonical source for all 16 scenarios. These are coverage-floor cases, not publication-density sampling.
 - [`src/`](src/) contains the runner, decision-compatibility adapter, signal-family bridge, proposed-action validation, controller, mock tools, baselines, prompt-injection slice, controlled agent loop, metrics, and validation.
 - [`tests/`](tests/) contains package tests.
+- [`lib/`](lib/) contains package-local helper utilities.
 - [`benchmark_reporting.py`](benchmark_reporting.py) regenerates a report from preserved evidence without making live requests.
 - [`results/`](results/) contains intentionally preserved reference-run packages.
 - [`catalog_signal_map.md`](catalog_signal_map.md) records the reviewed exact-label bridge provenance.
@@ -49,9 +50,9 @@ Run from the repository root:
 
 ```bash
 python3 -m unittest discover -s benchmarks/supported/runtime_trajectories/tests -p 'test_*.py'
-python3 benchmarks/validate_fixtures.py
-python3 benchmarks/run_all.py --suite runtime_trajectories --dry-run
-python3 -m py_compile benchmarks/supported/runtime_trajectories/*.py benchmarks/supported/runtime_trajectories/src/*.py benchmarks/lib/*.py
+python3 benchmarks/supported/runtime_trajectories/src/runner.py --dry-run
+python3 -m py_compile benchmarks/supported/runtime_trajectories/benchmark_reporting.py benchmarks/supported/runtime_trajectories/src/*.py benchmarks/supported/runtime_trajectories/lib/*.py
+python3 benchmarks/supported/runtime_trajectories/benchmark_reporting.py --output /tmp/runtime-trajectory-summary.md
 git diff --check
 ```
 

@@ -1,13 +1,13 @@
-# Shared Benchmark Library
+# Runtime Trajectory Helper Library
 
-`benchmarks/lib/` contains lightweight utilities shared by the current benchmark harness.
+This package's `lib/` directory contains lightweight utilities used by the runtime trajectory benchmark.
 
 Current utilities cover:
 
-- support-level validation for suite and fixture metadata;
+- support-level validation for benchmark metadata;
 - generic schema checks for simple manifest and fixture-like objects;
 - live API client behavior used by benchmark runners;
 - run-manifest creation; and
 - standard result-artifact writing helpers.
 
-These modules support the supported `runtime_trajectories` package and its decision-compatibility adapter. They are helpers, not independently runnable benchmark suites or result evidence.
+These modules are package-local helpers, not independently runnable benchmark suites or result evidence.

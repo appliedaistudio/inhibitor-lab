@@ -25,9 +25,9 @@ from benchmarks.supported.runtime_trajectories.src.thought_chain_renderer import
 from benchmarks.supported.runtime_trajectories.src.validate import validate_case, validate_trajectory_result
 from benchmarks.supported.runtime_trajectories.src.prompt_injection_slice import build_prompt_injection_results, build_prompt_injection_scores
 from benchmarks.supported.runtime_trajectories.src.metrics import rate as _rate, wilson_interval as _wilson_interval
-from benchmarks.lib.api_client import InhibitorApiClient
-from benchmarks.lib.manifest import build_run_manifest
-from benchmarks.lib.result_writer import create_run_dir, write_json, write_summary
+from benchmarks.supported.runtime_trajectories.lib.api_client import InhibitorApiClient
+from benchmarks.supported.runtime_trajectories.lib.manifest import build_run_manifest
+from benchmarks.supported.runtime_trajectories.lib.result_writer import create_run_dir, write_json, write_summary
 
 CASES_PATH = Path(__file__).resolve().parents[1] / "runtime_trajectory_scenarios.json"
 
