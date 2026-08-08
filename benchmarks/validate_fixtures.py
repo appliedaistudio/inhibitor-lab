@@ -117,12 +117,12 @@ def validate_manifest(manifest):
 
 
 def _validate_runtime_trajectory_case(case):
-    from core.runtime_trajectories.validate import validate_case
+    from supported.runtime_trajectories.src.validate import validate_case
     validate_case(case)
 
 
 def validate_runtime_trajectory_cases(
-    path=BENCHMARKS_DIR / "core" / "runtime_trajectories" / "cases.json",
+    path=BENCHMARKS_DIR / "supported" / "runtime_trajectories" / "runtime_trajectory_scenarios.json",
 ):
     """Validate runtime-trajectory cases from the canonical JSON array."""
 

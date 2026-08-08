@@ -7,29 +7,29 @@ import os
 from pathlib import Path
 import sys
 
-BENCHMARKS_DIR = Path(__file__).resolve().parents[2]
+BENCHMARKS_DIR = Path(__file__).resolve().parents[3]
 REPO_ROOT = BENCHMARKS_DIR.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from benchmarks.core.decision_compatibility.adapter import map_decision
-from benchmarks.core.runtime_trajectories.action_envelope import acceptable_signal_families
-from benchmarks.core.runtime_trajectories.signal_family_bridge import families_for_labels
-from benchmarks.core.runtime_trajectories.baseline_variants import (
+from benchmarks.supported.runtime_trajectories.src.decision_compatibility import map_decision
+from benchmarks.supported.runtime_trajectories.src.action_envelope import acceptable_signal_families
+from benchmarks.supported.runtime_trajectories.src.signal_family_bridge import families_for_labels
+from benchmarks.supported.runtime_trajectories.src.baseline_variants import (
     VARIANTS, checked_record, full_runtime_projection, render_final_output_only_baseline,
     render_tool_boundary_baseline, unprotected_record,
 )
-from benchmarks.core.runtime_trajectories.controller import ACTION_BY_DECISION, apply_controller
-from benchmarks.core.runtime_trajectories.agent_loop import run_agent_loop_case, SUPPORT_LEVEL
-from benchmarks.core.runtime_trajectories.thought_chain_renderer import render_thought_chain
-from benchmarks.core.runtime_trajectories.validate import validate_case, validate_trajectory_result
-from benchmarks.core.runtime_trajectories.prompt_injection_slice import build_prompt_injection_results, build_prompt_injection_scores
-from benchmarks.core.runtime_trajectories.metrics import rate as _rate, wilson_interval as _wilson_interval
+from benchmarks.supported.runtime_trajectories.src.controller import ACTION_BY_DECISION, apply_controller
+from benchmarks.supported.runtime_trajectories.src.agent_loop import run_agent_loop_case, SUPPORT_LEVEL
+from benchmarks.supported.runtime_trajectories.src.thought_chain_renderer import render_thought_chain
+from benchmarks.supported.runtime_trajectories.src.validate import validate_case, validate_trajectory_result
+from benchmarks.supported.runtime_trajectories.src.prompt_injection_slice import build_prompt_injection_results, build_prompt_injection_scores
+from benchmarks.supported.runtime_trajectories.src.metrics import rate as _rate, wilson_interval as _wilson_interval
 from benchmarks.lib.api_client import InhibitorApiClient
 from benchmarks.lib.manifest import build_run_manifest
 from benchmarks.lib.result_writer import create_run_dir, write_json, write_summary
 
-CASES_PATH = Path(__file__).resolve().parent / "cases.json"
+CASES_PATH = Path(__file__).resolve().parents[1] / "runtime_trajectory_scenarios.json"
 
 SEVERITY_WEIGHTS = {
     "safe": 0, "low": 1, "minor": 1, "moderate": 2, "medium": 2,
@@ -628,7 +628,7 @@ def run_live(args, cases, endpoint):
     manifest = build_run_manifest(suite_id="runtime_trajectories", run_id=args.run_id or None,
         runner_version="action_envelopes", endpoint=endpoint, total_cases=len(cases),
         notes="Structured action envelopes rendered into /check; simulated controller-enforced mock-tool outcomes.")
-    run_dir = create_run_dir("runtime_trajectories", manifest["run_id"])
+    run_dir = create_run_dir("", manifest["run_id"], root=Path(__file__).resolve().parents[1] / "results")
     write_json(run_dir / "manifest.json", manifest)
     client = InhibitorApiClient(endpoint, api_key=os.environ.get("INHIBITOR_API_KEY"), timeout=args.timeout)
     results = []

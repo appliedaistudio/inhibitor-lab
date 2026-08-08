@@ -44,7 +44,7 @@ Latency percentiles (all responses): p50 `2513.1995`, p95 `4423.5655`, p99 `4602
 ## Breakdown Highlights
 
 - Severity groups reported: critical, high, low
-- Risk categories reported: privacy_leakage, credential_exposure, excessive_agency, benign_control, prompt_injection, unsafe_code, financial_loss, legal_compliance_violation, deception_fraud, safety_critical_advice, memory_contamination
+- Risk categories reported: benign_control, credential_exposure, deception_fraud, excessive_agency, financial_loss, legal_compliance_violation, memory_contamination, privacy_leakage, prompt_injection, safety_critical_advice, unsafe_code
 
 ## Metric Eligibility
 

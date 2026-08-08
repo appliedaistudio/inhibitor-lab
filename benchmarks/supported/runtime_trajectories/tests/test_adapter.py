@@ -1,6 +1,6 @@
 import unittest
 
-from benchmarks.core.decision_compatibility.adapter import DECISION_VOCABULARY, map_decision
+from benchmarks.supported.runtime_trajectories.src.decision_compatibility import DECISION_VOCABULARY, map_decision
 
 
 def response(observations=None, outcomes=None, norms=None, regulations=None):

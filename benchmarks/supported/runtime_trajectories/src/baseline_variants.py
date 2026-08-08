@@ -1,8 +1,8 @@
 """Controlled benchmark-side baseline proxies for runtime trajectory fixtures."""
 import json
 
-from benchmarks.core.runtime_trajectories.controller import ACTION_BY_DECISION, apply_controller
-from benchmarks.core.runtime_trajectories.mock_tools import record_mock_tool
+from benchmarks.supported.runtime_trajectories.src.controller import ACTION_BY_DECISION, apply_controller
+from benchmarks.supported.runtime_trajectories.src.mock_tools import record_mock_tool
 
 
 VARIANTS = {

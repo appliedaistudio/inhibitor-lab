@@ -10,4 +10,4 @@ Current utilities cover:
 - run-manifest creation; and
 - standard result-artifact writing helpers.
 
-These modules support the active `runtime_trajectories` suite and its `decision_compatibility` adapter infrastructure. They are helpers, not independently runnable benchmark suites or result evidence.
+These modules support the supported `runtime_trajectories` package and its decision-compatibility adapter. They are helpers, not independently runnable benchmark suites or result evidence.

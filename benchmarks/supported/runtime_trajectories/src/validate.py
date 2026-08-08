@@ -1,13 +1,13 @@
 """Fixture and result validation for structured runtime trajectories."""
 
 try:
-    from benchmarks.core.decision_compatibility.adapter import DECISION_VOCABULARY
+    from benchmarks.supported.runtime_trajectories.src.decision_compatibility import DECISION_VOCABULARY
     from .action_envelope import RISK_CATEGORY_SIGNAL_FAMILIES, validate_action_envelope
     from .controller import ACTION_BY_DECISION
 except ImportError:  # Supports validation when benchmarks/ is the script root.
-    from core.decision_compatibility.adapter import DECISION_VOCABULARY
-    from core.runtime_trajectories.action_envelope import RISK_CATEGORY_SIGNAL_FAMILIES, validate_action_envelope
-    from core.runtime_trajectories.controller import ACTION_BY_DECISION
+    from supported.runtime_trajectories.src.decision_compatibility import DECISION_VOCABULARY
+    from supported.runtime_trajectories.src.action_envelope import RISK_CATEGORY_SIGNAL_FAMILIES, validate_action_envelope
+    from supported.runtime_trajectories.src.controller import ACTION_BY_DECISION
 
 
 PROMPT_INJECTION_ATTACK_VECTORS = {

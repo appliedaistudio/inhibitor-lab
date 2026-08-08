@@ -1,7 +1,7 @@
 """Deterministic, no-side-effect benchmark-side agent-loop prototype."""
 import copy
 import json
-from benchmarks.core.decision_compatibility.adapter import map_decision
+from benchmarks.supported.runtime_trajectories.src.decision_compatibility import map_decision
 from .controller import ACTION_BY_DECISION, apply_controller
 from .thought_chain_renderer import render_thought_chain
 

@@ -1,9 +1,9 @@
 import copy
 import unittest
-from benchmarks.core.runtime_trajectories.prompt_injection_slice import _api_ok, build_prompt_injection_results, build_prompt_injection_scores
-from benchmarks.core.runtime_trajectories.validate import validate_case
-from benchmarks.core.runtime_trajectories.runner import build_summary
-from benchmarks.core.runtime_trajectories.metrics import rate
+from benchmarks.supported.runtime_trajectories.src.prompt_injection_slice import _api_ok, build_prompt_injection_results, build_prompt_injection_scores
+from benchmarks.supported.runtime_trajectories.src.validate import validate_case
+from benchmarks.supported.runtime_trajectories.src.runner import build_summary
+from benchmarks.supported.runtime_trajectories.src.metrics import rate
 
 class PromptInjectionSliceTests(unittest.TestCase):
     def case(self, benign=False):

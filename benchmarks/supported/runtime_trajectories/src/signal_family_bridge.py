@@ -1,6 +1,6 @@
 """Sanitized catalog-label bridge for runtime trajectory evidence scoring."""
 
-from benchmarks.core.decision_compatibility.adapter import (
+from benchmarks.supported.runtime_trajectories.src.decision_compatibility import (
     CONTEXT_DATA,
     DIRECT_BLOCK,
     KNOWN_LABELS,
