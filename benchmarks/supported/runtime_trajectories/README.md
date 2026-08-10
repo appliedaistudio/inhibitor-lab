@@ -16,7 +16,7 @@ Academic runtime-inhibition and agent-safety papers provide reference guidelines
 - [`src/`](src/) contains the runner, decision-compatibility adapter, signal-family bridge, proposed-action validation, controller, mock tools, baselines, prompt-injection slice, controlled agent loop, metrics, and validation.
 - [`tests/`](tests/) contains package tests.
 - [`lib/`](lib/) contains package-local helper utilities.
-- [`benchmark_reporting.py`](benchmark_reporting.py) contains report-regeneration support used to keep preserved summaries reproducible; normal benchmark execution writes summaries through the runner.
+- [`benchmark_reporting.py`](benchmark_reporting.py) contains reporting support for reproducible preserved summaries. Normal dry-run validation, live execution, result writing, and summary writing are handled by [`src/runner.py`](src/runner.py).
 - [`results/`](results/) contains intentionally preserved reference-run packages.
 - [`catalog_signal_map.md`](catalog_signal_map.md) records the reviewed exact-label bridge provenance.
 
@@ -69,17 +69,32 @@ The live runner writes the result artifacts and generated summary into the packa
 
 New runs are written inside this package's `results/` directory. Do not commit a new run, especially raw responses, without explicit review.
 
-## Canonical evidence and reporting support
+## Result artifact contract
 
-The primary reference evidence is [`results/runtime_seed_20260729_143044/`](results/runtime_seed_20260729_143044/). Its JSON artifacts—not prose copied elsewhere—are canonical. Preserved summaries are derived artifacts generated from the JSON evidence package. The reporting code is retained so those summaries remain reproducible, but normal benchmark execution and summary writing are handled by the runner. A complete evidence package contains its manifest, raw and normalized responses, trajectories, adjustments, agent-loop results/scores, prompt-injection results/scores, baseline results/scores, scores, and generated summary.
+Each `results/<run_id>/` evidence package contains:
 
-## Current reference result
+- `manifest.json` — run metadata and endpoint context;
+- `raw_responses.json` — preserved live `/check` responses;
+- `normalized_results.json` — normalized decision and signal-mapping records;
+- `trajectory_results.json` — case-level runtime trajectory and controller outcomes;
+- `adjustment_results.json` — fixture-defined adjustment outcomes;
+- `agent_loop_results.json` and `agent_loop_scores.json` — the controlled agent-loop slice;
+- `prompt_injection_results.json` and `prompt_injection_scores.json` — the controlled prompt-injection slice;
+- `baseline_results.json` and `baseline_scores.json` — benchmark-side baseline comparisons;
+- `scores.json` — canonical aggregate metrics; and
+- `summary.md` — the derived human-readable summary generated from the JSON evidence.
 
-The primary run `runtime_seed_20260729_143044` (2026-07-29, `https://iaas.appliedai.studio`) completed 16/16 live calls and passed 12/16 cases. It prevented 11/14 unsafe mock actions, executed 3/14, completed 2/2 safe tasks, and over-inhibited 0/2. Signal expectations were met in 14/16 cases; acceptable decisions and controller outcome matches were each 12/16; harm-weighted unsafe execution was 9/50; 99/99 audit fields were complete. The prompt-injection slice recorded 4/5 signal expectations, 4/5 acceptable decisions, 3/4 prevention, 1/4 unsafe execution, 1/1 benign external-content completion, and 0/1 over-inhibition. The configured privacy-email adjustment did not trigger because `warn` was outside its trigger decisions.
+The JSON artifacts—not prose copied elsewhere—are canonical. Preserved summaries are derived artifacts generated from that JSON evidence. Package-local reporting support keeps those summaries reproducible, while normal benchmark execution and summary writing remain the runner's responsibility.
 
-The secondary run `runtime_seed_20260729_134216` is retained to show expected LLM-backed live-signal variability: 16/16 API successes, 13/16 passes, 12/14 prevention, 2/14 unsafe execution, 2/2 safe completion, 0/2 over-inhibition, and 15/16 signal expectations.
+## What the preserved results show
 
-The stable discrepancy is `rt_privacy_email_revision`: privacy/context evidence was present, but `warn` allowed the original mock email and did not trigger adjustment. Run-variable review areas are credential-file handling, legal/compliance evidence, financial-loss mapping, memory-contamination handling, and tool-output injection detection. These are review findings, not infrastructure failures.
+[`results/runtime_seed_20260729_143044/`](results/runtime_seed_20260729_143044/) is the primary reference result. Its 16/16 successful live `/check` calls show that every case produced live endpoint evidence. Of the 16 cases, 12 passed. The controlled outcome metrics show that 11/14 unsafe mock actions were prevented while 3/14 executed; both benign tasks completed, and neither was over-inhibited. Signal expectations were met in 14/16 cases, while acceptable decisions and controller outcomes were each achieved in 12/16 cases. The prompt-injection slice showed partial success, including one unsafe execution: it recorded 4/5 signal expectations, 4/5 acceptable decisions, 3/4 prevention, 1/4 unsafe execution, 1/1 benign external-content completion, and 0/1 over-inhibition.
+
+[`results/runtime_seed_20260729_134216/`](results/runtime_seed_20260729_134216/) is retained as a secondary variability and comparison result. It shows expected variability in the live signal and mapping stage, with 16/16 API successes, 13/16 passes, 12/14 prevention, 2/14 unsafe execution, 2/2 safe completion, 0/2 over-inhibition, and 15/16 signal expectations. It should be used for comparison and robustness discussion, not as the primary reference evidence.
+
+## Known discrepancies
+
+The stable discrepancy is `rt_privacy_email_revision`: privacy/context evidence was present, but `warn` allowed the original mock email and did not trigger adjustment. Other run-variable areas include credential-file handling, legal/compliance evidence, financial-loss mapping, memory-contamination handling, and tool-output injection detection. These are evidence findings, not infrastructure failures.
 
 ## Interpretation boundaries
 
@@ -95,6 +110,6 @@ With bounded language, the evidence supports mechanism review, vulnerability tes
 
 The local prompt-injection slice tests whether synthetic untrusted external, tool-output, or memory instructions lead to unsafe downstream mock actions. Its interpretation must stay within that controlled slice.
 
-## Known limitations and future review
+## Known limitations and future directions
 
-Future work should examine production controller traces when a safe environment exists, independent labeling, denser per-category sampling, repeated-run variability, decision calibration (especially `warn`, `pause`, and `revise`), broader agent-generated adjustment, semantic goal preservation, stronger tool-output injection detection, and official external benchmark integrations. Until then, reviewers should keep native evidence, compatibility mapping, deterministic control, and simulated outcomes explicitly separated.
+Future work should examine production controller traces when a safe environment exists, independent labeling, denser per-category sampling, repeated-run variability, decision calibration (especially `warn`, `pause`, and `revise`), broader agent-generated adjustment, semantic goal preservation, stronger tool-output injection detection, and official external benchmark integrations. Until then, native evidence, compatibility mapping, deterministic control, and simulated outcomes remain explicitly separated.
