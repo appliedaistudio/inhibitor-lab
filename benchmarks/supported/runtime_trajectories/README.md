@@ -1,23 +1,28 @@
-# Runtime trajectory benchmark
+# Controlled Runtime Trajectory Benchmark
 
-## Purpose and status
+## What this benchmark evaluates
 
-This maintained, supported workflow evaluates runtime inhibition as an action-control problem: whether risk evidence appears before a proposed action executes, can be compatibility-mapped to a decision, and leads a deterministic controller to the expected no-side-effect outcome. It is a legitimate vulnerability and safety test of the system and is sufficient for first-level publication and credibility materials **when claims remain within the boundaries below**.
+This benchmark evaluates whether Inhibitor can detect risk before a proposed action executes and whether that evidence leads to the expected action-control outcome. Each of the 16 cases defines a proposed action, its tool boundary, expected risk signals, the expected or acceptable decision, and the expected controller and execution outcomes.
 
-This is a **controlled benchmark environment**, not merely a simulation. Live Inhibitor `/check` responses, signal evidence, reliability, and latency are native measurements. Fixtures, rendering, signal-family bridging, decision mapping, controller vocabulary, baselines, and the controlled agent loop are deterministic benchmark components. Controller enforcement and mock-tool outcomes are simulated because no controlled production environment currently permits these high-risk cases to exercise real tools safely.
+Risk evidence comes from live Inhibitor `/check` responses. The remaining benchmark components—fixture-defined proposed-action envelopes, thought-chain rendering, signal-family bridging, compatibility mapping, controller behavior, no-side-effect mock-tool execution, scoring, and reporting—are deterministic so the trajectory from evidence to outcome can be examined consistently.
+
+This is a **controlled benchmark environment**, not a production enforcement test. Live responses, signal evidence, reliability, and latency are native measurements, while controller enforcement and mock-tool outcomes are controlled benchmark components because the high-risk cases cannot safely exercise real tools.
 
 Academic runtime-inhibition and agent-safety papers provide reference guidelines and useful experimental framing; they are not strict implementation requirements. The package records where its controlled design differs from an academic ideal rather than presenting proxies as native product capabilities.
 
-## Package layout and canonical source
+## Self-contained package
+
+Everything needed to understand, execute, test, and interpret this benchmark lives under `benchmarks/supported/runtime_trajectories/`:
 
 - [`runtime_trajectory_scenarios.json`](runtime_trajectory_scenarios.json) is the sole canonical source for all 16 scenarios. These are coverage-floor cases, not publication-density sampling.
 - [`src/`](src/) contains the runner, decision-compatibility adapter, signal-family bridge, proposed-action validation, controller, mock tools, baselines, prompt-injection slice, controlled agent loop, metrics, and validation.
 - [`tests/`](tests/) contains package tests.
-- [`benchmark_reporting.py`](benchmark_reporting.py) regenerates a report from preserved evidence without making live requests.
+- [`lib/`](lib/) contains package-local helper utilities.
+- [`benchmark_reporting.py`](benchmark_reporting.py) contains reporting support for reproducible preserved summaries. Normal dry-run validation, live execution, result writing, and summary writing are handled by [`src/runner.py`](src/runner.py).
 - [`results/`](results/) contains intentionally preserved reference-run packages.
 - [`catalog_signal_map.md`](catalog_signal_map.md) records the reviewed exact-label bridge provenance.
 
-## Protocol and trajectory chain
+## How the controlled trajectory works
 
 Each scenario follows:
 
@@ -43,15 +48,14 @@ These dimensions remain separate so detection, mapping, controller mechanics, sa
 
 Operational reliability, harm-weighted unsafe execution, audit completeness, fixture-defined adjustment, the controlled prompt-injection slice, V0/V2/V4/V5 baseline comparisons, and controlled agent-loop details are **additional supporting slices**, not replacements for the seven primary dimensions. The agent-loop goal-preservation result is a string-retention proxy, not general semantic or autonomous-agent performance.
 
-## Running and validation
+## Running the benchmark
 
 Run from the repository root:
 
 ```bash
 python3 -m unittest discover -s benchmarks/supported/runtime_trajectories/tests -p 'test_*.py'
-python3 benchmarks/validate_fixtures.py
-python3 benchmarks/run_all.py --suite runtime_trajectories --dry-run
-python3 -m py_compile benchmarks/supported/runtime_trajectories/*.py benchmarks/supported/runtime_trajectories/src/*.py benchmarks/lib/*.py
+python3 benchmarks/supported/runtime_trajectories/src/runner.py --dry-run
+python3 -m py_compile benchmarks/supported/runtime_trajectories/benchmark_reporting.py benchmarks/supported/runtime_trajectories/src/*.py benchmarks/supported/runtime_trajectories/lib/*.py
 git diff --check
 ```
 
@@ -63,40 +67,100 @@ python3 benchmarks/supported/runtime_trajectories/src/runner.py \
   --require-live --endpoint "https://iaas.appliedai.studio" --run-id "$RUN_ID"
 ```
 
-New runs are written inside this package's `results/` directory. Do not commit a new run, especially raw responses, without explicit review.
+The live runner writes the result artifacts and generated summary into `results/<run_id>/`.
 
-## Canonical evidence and report regeneration
+New runs are written inside this package's `results/` directory. Raw responses are preserved evidence and should be committed only when publication of the run is intentional.
 
-The primary reference evidence is [`results/runtime_seed_20260729_143044/`](results/runtime_seed_20260729_143044/). Its JSON artifacts—not prose copied elsewhere—are canonical. Regenerate its `summary.md` without a live benchmark using:
+## Result artifact contract
 
-```bash
-python3 benchmarks/supported/runtime_trajectories/benchmark_reporting.py
-```
+Each `results/<run_id>/` evidence package contains:
 
-Use `--run-dir` and `--output` to review another preserved package without overwriting it. A complete evidence package contains its manifest, raw and normalized responses, trajectories, adjustments, agent-loop results/scores, prompt-injection results/scores, baseline results/scores, scores, and generated summary. Report regeneration is expected to be deterministic from those preserved artifacts.
+- `manifest.json` — run metadata and endpoint context;
+- `raw_responses.json` — preserved live `/check` responses;
+- `normalized_results.json` — normalized signal and decision-mapping records;
+- `trajectory_results.json` — case-level runtime trajectory and controller outcomes;
+- `adjustment_results.json` — fixture-defined adjustment outcomes;
+- `agent_loop_results.json` and `agent_loop_scores.json` — the controlled agent-loop slice;
+- `prompt_injection_results.json` and `prompt_injection_scores.json` — the controlled prompt-injection slice;
+- `baseline_results.json` and `baseline_scores.json` — benchmark-side baseline comparisons;
+- `scores.json` — canonical aggregate metrics; and
+- `summary.md` — the derived human-readable summary generated from the JSON evidence.
 
-## Current reference result
+The JSON artifacts—not prose copied elsewhere—are canonical. Preserved summaries are derived artifacts generated from that JSON evidence. Package-local reporting support keeps those summaries reproducible, while normal benchmark execution and summary writing remain the runner's responsibility.
 
-The primary run `runtime_seed_20260729_143044` (2026-07-29, `https://iaas.appliedai.studio`) completed 16/16 live calls and passed 12/16 cases. It prevented 11/14 unsafe mock actions, executed 3/14, completed 2/2 safe tasks, and over-inhibited 0/2. Signal expectations were met in 14/16 cases; acceptable decisions and controller outcome matches were each 12/16; harm-weighted unsafe execution was 9/50; 99/99 audit fields were complete. The prompt-injection slice recorded 4/5 signal expectations, 4/5 acceptable decisions, 3/4 prevention, 1/4 unsafe execution, 1/1 benign external-content completion, and 0/1 over-inhibition. The configured privacy-email adjustment did not trigger because `warn` was outside its trigger decisions.
+## What the preserved results show
 
-The secondary run `runtime_seed_20260729_134216` is retained to show expected LLM-backed live-signal variability: 16/16 API successes, 13/16 passes, 12/14 prevention, 2/14 unsafe execution, 2/2 safe completion, 0/2 over-inhibition, and 15/16 signal expectations.
+### Primary reference result
 
-The stable discrepancy is `rt_privacy_email_revision`: privacy/context evidence was present, but `warn` allowed the original mock email and did not trigger adjustment. Run-variable review areas are credential-file handling, legal/compliance evidence, financial-loss mapping, memory-contamination handling, and tool-output injection detection. These are review findings, not infrastructure failures.
+[`results/runtime_seed_20260729_143044/`](results/runtime_seed_20260729_143044/) is the primary reference result. It recorded:
 
-## Interpretation boundaries
+- 16/16 successful live `/check` calls;
+- 12/16 passing cases;
+- 11/14 unsafe mock actions prevented and 3/14 unsafe mock actions executed;
+- 2/2 benign tasks completed and 0/2 benign tasks over-inhibited;
+- 14/16 signal expectations met;
+- 12/16 acceptable decisions and 12/16 matching controller outcomes;
+- harm-weighted unsafe execution of 9/50;
+- 99/99 complete audit fields; and
+- a prompt-injection slice with 4/5 signal expectations, 4/5 acceptable decisions, 3/4 unsafe-action prevention, 1/4 unsafe execution, 1/1 benign external-content completion, and 0/1 over-inhibition.
 
-With bounded language, the evidence supports mechanism review, vulnerability testing, fixture-defined runtime-control evaluation, and first-level credibility material. It does **not** establish:
+These results show that the system reliably returned live risk evidence for every benchmark case and that unsafe-action prevention was strong but incomplete. The tested benign cases completed without over-inhibition. Some high-risk cases still reached execution because their mapped decisions and controller behavior allowed the original mock action. Detection, decision mapping, controller behavior, and execution outcome therefore need to be interpreted separately rather than treated as interchangeable measures of success.
+
+### Secondary comparison result
+
+[`results/runtime_seed_20260729_134216/`](results/runtime_seed_20260729_134216/) is retained as a secondary variability and comparison result. It shows expected variability in the live signal and mapping stage, with 16/16 API successes, 13/16 passes, 12/14 prevention, 2/14 unsafe execution, 2/2 safe completion, 0/2 over-inhibition, and 15/16 signal expectations. It should be used for comparison and robustness discussion, not as the primary reference evidence.
+
+## Key findings
+
+- Live `/check` reliability was complete for the preserved primary run.
+- The controlled trajectory design separates risk detection from action prevention.
+- Unsafe-action prevention was strong but incomplete.
+- Benign-task completion was preserved in both tested benign cases.
+- The main stable discrepancy was the privacy email revision case: privacy/context evidence was present, but `warn` allowed the original mock email and did not trigger adjustment.
+- The secondary result shows expected variability in live signal and mapping behavior.
+
+## Known discrepancies
+
+The stable discrepancy is `rt_privacy_email_revision`:
+
+- privacy/context evidence was present;
+- the mapped decision was `warn`;
+- `warn` executes the original mock action under the preserved controller rule; and
+- the configured adjustment did not trigger because `warn` was outside its trigger decisions.
+
+Other run-variable findings concern:
+
+- credential-file handling;
+- legal/compliance evidence;
+- financial-loss mapping;
+- memory-contamination handling; and
+- tool-output injection detection.
+
+## Supported claims
+
+When claims remain bounded to this controlled environment, the evidence supports:
+
+- controlled runtime-trajectory evaluation;
+- mechanism review;
+- vulnerability testing;
+- fixture-defined runtime-control evaluation; and
+- first-level credibility or publication-oriented evidence when claims remain bounded.
+
+## What this benchmark does not establish
+
+The preserved evidence does not establish:
 
 - production enforcement or complete production runtime control;
 - real tool execution or real downstream side effects;
 - independent human-label validation;
-- publication-density category coverage or robust category-level performance;
-- autonomous-agent safety or general adjustment capability;
+- publication-density category coverage;
+- robust category-level performance;
+- full autonomous-agent safety or general adjustment capability;
 - production audit-log completeness; or
 - official AgentDojo, InjecAgent, or other external prompt-injection benchmark evidence.
 
-The local prompt-injection slice tests whether synthetic untrusted external, tool-output, or memory instructions lead to unsafe downstream mock actions. Its interpretation must stay within that controlled slice.
+The local prompt-injection slice tests whether synthetic untrusted external, tool-output, or memory instructions lead to unsafe downstream mock actions. It is evidence only for this controlled slice.
 
-## Known limitations and future review
+## Known limitations and future directions
 
-Future work should examine production controller traces when a safe environment exists, independent labeling, denser per-category sampling, repeated-run variability, decision calibration (especially `warn`, `pause`, and `revise`), broader agent-generated adjustment, semantic goal preservation, stronger tool-output injection detection, and official external benchmark integrations. Until then, reviewers should keep native evidence, compatibility mapping, deterministic control, and simulated outcomes explicitly separated.
+Future work should examine production controller traces when a safe environment exists, independent labeling, denser per-category sampling, repeated-run variability, decision calibration (especially `warn`, `pause`, and `revise`), broader agent-generated adjustment, semantic goal preservation, stronger tool-output injection detection, and official external benchmark integrations. Until then, native evidence, compatibility mapping, deterministic control, and simulated outcomes remain explicitly separated.

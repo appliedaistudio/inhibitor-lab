@@ -14,6 +14,11 @@ A supported benchmark package should provide:
 - derived summaries and reports; and
 - explicit interpretation boundaries.
 
-The [`operational/`](operational/) benchmark is currently supported. Future supported categories may include runtime-trajectory, semantic, regression, or safety evaluation workflows, but those categories are not represented here as maintained implementations today.
+The currently supported benchmark packages are:
+
+- [`operational/`](operational/) — operational load and recovery benchmark;
+- [`runtime_trajectories/`](runtime_trajectories/) — controlled runtime trajectory benchmark.
+
+Future supported categories may include semantic, regression, or other safety evaluation workflows, but those categories are not represented here as maintained implementations today.
 
 Supported means maintained and reproducible. It does not automatically mean production-certified, statistically repeatable, a service-level guarantee, or proof of semantic correctness.
