@@ -72,6 +72,7 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 - [`benchmarks/`](benchmarks/) – entry point for supported workflows and historical benchmark assets.
   - [`benchmarks/supported/`](benchmarks/supported/) – actively maintained benchmark workflows.
   - [`benchmarks/supported/operational/`](benchmarks/supported/operational/) – supported operational load and recovery benchmark.
+  - [`benchmarks/supported/runtime_trajectories/`](benchmarks/supported/runtime_trajectories/) – supported controlled runtime trajectory benchmark.
   - [`benchmarks/legacy/`](benchmarks/legacy/) – historical benchmark implementations and result artifacts.
 - `codefest/` – Philly Codefest OpenBuild challenge kits, starter notebooks, shared logs, and team operations docs.
 
@@ -80,6 +81,7 @@ The Inhibitor tracks and surfaces violations across a maintained set of regulati
 Start with the [benchmark lifecycle guide](benchmarks/README.md). [Supported benchmarks](benchmarks/supported/README.md) are the authoritative entry points for new execution, while historical benchmark implementations and outputs remain available under [`benchmarks/legacy/`](benchmarks/legacy/) for provenance and comparison.
 
 - **Supported operational benchmark** – review the [operational guide](benchmarks/supported/operational/README.md), run the [benchmark notebook](benchmarks/supported/operational/inhibitor_operational_benchmark.ipynb), and use [`benchmark_reporting.py`](benchmarks/supported/operational/benchmark_reporting.py) for its deterministic reporting workflow.
+- **Supported controlled runtime trajectory benchmark** – see the [runtime trajectory guide](benchmarks/supported/runtime_trajectories/README.md) and use the runner dry-run to list and validate its controlled scenarios.
 - **Operational reference report** – see the published Inhibitor 2.24.1 reference run in [`benchmark_report.md`](benchmarks/supported/operational/results/operational-v2.24.1-2026-07-31T16-07-17Z/benchmark_report.md).
 
 ### Documentation trails

@@ -1,0 +1,264 @@
+{
+  "comparison": {
+    "reference_variant": "v5_full_runtime_inhibition",
+    "unsafe_execution_rate_delta_vs_v0": {
+      "interpretation": "Lower is better for unsafe execution.",
+      "value": -0.8571
+    }
+  },
+  "interpretation_limit": "Controlled benchmark-side baseline variants over existing fixtures; not end-to-end autonomous agent baselines.",
+  "variants": {
+    "v0_unprotected_mock_execution": {
+      "benign_cases": 2,
+      "duplicate_result_cases": [],
+      "eligible_cases": 16,
+      "excluded_cases": [],
+      "excluded_cases_by_reason": {},
+      "expected_cases": 16,
+      "ineligible_cases": 0,
+      "missing_result_cases": [],
+      "over_inhibition_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.0,
+          "method": "wilson",
+          "upper": 0.6576
+        },
+        "denominator": 2,
+        "numerator": 0,
+        "support_level": "simulated",
+        "value": 0.0
+      },
+      "recorded_cases": 16,
+      "safe_task_completion_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.3424,
+          "method": "wilson",
+          "upper": 1.0
+        },
+        "denominator": 2,
+        "numerator": 2,
+        "support_level": "simulated",
+        "value": 1.0
+      },
+      "support_level": "simulated_baseline",
+      "total_cases": 16,
+      "unsafe_action_prevention_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.0,
+          "method": "wilson",
+          "upper": 0.2153
+        },
+        "denominator": 14,
+        "numerator": 0,
+        "support_level": "simulated",
+        "value": 0.0
+      },
+      "unsafe_cases": 14,
+      "unsafe_execution_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.7847,
+          "method": "wilson",
+          "upper": 1.0
+        },
+        "denominator": 14,
+        "numerator": 14,
+        "support_level": "simulated",
+        "value": 1.0
+      },
+      "variant_label": "Unprotected mock execution"
+    },
+    "v2_final_output_only_check": {
+      "benign_cases": 2,
+      "duplicate_result_cases": [],
+      "eligible_cases": 16,
+      "excluded_cases": [],
+      "excluded_cases_by_reason": {},
+      "expected_cases": 16,
+      "ineligible_cases": 0,
+      "missing_result_cases": [],
+      "over_inhibition_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.0,
+          "method": "wilson",
+          "upper": 0.6576
+        },
+        "denominator": 2,
+        "numerator": 0,
+        "support_level": "live_check_proxy",
+        "value": 0.0
+      },
+      "recorded_cases": 16,
+      "safe_task_completion_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.3424,
+          "method": "wilson",
+          "upper": 1.0
+        },
+        "denominator": 2,
+        "numerator": 2,
+        "support_level": "live_check_proxy",
+        "value": 1.0
+      },
+      "support_level": "live_check_proxy",
+      "total_cases": 16,
+      "unsafe_action_prevention_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.268,
+          "method": "wilson",
+          "upper": 0.732
+        },
+        "denominator": 14,
+        "numerator": 7,
+        "support_level": "live_check_proxy",
+        "value": 0.5
+      },
+      "unsafe_cases": 14,
+      "unsafe_execution_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.268,
+          "method": "wilson",
+          "upper": 0.732
+        },
+        "denominator": 14,
+        "numerator": 7,
+        "support_level": "live_check_proxy",
+        "value": 0.5
+      },
+      "variant_label": "Final-output-only check"
+    },
+    "v4_tool_boundary_check": {
+      "benign_cases": 2,
+      "duplicate_result_cases": [],
+      "eligible_cases": 16,
+      "excluded_cases": [],
+      "excluded_cases_by_reason": {},
+      "expected_cases": 16,
+      "ineligible_cases": 0,
+      "missing_result_cases": [],
+      "over_inhibition_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.0,
+          "method": "wilson",
+          "upper": 0.6576
+        },
+        "denominator": 2,
+        "numerator": 0,
+        "support_level": "live_check_proxy",
+        "value": 0.0
+      },
+      "recorded_cases": 16,
+      "safe_task_completion_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.3424,
+          "method": "wilson",
+          "upper": 1.0
+        },
+        "denominator": 2,
+        "numerator": 2,
+        "support_level": "live_check_proxy",
+        "value": 1.0
+      },
+      "support_level": "live_check_proxy",
+      "total_cases": 16,
+      "unsafe_action_prevention_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.268,
+          "method": "wilson",
+          "upper": 0.732
+        },
+        "denominator": 14,
+        "numerator": 7,
+        "support_level": "live_check_proxy",
+        "value": 0.5
+      },
+      "unsafe_cases": 14,
+      "unsafe_execution_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.268,
+          "method": "wilson",
+          "upper": 0.732
+        },
+        "denominator": 14,
+        "numerator": 7,
+        "support_level": "live_check_proxy",
+        "value": 0.5
+      },
+      "variant_label": "Tool-boundary check"
+    },
+    "v5_full_runtime_inhibition": {
+      "benign_cases": 2,
+      "duplicate_result_cases": [],
+      "eligible_cases": 16,
+      "excluded_cases": [],
+      "excluded_cases_by_reason": {},
+      "expected_cases": 16,
+      "ineligible_cases": 0,
+      "missing_result_cases": [],
+      "over_inhibition_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.0,
+          "method": "wilson",
+          "upper": 0.6576
+        },
+        "denominator": 2,
+        "numerator": 0,
+        "support_level": "simulated",
+        "value": 0.0
+      },
+      "recorded_cases": 16,
+      "safe_task_completion_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.3424,
+          "method": "wilson",
+          "upper": 1.0
+        },
+        "denominator": 2,
+        "numerator": 2,
+        "support_level": "simulated",
+        "value": 1.0
+      },
+      "support_level": "native + compatibility_mapped + simulated",
+      "total_cases": 16,
+      "unsafe_action_prevention_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.6006,
+          "method": "wilson",
+          "upper": 0.9599
+        },
+        "denominator": 14,
+        "numerator": 12,
+        "support_level": "simulated",
+        "value": 0.8571
+      },
+      "unsafe_cases": 14,
+      "unsafe_execution_rate": {
+        "confidence_interval": {
+          "confidence_level": 0.95,
+          "lower": 0.0401,
+          "method": "wilson",
+          "upper": 0.3994
+        },
+        "denominator": 14,
+        "numerator": 2,
+        "support_level": "simulated",
+        "value": 0.1429
+      },
+      "variant_label": "Full runtime inhibition"
+    }
+  }
+}
