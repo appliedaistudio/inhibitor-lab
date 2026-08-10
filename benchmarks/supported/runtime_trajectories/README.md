@@ -16,7 +16,7 @@ Academic runtime-inhibition and agent-safety papers provide reference guidelines
 - [`src/`](src/) contains the runner, decision-compatibility adapter, signal-family bridge, proposed-action validation, controller, mock tools, baselines, prompt-injection slice, controlled agent loop, metrics, and validation.
 - [`tests/`](tests/) contains package tests.
 - [`lib/`](lib/) contains package-local helper utilities.
-- [`benchmark_reporting.py`](benchmark_reporting.py) regenerates a report from preserved evidence without making live requests.
+- [`benchmark_reporting.py`](benchmark_reporting.py) contains report-regeneration support used to keep preserved summaries reproducible; normal benchmark execution writes summaries through the runner.
 - [`results/`](results/) contains intentionally preserved reference-run packages.
 - [`catalog_signal_map.md`](catalog_signal_map.md) records the reviewed exact-label bridge provenance.
 
@@ -54,7 +54,6 @@ Run from the repository root:
 python3 -m unittest discover -s benchmarks/supported/runtime_trajectories/tests -p 'test_*.py'
 python3 benchmarks/supported/runtime_trajectories/src/runner.py --dry-run
 python3 -m py_compile benchmarks/supported/runtime_trajectories/benchmark_reporting.py benchmarks/supported/runtime_trajectories/src/*.py benchmarks/supported/runtime_trajectories/lib/*.py
-python3 benchmarks/supported/runtime_trajectories/benchmark_reporting.py --output /tmp/runtime-trajectory-summary.md
 git diff --check
 ```
 
@@ -66,17 +65,13 @@ python3 benchmarks/supported/runtime_trajectories/src/runner.py \
   --require-live --endpoint "https://iaas.appliedai.studio" --run-id "$RUN_ID"
 ```
 
+The live runner writes the result artifacts and generated summary into the package results directory.
+
 New runs are written inside this package's `results/` directory. Do not commit a new run, especially raw responses, without explicit review.
 
-## Canonical evidence and report regeneration
+## Canonical evidence and reporting support
 
-The primary reference evidence is [`results/runtime_seed_20260729_143044/`](results/runtime_seed_20260729_143044/). Its JSON artifacts—not prose copied elsewhere—are canonical. Regenerate its `summary.md` without a live benchmark using:
-
-```bash
-python3 benchmarks/supported/runtime_trajectories/benchmark_reporting.py
-```
-
-Use `--run-dir` and `--output` to review another preserved package without overwriting it. A complete evidence package contains its manifest, raw and normalized responses, trajectories, adjustments, agent-loop results/scores, prompt-injection results/scores, baseline results/scores, scores, and generated summary. Report regeneration is expected to be deterministic from those preserved artifacts.
+The primary reference evidence is [`results/runtime_seed_20260729_143044/`](results/runtime_seed_20260729_143044/). Its JSON artifacts—not prose copied elsewhere—are canonical. Preserved summaries are derived artifacts generated from the JSON evidence package. The reporting code is retained so those summaries remain reproducible, but normal benchmark execution and summary writing are handled by the runner. A complete evidence package contains its manifest, raw and normalized responses, trajectories, adjustments, agent-loop results/scores, prompt-injection results/scores, baseline results/scores, scores, and generated summary.
 
 ## Current reference result
 
