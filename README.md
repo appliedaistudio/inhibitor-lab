@@ -86,6 +86,7 @@ Start with the [benchmark lifecycle guide](benchmarks/README.md). [Supported ben
 
 ### Documentation trails
 
+- **Beyond prompt screening** – Explore [broader uses for Inhibitor](docs/beyond-prompt-screening.md), including checks around tool actions, data writes, outbound responses, multi-step behavior, and human review.
 - **Real-time applications** – Use the [real-time application best practices](docs/real-time-application-best-practices.md) to design bounded checks, safe fallbacks, and deterministic enforcement, with a voice agent as the working example.
 - **Implementation flow** – Start with the [Inhibitor Application Sprint](docs/inhibitor-application-sprint.md), then dive into the [Reason-Observe-Adjust pattern](docs/roa-pattern.md) and the [Inside the Inhibitor](docs/inhibitor-inside.md) narrative to see how the oversight loop runs.
 - **Adoption progression** – Follow the [typical Inhibitor adoption progression](docs/inhibitor-progression.md) to sequence confidence calibration, schema hardening, error prevention, and auditability.
