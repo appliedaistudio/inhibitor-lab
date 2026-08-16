@@ -4,7 +4,7 @@
 
 # inhibitor-lab
 
-**inhibitor-lab** is the open-source R&D space for integrating the **Inhibitor** into agent-based systems. The audience is AI technologists who need defensible, real-time controls to keep autonomous agents from doing unsafe or wasteful work.
+**inhibitor-lab** is the open-source R&D space for integrating **Inhibitor Service 3.1.2** into agent-based systems. The audience is AI technologists who need defensible, real-time controls to keep autonomous agents from doing unsafe or wasteful work.
 
 ---
 
@@ -17,7 +17,7 @@
 
 ## Why teams ship with the Inhibitor
 
-- **Real-time guardrails** for LLM-driven agents, with interruptibility and course correction rather than post-hoc filters.
+- **Real-time inhibition** for LLM-driven agents, with interruptibility and course correction rather than post-hoc filters.
 - **Audit-ready trails** that explain why actions were blocked, enabling compliance reviews and root-cause analysis.
 - **Deployment agility** via edge-first, stateless design that respects geographic data boundaries and GDPR expectations.
 
@@ -53,6 +53,8 @@ References:
    - [Quickstart: Inhibitor API](notebooks/quickstart_inhibitor.ipynb)
    - [Adaptive Feedback Agent](notebooks/adaptive_agent_feedback_loops.ipynb)
    - [Real-Time Moderation Agent](notebooks/realtime_moderation_agent.ipynb)
+   - [Indirect Injection Boundary Matrix](notebooks/indirect_injection_boundary_matrix.ipynb)
+   - [Legitimate-Use PII Evaluation](notebooks/legitimate_use_pii_evaluation.ipynb)
 5. **Layer the Inhibitor into your agent loop** (oversight, critique, and action correction).
 6. **Stress-test and monitor** using the [Inhibitor Application Sprint](docs/inhibitor-application-sprint.md).
 
@@ -93,7 +95,7 @@ Start with the [benchmark lifecycle guide](benchmarks/README.md). [Supported ben
 - **Case studies** – See how the inhibitor performs in production with the [healthcare case impact report](docs/case-studies/healthcare-case-impact.md).
 - **Policy to runtime** – Trace how written policies become DILL rules in the [policy-to-rule examples](docs/policy-rule-examples/README.md), then compare enforcement outcomes in the [API reference](docs/inhibitor-api.md) and [supported regulations](docs/supported-regulations.md).
 - **Governance and compliance** – Pair [GDPR guidance](docs/gdpr-compliance.md) with [global edge deployment](docs/global-edge-deployment.md) and zoom out to the [ethical inference theory](docs/ethical-inference-theory.md) that underpins the system.
-- **Change history** – Start with [release notes 1.11](docs/release-notes/1.11.md) for the benchmark lifecycle restructuring, then review [release notes 1.10](docs/release-notes/1.10.md) for API integration documentation, [release notes 1.9](docs/release-notes/1.9.md) for policy validation workflows, or [release notes 1.8](docs/release-notes/1.8.md) for the preceding release.
+- **Change history** – Start with the [Inhibitor Service 3.1.2 release notes](docs/release-notes/3.1.2.md) for the latest evaluation notebooks and application guidance, then review [release notes 1.12](docs/release-notes/1.12.md) for the controlled runtime trajectory benchmark and [release notes 1.11](docs/release-notes/1.11.md) for the benchmark lifecycle restructuring.
 
 ---
 
