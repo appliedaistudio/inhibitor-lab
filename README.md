@@ -4,7 +4,7 @@
 
 # inhibitor-lab
 
-**inhibitor-lab** is the open-source R&D space for integrating **Inhibitor Service 3.1.2** into agent-based systems. The audience is AI technologists who need defensible, real-time controls to keep autonomous agents from doing unsafe or wasteful work.
+**inhibitor-lab** is the open-source R&D space for integrating **Inhibitor Service 3.1.3** into agent-based systems. The audience is AI technologists who need defensible, real-time controls to keep autonomous agents from doing unsafe or wasteful work.
 
 ---
 
@@ -95,7 +95,7 @@ Start with the [benchmark lifecycle guide](benchmarks/README.md). [Supported ben
 - **Case studies** – See how the inhibitor performs in production with the [healthcare case impact report](docs/case-studies/healthcare-case-impact.md).
 - **Policy to runtime** – Trace how written policies become DILL rules in the [policy-to-rule examples](docs/policy-rule-examples/README.md), then compare enforcement outcomes in the [API reference](docs/inhibitor-api.md) and [supported regulations](docs/supported-regulations.md).
 - **Governance and compliance** – Pair [GDPR guidance](docs/gdpr-compliance.md) with [global edge deployment](docs/global-edge-deployment.md) and zoom out to the [ethical inference theory](docs/ethical-inference-theory.md) that underpins the system.
-- **Change history** – Start with the [Inhibitor Service 3.1.2 release notes](docs/release-notes/3.1.2.md) for the latest evaluation notebooks and application guidance, then review [release notes 1.12](docs/release-notes/1.12.md) for the controlled runtime trajectory benchmark and [release notes 1.11](docs/release-notes/1.11.md) for the benchmark lifecycle restructuring.
+- **Change history** – Start with the [Inhibitor Service 3.1.3 release notes](docs/release-notes/3.1.3.md) for the plain-language evaluation notebooks, then review [release notes 3.1.2](docs/release-notes/3.1.2.md) for earlier application guidance.
 
 ---
 
