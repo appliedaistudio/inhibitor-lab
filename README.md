@@ -95,7 +95,7 @@ Start with the [benchmark lifecycle guide](benchmarks/README.md). [Supported ben
 - **Case studies** – See how the inhibitor performs in production with the [healthcare case impact report](docs/case-studies/healthcare-case-impact.md).
 - **Policy to runtime** – Trace how written policies become DILL rules in the [policy-to-rule examples](docs/policy-rule-examples/README.md), then compare enforcement outcomes in the [API reference](docs/inhibitor-api.md) and [supported regulations](docs/supported-regulations.md).
 - **Governance and compliance** – Pair [GDPR guidance](docs/gdpr-compliance.md) with [global edge deployment](docs/global-edge-deployment.md) and zoom out to the [ethical inference theory](docs/ethical-inference-theory.md) that underpins the system.
-- **Change history** – Start with the [Inhibitor Service 3.1.3 release notes](docs/release-notes/3.1.3.md) for the plain-language evaluation notebooks, then review [release notes 3.1.2](docs/release-notes/3.1.2.md) for earlier application guidance.
+- **Change history** – Start with the [Inhibitor Service 3.1.3 release notes](docs/release-notes/3.1.3.md) for the latest real-time rule guidance, then review the [3.1.2 release notes](docs/release-notes/3.1.2.md) for evaluation notebooks and broader application guidance.
 
 ---
 
