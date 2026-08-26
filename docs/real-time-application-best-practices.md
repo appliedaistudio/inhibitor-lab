@@ -32,6 +32,26 @@ If one search result is unsafe, the application can remove that result instead o
 the whole turn. If a proposed calendar change fails, the application can stop the change
 without stopping ordinary conversation.
 
+### Write rules for the deployment-specific gap
+
+Custom policy documents should focus on requirements that are specific to the deployment,
+organization, domain, workflow, or tool. The Inhibitor already evaluates broad semantic and
+ethical risks, so repeating general safety principles can create overlapping findings,
+contradictory rules, and extra work during review.
+
+Write concrete, testable requirements that the Inhibitor could not otherwise know. For
+example:
+
+| Include in the custom policy | Usually leave to general evaluation |
+| --- | --- |
+| Only a verified patient may reschedule this appointment. | Protect privacy. |
+| Transfers over $5,000 require a second approval. | Do not cause financial harm. |
+| Never disclose the internal risk score to a caller. | Be transparent and fair. |
+
+Repeat a general principle only when the deployment needs a stricter definition, a special
+interpretation, or an explicit finding for audit purposes. Keep authentication,
+authorization, schemas, permissions, and side-effect controls in application code.
+
 ## 2. Send only the context needed for the decision
 
 A live check should usually contain:
