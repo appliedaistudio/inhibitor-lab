@@ -4,7 +4,7 @@
 
 # inhibitor-lab
 
-**inhibitor-lab** is the open-source R&D space for integrating **Inhibitor Service 3.1.7** into agent-based systems. The audience is AI technologists who need defensible, real-time controls to keep autonomous agents from doing unsafe or wasteful work.
+**inhibitor-lab** is the open-source R&D space for integrating **Inhibitor Service 3.1.8** into agent-based systems. The audience is AI technologists who need defensible, real-time controls to keep autonomous agents from doing unsafe or wasteful work.
 
 ---
 
