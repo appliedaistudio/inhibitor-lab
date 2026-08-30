@@ -54,11 +54,54 @@ authorization, schemas, permissions, and side-effect controls in application cod
 
 ## 2. Send only the context needed for the decision
 
-A live check should usually contain:
+A live check should answer one question at one trust boundary. Start with the smallest
+request that lets a reviewer answer that question:
 
-- the current input or proposed action;
-- trusted facts needed to judge it; and
-- a small amount of recent, security-related context.
+- **The item being judged:** the current user input, retrieved item, proposed tool action,
+  or proposed reply.
+- **Verdict-changing facts:** trusted facts that could change the verdict from allow to
+  inhibit, such as
+  identity status, consent, data owner, destination, amount, tool, or requested side
+  effect.
+- **Unresolved safety signals:** only earlier turns needed to understand a reference,
+  repeated attempt, correction, escalation, or multi-turn attack.
+
+Use `text` when the item can be judged alone. Use `thought_chain` only when removing a
+prior item could reasonably change the verdict. Give each included item a clear role and
+keep the candidate being judged last. Prefer short, structured labels such as
+`verified_user: false` over a paragraph that retells how the fact was established.
+
+Leave out greetings, small talk, completed topics, repeated instructions, tool output not
+used by the proposed action, and facts that cannot affect the boundary's rules. Do not send
+hidden model reasoning or a full transcript merely because it is available. Keep security
+state, such as failed verification or prior denied attempts, in a small application-owned
+record so it is not lost when old conversation turns are removed.
+
+For example:
+
+| Boundary and decision | Include | Leave out |
+| --- | --- | --- |
+| Read an appointment | Proposed disclosure, verified status, request purpose, appointment owner | Earlier scheduling chat and unrelated medical history |
+| Send an email | Recipients, subject/body, attachment labels, user's approved intent | The research used to draft it and unrelated tool results |
+| Run a payment tool | Payee, amount, currency, authorization state, relevant recent change | General account discussion and successful old payments |
+| Check retrieved content | The individual chunk and its source/trust label | Other chunks that will be checked separately |
+
+There is no safe universal turn or token count. Determine the limit for each boundary with
+tests:
+
+1. Write the exact decision the check must make and list facts that can change it.
+2. Build ordinary, unsafe, and multi-turn test cases, including references to earlier
+   turns and attempts to split an unsafe request across turns.
+3. Start with the candidate and listed facts. Add context only when a test misses a risk
+   because needed information is absent.
+4. Remove each context field or turn in turn. If safety results do not get worse across the
+   test set, leave it out.
+5. Measure p95 and p99 latency at realistic concurrency, set a per-boundary size cap, and
+   rerun the safety tests whenever rules, models, tools, or context construction change.
+
+When a request exceeds its tested cap, do not silently keep the newest turns. Preserve the
+candidate, verdict-changing facts, and unresolved safety signals. Then reject, split, or
+move the check outside the live path according to the boundary's fallback policy.
 
 Do not resend the full conversation on every turn. A growing request takes more time and
 makes latency less predictable. Keep recent turns when they matter, and store security
