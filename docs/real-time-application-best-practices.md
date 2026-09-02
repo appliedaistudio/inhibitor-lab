@@ -77,6 +77,11 @@ hidden model reasoning or a full transcript merely because it is available. Keep
 state, such as failed verification or prior denied attempts, in a small application-owned
 record so it is not lost when old conversation turns are removed.
 
+For every agent proposal, include a short, purpose-built explanation of its intent,
+decision-relevant reasoning, and expected outcome. This is not a request for private
+chain-of-thought: summarize only the rationale that a reviewer needs to judge the proposed
+response or action.
+
 For example:
 
 | Boundary and decision | Include | Leave out |

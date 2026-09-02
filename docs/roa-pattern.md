@@ -75,6 +75,7 @@ When wiring ROA into production agents, apply these defaults unless your domain 
 
 * **Default to Performance Mode** during Observe checks. In most loops, agents self-correct effectively from minimal flag feedback, and lower latency improves end-to-end task quality.
 * **Escalate to Insight Mode selectively** for audit workflows, incident analysis, or cases where operators explicitly need narrative rationale.
+* **Explain every proposal sent for observation.** Include a concise summary of the agent's intent, decision-relevant reasoning, and expected outcome with the proposed response or action so the Inhibitor can evaluate what the agent means to do, not only its wording.
 * **Require direct remediation responses** after each observation. Each agent turn should address inhibitor feedback explicitly (what changed, what was removed, or why execution is paused), without filler language.
 * **Keep correction messages concise and operational** so downstream evaluators can parse intent and changes quickly.
 
