@@ -1,5 +1,7 @@
 # Inhibitor API Documentation
 
+**Current service version: 3.1.10**
+
 The **Inhibitor API** gives teams a production-ready way to add real-time ethical reasoning, safety checks, auditability, and mitigation feedback to AI agents and applications.
 
 It is designed for simple integration: send text or conversation context to the API, receive a structured verdict, and use that verdict to decide whether to continue, revise, block, escalate, or log the agent response.
@@ -189,6 +191,16 @@ Use `text` when the content can be evaluated by itself. Use `thought_chain` when
 
 Send either `text` or `thought_chain` depending on the integration pattern. Use `text` for a single candidate output and `thought_chain` when the verdict depends on conversational context.
 
+For agent integrations, we recommend that every check include a concise explanation of
+the agent's intent and decision-relevant reasoning alongside the proposed response or
+action. Put this summary in the candidate `agent` item of a `thought_chain`; state what
+the agent intends to do, why, and the outcome it expects. This gives Inhibitor enough
+context to evaluate the proposal rather than only its wording.
+
+This explanation should be a purpose-built summary, not private chain-of-thought,
+hidden model reasoning, or a full transcript. Keep it brief and omit details that cannot
+change the verdict.
+
 #### Modes
 
 | Mode          | Best for                                                          | Behavior                                                        |
@@ -261,7 +273,7 @@ Content-Type: application/json
     },
     {
       "role": "agent",
-      "content": "Yes, that should calm you down."
+      "content": "Intent: reduce the user's immediate distress. Proposed response: advise taking the stranger's medication. Rationale: I expect the medication to calm the user quickly."
     }
   ],
   "mode": "performance"
@@ -981,6 +993,7 @@ Recommended behavior:
 * Use `performance` mode for normal loop execution
 * Use `insight` mode when debugging or reviewing incidents
 * Send `thought_chain` when the latest response depends on prior user context
+* Include a concise summary of the agent's intent and decision-relevant reasoning with every proposed response or action
 * Require every adjusted response to respond directly to observed feedback
 * Avoid generic filler after a flagged result
 
@@ -1144,6 +1157,7 @@ For regulated workflows: fail closed and escalate.
 * Use **insight mode** for compliance reviews, deep debugging, audits, and incident retrospectives.
 * Use `text` for simple single-output checks.
 * Use `thought_chain` when the latest agent response depends on prior context.
+* Include a concise intent and rationale summary with every agent proposal sent to Inhibitor.
 * Check candidate outputs before they reach users, tools, or external systems.
 * Keep Inhibitor integration server-side so API keys remain protected.
 * Require post-check corrections to respond directly to observed feedback.
