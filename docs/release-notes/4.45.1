@@ -1,0 +1,165 @@
+# Inhibitor Service 4.45.1 Release Notes
+
+## Overview
+
+This `inhibitor-lab` release aligns the public repository with Inhibitor Service 4.45.1 and documents a substantial evolution of the service's observation-selection, Bayesian inference, deterministic-rule execution, diagnostics, and evidence-grounding architecture.
+
+Since Inhibitor Service 3.1.2, the service has moved toward a more explicit evidence pipeline: scenario content is preserved with role and ordering information, candidate observations are narrowed before classification, selected observations feed a validated Bayesian prediction layer, and deterministic DILL rules remain a separate application-facing policy mechanism.
+
+The release also introduces a grounded LLM observation selector, expands observation and safeguard definitions across multiple policy domains, restructures Bayesian conditional-probability relationships around direct observations, strengthens deterministic rule execution and caching, and adds significantly deeper diagnostics for understanding how a `/check` result was produced.
+
+These changes improve evidence traceability and reduce reliance on loosely inferred context, but they do not make the Inhibitor an authorization system or replace application-owned controls. Host applications remain responsible for trusted identity, permissions, data provenance, side-effect control, decision mapping, rollback, and safe handling of indeterminate or failed evaluations.
+
+## Highlights
+
+### Grounded LLM observation selection
+
+- Added a grounded LLM observation-selection path for determining which configured observations are supported by scenario evidence.
+- Observation selection now operates through a swappable selector interface rather than being inseparably coupled to the rest of the inhibition pipeline.
+- The current grounded selector receives the scenario together with a bounded candidate set instead of attempting to classify against the entire observation catalogue at once.
+- Candidate observations passed to the final selector are reduced to their stable observation `key` and full `description`, avoiding unnecessary selector-specific metadata in the final classification request.
+- Provider-enforced structured output and local response validation are used to keep selector responses machine-readable.
+- Malformed or failed selector responses can be retried rather than silently interpreted as valid evidence.
+- The selector boundary allows alternative selection strategies to be substituted without rewriting the downstream inhibition pipeline.
+
+### Retrieval before classification
+
+- Added a retrieval stage using precomputed observation embeddings to narrow the observation search space before final classification.
+- The retrieval corpus is built from the raw role-labelled scenario rather than flattening the interaction into an undifferentiated block of text.
+- This preserves conversation chronology and distinguishes content supplied by different actors or system components.
+- The service selects a bounded shortlist of relevant candidate observations before passing them to the grounded selector.
+- Retrieval scores are used for candidate narrowing rather than being treated as proof that an observation is present.
+- Final observation selection remains a separate classification step.
+
+### Evidence-grounded observations
+
+- Observation definitions have been expanded and hardened to distinguish direct evidence from assumptions about intent, identity, authorization, or institutional context.
+- Observation matching increasingly relies on events or safeguards actually represented in the scenario rather than inferring unsupported application state.
+- Actor-neutral observations reduce unnecessary dependence on whether an action is phrased as coming from a user, assistant, tool, agent, or other participant.
+- Safeguard observations cover areas including privacy, fairness, security, legal and regulatory scope, clinical decision-making, academic integrity, AML controls, proprietary information, transparency, trust, and human review.
+- Regression coverage has been expanded around cases where superficially similar language should produce different observations depending on whether the required evidence is actually present.
+- Application-provided trusted facts remain distinct from claims appearing inside untrusted scenario content.
+
+### Bayesian prediction architecture
+
+- Bayesian inference is organized around direct observation-to-prediction relationships rather than allowing predictions to become informal substitutes for observations.
+- Added a canonical prediction registry so supported Bayesian prediction nodes are explicitly defined.
+- CPT authoring and validation have been tightened so conditional-probability relationships reference valid observation and prediction identifiers.
+- Prediction relationships are structured to avoid uncontrolled prediction-to-prediction chaining.
+- The Bayesian layer therefore represents probabilistic consequences of observed evidence rather than silently manufacturing additional factual observations.
+- Observation evidence and Bayesian predictions remain conceptually separate so applications can distinguish what was detected from what was probabilistically inferred.
+
+### Observation relationships and normalization
+
+- Added explicit handling for relationships between observations.
+- Normalization and inference can derive approved observation relationships without requiring the LLM selector to enumerate every equivalent or structurally related observation itself.
+- This allows direct evidence selection and deterministic observation relationships to remain separate.
+- Observation semantics and evidence expectations have been tightened to reduce ambiguity between direct findings and derived relationships.
+- Observation identifiers should therefore be treated as stable evidence contracts rather than free-form classifier labels.
+
+### Stronger deterministic DILL rule execution
+
+- Deterministic rule processing has been expanded across binding, extraction, interpretation, evaluation, validation, consistency, policy preprocessing, caching, and rule categorization.
+- Rule applicability can be evaluated separately from the substantive rule condition.
+- Rule evaluation supports explicit outcomes for cases where a rule is not applicable rather than forcing every rule into a simple pass/fail interpretation.
+- Semantic fallback bindings improve rule execution where equivalent application facts are represented through supported alternative bindings.
+- Prepared rules can be cached instead of repeatedly performing the same interpretation work for every request.
+- Rule loading and evaluation paths have been structured to support more efficient execution while preserving deterministic policy semantics.
+- The consistency checks introduced in earlier releases remain part of the DILL generation and validation architecture.
+
+### Policy-grounded rule generation
+
+- Policy preprocessing can extract structured requirements from source material before final DILL rule construction.
+- Generated rules retain stronger provenance to the policy material from which requirements were derived.
+- Standard rule categories provide more predictable organization of generated safeguards.
+- Applicability conditions can be represented separately from the actual policy requirement being enforced.
+- Rule validation and consistency analysis continue to protect against malformed or internally incompatible generated rulesets.
+- Generated policy still requires review before activation; generation-time validation establishes structural and logical checks, not legal, organizational, or operational correctness.
+
+### Expanded diagnostics
+
+- `/check` diagnostics have been expanded to expose significantly more detail about the evaluation pipeline.
+- Diagnostic timing can distinguish stages such as API-key processing, LLM work, observation selection, Bayesian processing, and deterministic-rule execution.
+- Selector diagnostics can expose the candidate-selection and classification path used for an evaluation.
+- Bayesian diagnostics make it easier to distinguish directly selected observations from derived predictions.
+- Rule diagnostics can expose evaluated bindings and rule execution state.
+- Rule-cache status can be inspected to help diagnose performance and execution behavior.
+- Sensitive credentials and protected identifiers are redacted from diagnostics rather than being returned verbatim.
+- More detailed selector request and response material is restricted to diagnostic use and should be treated as potentially sensitive application data.
+
+### Performance and rule caching
+
+- Added prepared-rule caching to reduce repeated interpretation work when underlying rule material has not changed.
+- The rule pipeline is decomposed so extraction, interpretation, validation, binding, and evaluation can be measured and optimized independently.
+- Precomputed observation embeddings avoid recalculating the static observation catalogue representation on every request.
+- Candidate narrowing limits the number of observation definitions presented to the final classifier.
+- These optimizations reduce repeated work but do not eliminate the need for application-level latency budgets, deadlines, and safe fallback behavior.
+
+### API and integration model
+
+- The public [Inhibitor API reference](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/inhibitor-api.md) remains the integration reference for request structure, service behavior, and application-facing endpoints.
+- The broader integration model continues to place Inhibitor at consequential trust boundaries rather than treating it only as a prompt filter.
+- Applications should evaluate untrusted retrieved content, proposed tool actions, outbound disclosures, writes, and other consequential operations where appropriate.
+- The application remains the enforcement authority: Inhibitor supplies evidence and policy evaluation, while the host system owns authentication, authorization, schemas, side effects, recovery, and review workflows.
+- The guidance in [Using the Inhibitor in Real-Time Applications](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/real-time-application-best-practices.md) and [Beyond Prompt Screening: Broader Uses for Inhibitor](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/beyond-prompt-screening.md) remains applicable to 4.45.1 integrations.
+
+## Adoption Guidance
+
+1. Begin with the [Inhibitor API reference](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/inhibitor-api.md) and verify that application integrations correctly distinguish observations, predictions, deterministic-rule results, errors, and diagnostic information.
+
+2. Use [Using the Inhibitor in Real-Time Applications](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/real-time-application-best-practices.md) to identify trust boundaries, latency budgets, fallback behavior, and rollout stages before enabling new 4.45.1 behavior in production.
+
+3. Use [Beyond Prompt Screening: Broader Uses for Inhibitor](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/beyond-prompt-screening.md) to prioritize checks around actions that are difficult to reverse, including tool calls, database writes, external communications, and sensitive disclosures.
+
+4. Treat the 4.45.1 observation catalogue as an evidence contract. Supply trusted facts through trusted application context rather than asking the service to infer identity, authorization, consent, or application state from untrusted text.
+
+5. Treat retrieval as candidate narrowing only. An observation appearing in a shortlist does not mean that the observation has been established.
+
+6. Treat grounded-selector output as evidence classification, not authorization. Application permissions, identity, entitlement, consent, and side-effect controls must remain application-owned unless represented through explicit trusted facts.
+
+7. Keep direct observations distinct from Bayesian predictions in application decision logic. Predictions express configured probabilistic inference and should not be treated as if they were directly observed facts.
+
+8. Review existing DILL policies after upgrading. Applicability predicates, bindings, rule categories, and prepared-rule behavior can expose assumptions in policies that previously depended on loosely interpreted context.
+
+9. Monitor rule-cache behavior and diagnostic timings during rollout. Establish application-specific latency budgets and preserve deterministic timeout and fallback behavior.
+
+10. Restrict expanded diagnostics to authorized development, testing, or operational workflows. Selector inputs, role-labelled scenarios, rule bindings, and other diagnostic information may contain sensitive application context even when credentials and identifiers are redacted.
+
+11. Re-run application-specific regression suites whenever the service version, observation catalogue, selector model, embeddings, CPTs, DILL policy set, trusted-context construction, or downstream decision mapping changes.
+
+12. Continue to fail safely on selector failures, malformed structured output, missing trusted facts, rule-evaluation errors, timeouts, and other indeterminate states rather than interpreting them as permission to proceed.
+
+## Interpretation Boundaries
+
+- A selected observation means the configured observation-selection pipeline found evidence corresponding to that observation; it does not independently establish identity, authorization, consent, legal status, or permission to perform an action.
+
+- Retrieval similarity is not evidence. The embedding stage narrows the candidate set and must not be interpreted as a positive policy finding.
+
+- An unselected observation is not proof that the underlying event or safeguard is absent. Selection behavior depends on the configured model, observation definitions, candidate retrieval, scenario construction, and available evidence.
+
+- Bayesian predictions are probabilistic inferences from configured observations and CPTs. They are not additional directly observed facts.
+
+- A high or low Bayesian probability does not replace application-specific enforcement thresholds, authorization logic, or human-review requirements.
+
+- Deterministic DILL rules only evaluate the facts and bindings made available to them. A passing rule does not establish that required external controls actually occurred unless those controls are represented through trusted evidence.
+
+- A rule that is not applicable is distinct from a policy requirement that has passed. Applications should not collapse non-applicability, successful evaluation, failed evaluation, and evaluation errors into one generic "safe" state.
+
+- Rule caching improves repeated evaluation performance but does not change the policy authority of the cached rule. Applications must refresh policy state appropriately when rules change.
+
+- Structured selector responses reduce parsing ambiguity but do not guarantee semantic correctness.
+
+- Expanded diagnostics are intended for debugging and operational analysis. They should not be exposed indiscriminately to end users or persisted without an appropriate data-retention policy.
+
+- Observation definitions, CPTs, and deterministic rules remain configuration-sensitive. Results from one deployment do not establish universal service accuracy, regulatory compliance, or safe autonomous operation.
+
+- The Inhibitor supplies policy evidence and evaluation. The host application remains responsible for authentication, authorization, schemas, trusted context, downstream side effects, rollback, audit, incident handling, and human-review workflows.
+
+## Cross-references
+
+- [Inhibitor API reference](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/inhibitor-api.md)
+- [Using the Inhibitor in Real-Time Applications](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/real-time-application-best-practices.md)
+- [Beyond Prompt Screening: Broader Uses for Inhibitor](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/beyond-prompt-screening.md)
+- [Supported Regulations](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/supported-regulations.md)
+- [Ethical Inference Theory](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/ethical-inference-theory.md)
+- [Inhibitor Service 3.1.2 release notes](https://github.com/appliedaistudio/inhibitor-lab/blob/main/docs/release-notes/3.1.2.md)
